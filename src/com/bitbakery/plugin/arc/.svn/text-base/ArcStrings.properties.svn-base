@@ -1,0 +1,54 @@
+# Common plugin
+plugin.arc.name=Arc
+plugin.arc.description=Arc development kit. \
+  Adds dedicated Arc module type to IntelliJ IDEA project. \
+  Allows compilation, packaging and execution of Arc code through Arc-oriented run configuration.
+
+# Colors and fonts page
+color.settings.name=Arc
+color.settings.docstring=Documentation
+color.settings.comment=Line comment
+color.settings.number=Number
+color.settings.string=String
+color.settings.bad_character=Invalid character
+color.settings.def=Def
+color.settings.mac=Mac
+color.settings.backquote=Backquote
+color.settings.comma=Comma
+color.settings.comma_at=Comma-at
+
+# General file descriptions
+arc.filetype.description=Arc source file
+
+# REPL labels
+repl.cancel=Cancel
+repl.close=Close the current REPL tab
+repl.open=Open a new REPL tab
+repl.rename=Rename REPL
+repl.toolWindowId=Arc REPL
+repl.add=Add
+repl.remove=Remove
+repl.newName=New name:
+repl.ok=OK
+repl.title=Arc REPL
+
+# Config
+config.mzSchemeHome=MzScheme Home
+config.arcHome=Arc Home
+config.initializationFile=Initialization File
+config.mzSchemeUrl=http://www.plt-scheme.org/software/mzscheme/
+config.arcUrl=http://www.arclanguage.org/
+config.error.replNotConfiguredMessage=The Arc REPL will be unavailable
+config.error.replNotConfiguredTitle=Arc REPL Not Configured
+config.getArc=Arc is available at
+config.getMzScheme=MzScheme is available at
+
+# Parser
+parser.error.expectedLeftParen=Expected '('
+parser.error.expectedRightParen=Expected ')'
+parser.error.expectedRightBracket=Expected ']'
+parser.error.expectedFunctionOrMacro=Expected a function or macro
+parser.error.expectedParameterList=Expected parameter list
+parser.error.expectedIdentifier=Expected identifier
+os.not.supported=OS not supported
+sdk.title=Arc SDK

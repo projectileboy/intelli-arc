@@ -1,0 +1,52 @@
+9
+
+dir
+46
+https://intelli-arc.googlecode.com/svn/trunk/src/com/bitbakery/plugin/arc/tools
+https://intelli-arc.googlecode.com/svn
+
+
+
+2008-05-13T18:37:01.671874Z
+43
+kurt.j.christensen
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+2707d202-6847-0410-b310-6db1f0165dca
+
+ArcTokenizer.java
+file
+
+
+
+
+2008-05-13T18:36:43.000000Z
+d669a15345ed2e2998031f38b1a92062
+2008-05-13T18:37:01.671874Z
+43
+kurt.j.christensen
+
+DocGenerator.java
+file
+
+
+
+
+2008-05-13T18:36:43.000000Z
+9fe1165cf16d9daece6be37d1a73fbde
+2008-05-13T18:37:01.671874Z
+43
+kurt.j.christensen
+

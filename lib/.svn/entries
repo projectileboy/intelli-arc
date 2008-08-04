@@ -1,0 +1,56 @@
+9
+
+dir
+46
+https://intelli-arc.googlecode.com/svn/trunk/lib
+https://intelli-arc.googlecode.com/svn
+
+
+
+2008-05-13T18:37:01.671874Z
+43
+kurt.j.christensen
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+2707d202-6847-0410-b310-6db1f0165dca
+
+JFlex.jar
+file
+
+
+
+
+2008-03-01T23:02:39.000000Z
+b37cf27cb41f52430d44fddadb9c706d
+2008-03-01T22:56:46.701352Z
+2
+kurt.j.christensen
+has-props
+
+arc2
+dir
+
+idea-flex.skeleton
+file
+
+
+
+
+2008-03-01T23:02:37.000000Z
+f9379d19c5346e509bd240a4019d04e8
+2008-03-01T22:56:46.701352Z
+2
+kurt.j.christensen
+
