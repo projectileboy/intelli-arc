@@ -6,6 +6,10 @@
     <property name="lexer.skeleton" value="lib/idea-flex.skeleton"/>
     <property name="jflex.jar" value="lib/JFlex.jar"/>
 
+    <target name="git-test">
+    </target>
+
+
     <target name="clean">
         <delete file="${lexer.file}~"/>
         <delete file="${lexer.file}"/>
