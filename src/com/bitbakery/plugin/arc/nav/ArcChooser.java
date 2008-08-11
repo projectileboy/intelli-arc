@@ -31,6 +31,11 @@ public class ArcChooser implements ChooseByNameContributor {
         return names.toArray(new String[names.size()]);
     }
 
+    public NavigationItem[] getItemsByName(String name, String pattern, Project project, boolean includeNonProjectItems) {
+        // TODO - New in IntelliJ 8... Whah??
+        return new NavigationItem[0];
+    }
+
     private void findNames(Project project, VirtualFile baseDir, List<String> names) {
         if (baseDir != null) {
             for (VirtualFile file : baseDir.getChildren()) {

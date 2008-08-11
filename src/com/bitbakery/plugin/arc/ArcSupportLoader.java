@@ -14,8 +14,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 
-public class ArcSupportLoader extends FileTypeFactory implements ApplicationComponent, //InspectionToolProvider,
-        FileTypeIndentOptionsProvider, IconProvider {
+public class ArcSupportLoader extends FileTypeFactory implements ApplicationComponent { //, InspectionToolProvider, FileTypeIndentOptionsProvider, IconProvider {
 
     public static final LanguageFileType ARC = new ArcFileType();
 

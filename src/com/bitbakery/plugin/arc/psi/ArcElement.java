@@ -53,5 +53,5 @@ public abstract class ArcElement extends ASTWrapperPsiElement {
 
     protected boolean isEmpty(ASTNode[] children) {
         return children == null || children.length < 1;
-    }    
+    }
 }

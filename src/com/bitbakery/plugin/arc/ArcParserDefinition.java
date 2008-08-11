@@ -44,6 +44,11 @@ public class ArcParserDefinition implements ParserDefinition {
         return ArcTokenTypes.COMMENTS;
     }
 
+    @NotNull
+    public TokenSet getStringLiteralElements() {
+        return TokenSet.create(ArcTokenTypes.STRING_LITERAL); // TODO - Not sure if this is complete
+    }
+
     public SpaceRequirements spaceExistanceTypeBetweenTokens(ASTNode left, ASTNode right) {
         // TODO - Is this right? Are there spacing requirements in Lisp/Scheme/Arc that I'm not aware of?
         if (left.getElementType() == ArcTokenTypes.COMMA

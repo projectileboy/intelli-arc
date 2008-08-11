@@ -2,7 +2,6 @@ package com.bitbakery.plugin.arc.repl;
 
 import com.bitbakery.plugin.arc.ArcIcons;
 import static com.bitbakery.plugin.arc.ArcStrings.message;
-import com.bitbakery.plugin.arc.psi.Def;
 import com.intellij.execution.ExecutionException;
 import com.intellij.execution.filters.TextConsoleBuilder;
 import com.intellij.execution.filters.TextConsoleBuilderFactory;
@@ -11,18 +10,16 @@ import com.intellij.execution.process.ProcessTerminatedListener;
 import com.intellij.execution.ui.ConsoleView;
 import com.intellij.execution.ui.ConsoleViewContentType;
 import com.intellij.openapi.components.ProjectComponent;
+import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.impl.EditorComponentImpl;
 import com.intellij.openapi.editor.impl.EditorImpl;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowAnchor;
 import com.intellij.openapi.wm.ToolWindowManager;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiReference;
 import com.intellij.psi.impl.source.resolve.reference.PsiReferenceProvider;
 import com.intellij.psi.impl.source.resolve.reference.ReferenceProvidersRegistry;
 import com.intellij.psi.impl.source.resolve.reference.ReferenceType;
-import com.intellij.psi.scope.PsiScopeProcessor;
 import com.intellij.ui.JScrollPane2;
 import org.jetbrains.annotations.NotNull;
 
@@ -52,27 +49,22 @@ public class ReplToolWindow implements ProjectComponent {
             }
         });
 
-        // TODO - This doesn't belong here... we should have some sort of "ArcProjectLoader"...
-        ReferenceProvidersRegistry.getInstance(project).registerReferenceProvider(Def.class, new PsiReferenceProvider() {
-            @NotNull
-            public PsiReference[] getReferencesByElement(PsiElement psiElement) {
-                return new PsiReference[0];  //To change body of implemented methods use File | Settings | File Templates.
-            }
-
-            @NotNull
-            public PsiReference[] getReferencesByElement(PsiElement psiElement, ReferenceType referenceType) {
-                return new PsiReference[0];  //To change body of implemented methods use File | Settings | File Templates.
-            }
-
-            @NotNull
-            public PsiReference[] getReferencesByString(String s, PsiElement psiElement, ReferenceType referenceType, int i) {
-                return new PsiReference[0];  //To change body of implemented methods use File | Settings | File Templates.
-            }
-
-            public void handleEmptyContext(PsiScopeProcessor psiScopeProcessor, PsiElement psiElement) {
-                //To change body of implemented methods use File | Settings | File Templates.
-            }
-        });
+//        // TODO - This doesn't belong here... we should have some sort of "ArcProjectLoader"...
+//        ReferenceProvidersRegistry.getInstance(project).registerReferenceProvider(Def.class, new PsiReferenceProvider() {
+//            @NotNull
+//            public PsiReference[] getReferencesByElement(PsiElement psiElement) {
+//                return new PsiReference[0];  //To change body of implemented methods use File | Settings | File Templates.
+//            }
+//
+//            public void handleEmptyContext(PsiScopeProcessor psiScopeProcessor, PsiElement psiElement) {
+//                //To change body of implemented methods use File | Settings | File Templates.
+//            }
+//
+//            @NotNull
+//            public PsiReference[] getReferencesByElement(@NotNull PsiElement element, @NotNull ProcessingContext context) {
+//                return new PsiReference[0];  //To change body of implemented methods use File | Settings | File Templates.
+//            }
+//        });
     }
 
     public void projectOpened() {
@@ -127,7 +119,7 @@ public class ReplToolWindow implements ProjectComponent {
             ToolWindow window = manager.registerToolWindow(message("repl.title"), view.getComponent(), ToolWindowAnchor.BOTTOM);
             window.setIcon(ArcIcons.ARC_REPL_ICON);
 
-            final EditorImpl repl = getReplContent();
+            final Editor repl = getReplContent();
             repl.getContentComponent().addKeyListener(new KeyAdapter() {
                 public void keyTyped(KeyEvent event) {
                     repl.getCaretModel().moveToOffset(view.getContentSize());
@@ -185,11 +177,11 @@ public class ReplToolWindow implements ProjectComponent {
     /**
      * A bit of a hack; needed until JetBrains opens up the ConsoleView class.
      */
-    private EditorImpl getReplContent() {
+    private Editor getReplContent() {
         final JPanel editorPanel = (JPanel) view.getComponent().getComponent(0);
         JScrollPane2 scrollPane = (JScrollPane2) editorPanel.getComponents()[1];
         JViewport port = (JViewport) scrollPane.getComponents()[0];
-        EditorComponentImpl ed = (EditorComponentImpl) port.getComponents()[0];
+        EditorComponent ed = (EditorComponent) port.getComponents()[0];
         return ed.getEditor();
     }
 }
