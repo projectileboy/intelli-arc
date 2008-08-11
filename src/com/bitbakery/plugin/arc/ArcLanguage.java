@@ -32,11 +32,6 @@ public class ArcLanguage extends Language {
         super("Arc");
     }
 
-    @NotNull
-    public ParserDefinition getParserDefinition() {
-        return new ArcParserDefinition();
-    }
-
     @Nullable
     protected DocumentationProvider createDocumentationProvider() {
         return new ArcDocumentationProvider();
