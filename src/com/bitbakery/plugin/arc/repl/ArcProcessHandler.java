@@ -14,7 +14,7 @@ import com.intellij.openapi.project.Project;
 import static com.intellij.openapi.util.SystemInfo.isMac;
 import static com.intellij.openapi.util.SystemInfo.isWindows;
 import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.openapi.vfs.CharsetToolkit;
+import com.intellij.openapi.vfs.encoding.EncodingManager;
 import com.intellij.util.Alarm;
 
 import javax.swing.*;
@@ -232,7 +232,7 @@ public class ArcProcessHandler extends ProcessHandler {
     }
 
     public Charset getCharset() {
-        return CharsetToolkit.getIDEOptionsCharset();
+        return EncodingManager.getInstance().getDefaultCharset();
     }
 
     private static abstract class ReadProcessThread implements Runnable {

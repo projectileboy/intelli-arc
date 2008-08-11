@@ -10,6 +10,18 @@ import org.jetbrains.annotations.Nullable;
  * TODO - Describe roles and responsibilities
  */
 public class ArcRefactoringSupportProvider implements RefactoringSupportProvider {
+    public RefactoringActionHandler getIntroduceConstantHandler() {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public RefactoringActionHandler getIntroduceFieldHandler() {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public boolean doInplaceRenameFor(PsiElement element, PsiElement context) {
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
     public boolean isSafeDeleteAvailable(PsiElement element) {
         return true;
     }

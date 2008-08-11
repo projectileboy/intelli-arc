@@ -1,6 +1,7 @@
 package com.bitbakery.plugin.arc.psi;
 
 import com.bitbakery.plugin.arc.ArcFileType;
+import com.intellij.extapi.psi.StubBasedPsiElementBase;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.Language;
@@ -8,6 +9,7 @@ import com.intellij.openapi.util.Key;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.search.LocalSearchScope;
 import com.intellij.psi.search.SearchScope;
+import com.intellij.psi.stubs.StubElement;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
@@ -15,7 +17,7 @@ import javax.swing.*;
 /**
  * Abstract base class for all Arc PSI element classes.
  */
-public abstract class ArcElement extends ASTWrapperPsiElement {
+public abstract class ArcElement extends ASTWrapperPsiElement { // <T extends StubElement> extends StubBasedPsiElementBase<T> {
     public ArcElement(@NotNull final ASTNode node) {
         super(node);
     }

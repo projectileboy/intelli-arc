@@ -12,14 +12,10 @@ import com.intellij.execution.ui.ConsoleViewContentType;
 import com.intellij.openapi.components.ProjectComponent;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.impl.EditorComponentImpl;
-import com.intellij.openapi.editor.impl.EditorImpl;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowAnchor;
 import com.intellij.openapi.wm.ToolWindowManager;
-import com.intellij.psi.impl.source.resolve.reference.PsiReferenceProvider;
-import com.intellij.psi.impl.source.resolve.reference.ReferenceProvidersRegistry;
-import com.intellij.psi.impl.source.resolve.reference.ReferenceType;
 import com.intellij.ui.JScrollPane2;
 import org.jetbrains.annotations.NotNull;
 
@@ -181,7 +177,7 @@ public class ReplToolWindow implements ProjectComponent {
         final JPanel editorPanel = (JPanel) view.getComponent().getComponent(0);
         JScrollPane2 scrollPane = (JScrollPane2) editorPanel.getComponents()[1];
         JViewport port = (JViewport) scrollPane.getComponents()[0];
-        EditorComponent ed = (EditorComponent) port.getComponents()[0];
+        EditorComponentImpl ed = (EditorComponentImpl) port.getComponents()[0];
         return ed.getEditor();
     }
 }
