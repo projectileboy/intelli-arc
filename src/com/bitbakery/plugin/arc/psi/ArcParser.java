@@ -152,9 +152,9 @@ public class ArcParser implements PsiParser {
 
         // TODO - We need to get coloring to work for this.
         // TODO - We *could* just have a single string for the body, in which case this is *not* a docstring...
-            if (STRING_LITERAL == builder.getTokenType()) {
-                markAndAdvance(builder, DOCSTRING);
-            }
+        if (STRING_LITERAL == builder.getTokenType()) {
+            markAndAdvance(builder, DOCSTRING);
+        }
         parseExpression(builder, marker, FUNCTION_DEFINITION);
     }
 
@@ -314,6 +314,7 @@ public class ArcParser implements PsiParser {
 
     private PsiBuilder.Marker markAndAdvance(PsiBuilder builder) {
         PsiBuilder.Marker marker = builder.mark();
+        builder.getTokenType();
         builder.advanceLexer();
         return marker;
     }

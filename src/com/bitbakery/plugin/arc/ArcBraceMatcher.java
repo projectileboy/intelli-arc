@@ -3,8 +3,8 @@ package com.bitbakery.plugin.arc;
 import com.bitbakery.plugin.arc.lexer.ArcTokenTypes;
 import com.intellij.lang.BracePair;
 import com.intellij.lang.PairedBraceMatcher;
-import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.PsiFile;
+import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -26,6 +26,6 @@ public class ArcBraceMatcher implements PairedBraceMatcher {
     }
 
     public int getCodeConstructStart(PsiFile file, int openingBraceOffset) {
-        return 0;  // TODO - This could be handy for non-Lispy languages; I'm not sure we actually need it (see parent Javadoc)
+        return openingBraceOffset;
     }
 }

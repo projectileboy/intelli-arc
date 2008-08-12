@@ -1,14 +1,12 @@
 package com.bitbakery.plugin.arc;
 
 
-import com.intellij.ide.IconProvider;
 import com.intellij.openapi.components.ApplicationComponent;
 import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.openapi.fileTypes.FileTypeFactory;
 import com.intellij.openapi.fileTypes.LanguageFileType;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.codeStyle.CodeStyleSettings;
-import com.intellij.psi.codeStyle.FileTypeIndentOptionsProvider;
 import com.intellij.util.PairConsumer;
 import org.jetbrains.annotations.NotNull;
 
@@ -43,6 +41,7 @@ TODO - See Javascript plugin for good examples of inspection goodies
     }
 
     public FileType getFileType() {
+
         return ARC;
     }
 

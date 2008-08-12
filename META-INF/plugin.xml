@@ -16,11 +16,27 @@
     <resource-bundle>com.bitbakery.plugin.arc.ArcStrings</resource-bundle>
 
     <extensions defaultExtensionNs="com.intellij">
-        <!-- <errorHandler implementation="com.intellij.diagnostic.ITNReporter"/> -->
-        <lang.parserDefinition language="Arc" implementationClass="com.bitbakery.plugin.arc.ArcParserDefinition"/>
-        <fileTypeFactory implementation="com.bitbakery.plugin.arc.ArcSupportLoader"/>
+        <annotator language="Arc" implementationClass="com.bitbakery.plugin.arc.ArcAnnotator"/>
         <colorSettingsPage implementation="com.bitbakery.plugin.arc.ArcColorsPage"/>
+        <!-- <errorHandler implementation="com.intellij.diagnostic.ITNReporter"/> -->
+        <fileTypeFactory implementation="com.bitbakery.plugin.arc.ArcSupportLoader"/>
         <gotoClassContributor implementation="com.bitbakery.plugin.arc.nav.ArcChooser"/>
+        <!-- <gotoFileContributor implementation="com.bitbakery.plugin.arc.nav.ArcChooser"/> -->
+        <!-- <gotoSymbolContributor implementation="com.bitbakery.plugin.arc.nav.ArcChooser"/> -->
+        <syntaxHighlighter language="Arc" implementationClass="com.bitbakery.plugin.arc.ArcSyntaxHighlighterProvider"/>
+
+        <lang.braceMatcher language="Arc" implementationClass="com.bitbakery.plugin.arc.ArcBraceMatcher"/>
+        <lang.commenter language="Arc" implementationClass="com.bitbakery.plugin.arc.ArcCommenter"/>
+        <lang.documentationProvider language="Arc"
+                                    implementationClass="com.bitbakery.plugin.arc.ArcDocumentationProvider"/>
+        <lang.findUsagesProvider language="Arc" implementationClass="com.bitbakery.plugin.arc.ArcFindUsagesProvider"/>
+        <lang.foldingBuilder language="Arc" implementationClass="com.bitbakery.plugin.arc.ArcFoldingBuilder"/>
+        <lang.formatter language="Arc" implementationClass="com.bitbakery.plugin.arc.ArcFormattingModelBuilder"/>
+        <lang.languageProvider language="Arc" implementationClass="com.bitbakery.plugin.arc.ArcLanguage"/>
+        <lang.parserDefinition language="Arc" implementationClass="com.bitbakery.plugin.arc.ArcParserDefinition"/>
+        <lang.psiStructureViewFactory language="Arc"
+                                      implementationClass="com.bitbakery.plugin.arc.ArcStructureViewBuilderFactory"/>
+
     </extensions>
 
     <application-components>
