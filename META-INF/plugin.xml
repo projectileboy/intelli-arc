@@ -23,7 +23,7 @@
         <gotoClassContributor implementation="com.bitbakery.plugin.arc.nav.ArcChooser"/>
         <!-- <gotoFileContributor implementation="com.bitbakery.plugin.arc.nav.ArcChooser"/> -->
         <!-- <gotoSymbolContributor implementation="com.bitbakery.plugin.arc.nav.ArcChooser"/> -->
-        <syntaxHighlighter language="Arc" implementationClass="com.bitbakery.plugin.arc.ArcSyntaxHighlighterProvider"/>
+        <syntaxHighlighter key="Arc" factoryClass="com.bitbakery.plugin.arc.ArcSyntaxHighlighterProvider"/>
 
         <lang.braceMatcher language="Arc" implementationClass="com.bitbakery.plugin.arc.ArcBraceMatcher"/>
         <lang.commenter language="Arc" implementationClass="com.bitbakery.plugin.arc.ArcCommenter"/>
