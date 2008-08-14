@@ -18,13 +18,14 @@
     <list name="Default" comment="" />
     <list name="docs" comment="" />
     <list default="true" name="All Uncommited Changes" comment="Migrating to v8">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.git/FETCH_HEAD" afterPath="$PROJECT_DIR$/.git/FETCH_HEAD" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/intelli-arc.ipr" afterPath="$PROJECT_DIR$/intelli-arc.ipr" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/intelli-arc.iws" afterPath="$PROJECT_DIR$/intelli-arc.iws" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcLanguage.java" afterPath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcLanguage.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcBraceMatcher.java" afterPath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcBraceMatcher.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/ArcParser.java" afterPath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/ArcParser.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/META-INF/plugin.xml" afterPath="$PROJECT_DIR$/META-INF/plugin.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcSupportLoader.java" afterPath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcSupportLoader.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/META-INF/plugin.xml" afterPath="$PROJECT_DIR$/META-INF/plugin.xml" />
     </list>
     <ignored path="intelli-arc.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -118,16 +119,25 @@
       <file leaf-file-name="plugin.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/META-INF/plugin.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="116" selection-start="1386" selection-end="1386" vertical-scroll-proportion="0.23227753">
+            <state line="29" column="0" selection-start="1601" selection-end="1601" vertical-scroll-proportion="0.32126698">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ArcSyntaxHighlighter.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcSyntaxHighlighter.java">
+      <file leaf-file-name="ArcSupportLoader.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcSupportLoader.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="0" selection-start="696" selection-end="696" vertical-scroll-proportion="0.0">
+            <state line="20" column="0" selection-start="687" selection-end="687" vertical-scroll-proportion="0.12966602">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ArcLanguage.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcLanguage.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="13" column="0" selection-start="418" selection-end="950" vertical-scroll-proportion="0.070726916">
               <folding />
             </state>
           </provider>
@@ -136,7 +146,7 @@
       <file leaf-file-name="ArcSyntaxHighlighterProvider.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcSyntaxHighlighterProvider.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="0" selection-start="583" selection-end="583" vertical-scroll-proportion="0.16502947">
+            <state line="11" column="32" selection-start="564" selection-end="564" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -144,43 +154,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ArcBraceMatcher.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="ArcBraceMatcher.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcBraceMatcher.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="31" column="0" selection-start="1028" selection-end="1028" vertical-scroll-proportion="0.3654224">
+            <state line="28" column="8" selection-start="993" selection-end="993" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ArcFileType.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcFileType.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="37" column="0" selection-start="780" selection-end="780" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ArcStructureViewBuilderFactory.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcStructureViewBuilderFactory.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="10" selection-start="891" selection-end="891" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ArcSupportLoader.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcSupportLoader.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="43" column="0" selection-start="1191" selection-end="1191" vertical-scroll-proportion="0.40078586">
-              <folding>
-                <marker date="1218512190000" expanded="false" signature="43:448" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -286,6 +265,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.bitbakery.plugin.arc" />
       <recent name="com.bitbakery.plugin.arc.psi.parser" />
       <recent name="com.bitbakery.plugin.arc.psi" />
     </key>
@@ -629,76 +609,30 @@
     </buildFile>
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/psi/FileViewProvider.java">
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/lang/LanguageLiteralEscapers.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/psi/FileViewProviderFactory.java">
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/pom/java/LanguageLevel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="13" selection-start="188" selection-end="188" vertical-scroll-proportion="0.0">
+        <state line="31" column="12" selection-start="1146" selection-end="1146" vertical-scroll-proportion="0.20461383">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/psi/LanguageFileViewProviders.java">
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/com/intellij/lang/LanguagePerFileMappings.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="69" selection-start="165" selection-end="165" vertical-scroll-proportion="0.0">
+        <state line="5" column="22" selection-start="164" selection-end="164" vertical-scroll-proportion="0.04715128">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/openapi/fileTypes/LanguageFileType.java">
+    <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcBraceMatcher.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/lang/LanguageImportStatements.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcSupportLoader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="43" column="0" selection-start="1191" selection-end="1191" vertical-scroll-proportion="0.40078586">
-          <folding>
-            <marker date="1218512190000" expanded="false" signature="43:448" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcLanguage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="0" selection-start="251" selection-end="251" vertical-scroll-proportion="0.11787819">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/lang/Language.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="124" column="18" selection-start="4344" selection-end="4344" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/lang/findUsages/LanguageFindUsages.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="13" selection-start="121" selection-end="121" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcStructureViewBuilderFactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="10" selection-start="891" selection-end="891" vertical-scroll-proportion="0.0">
+        <state line="28" column="8" selection-start="993" selection-end="993" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -707,47 +641,87 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcFileType.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="0" selection-start="780" selection-end="780" vertical-scroll-proportion="0.0">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/openapi/fileTypes/SyntaxHighlighterProvider.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="17" selection-start="280" selection-end="280" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/openapi/fileTypes/LanguageFileTypeHighlighterProvider.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="67" selection-start="266" selection-end="266" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/openapi/fileTypes/SyntaxHighlighterFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="22" selection-start="253" selection-end="253" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/openapi/fileTypes/SyntaxHighlighter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="17" selection-start="1137" selection-end="1137" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/openapi/fileTypes/SyntaxHighlighterLanguageFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="13" selection-start="260" selection-end="260" vertical-scroll-proportion="0.08425276">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcColorsPage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="86" column="0" selection-start="3031" selection-end="3031" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcSyntaxHighlighter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="0" selection-start="696" selection-end="696" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/META-INF/plugin.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="116" selection-start="1386" selection-end="1386" vertical-scroll-proportion="0.23227753">
+        <state line="19" column="13" selection-start="709" selection-end="709" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcSyntaxHighlighterProvider.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="0" selection-start="583" selection-end="583" vertical-scroll-proportion="0.16502947">
+        <state line="11" column="32" selection-start="564" selection-end="564" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/lang/PairedBraceMatcher.java">
+    <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcSupportLoader.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="20" column="0" selection-start="687" selection-end="687" vertical-scroll-proportion="0.12966602">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcBraceMatcher.java">
+    <entry file="file://$PROJECT_DIR$/META-INF/plugin.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="0" selection-start="1028" selection-end="1028" vertical-scroll-proportion="0.3654224">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state line="29" column="0" selection-start="1601" selection-end="1601" vertical-scroll-proportion="0.32126698">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcLanguage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="0" selection-start="418" selection-end="950" vertical-scroll-proportion="0.070726916">
+          <folding />
         </state>
       </provider>
     </entry>
