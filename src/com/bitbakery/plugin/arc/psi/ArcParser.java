@@ -159,6 +159,23 @@ public class ArcParser implements PsiParser {
     }
 
     /**
+     * Enter: Lexer is pointed at the "mac" token
+     * Exit: Lexer is pointed immediatelytely after the closing right paren, or at the end-of-file
+     */
+    private void parseMac(PsiBuilder builder, PsiBuilder.Marker marker) {
+        if (parseIdentifier(builder, marker)) return;
+        if (parseParameterList(builder, marker)) return;
+
+        // TODO - We need to get coloring to work for this.
+        // TODO - We *could* just have a single string for the body, in which case this is *not* a docstring...
+        if (STRING_LITERAL == builder.getTokenType()) {
+            markAndAdvance(builder, DOCSTRING);
+        }
+
+        parseExpression(builder, marker, MACRO_DEFINITION);
+    }
+
+    /**
      * Enter: Lexer is pointed at the "fn" token
      * Exit: Lexer is pointed immediately after the closing right paren, or at the end-of-file
      */
@@ -269,23 +286,6 @@ public class ArcParser implements PsiParser {
         }
 
         marker.error(message("parser.error.expectedRightParen"));
-    }
-
-    /**
-     * Enter: Lexer is pointed at the "mac" token
-     * Exit: Lexer is pointed immediatelytely after the closing right paren, or at the end-of-file
-     */
-    private void parseMac(PsiBuilder builder, PsiBuilder.Marker marker) {
-        if (parseIdentifier(builder, marker)) return;
-        if (parseParameterList(builder, marker)) return;
-
-        // TODO - We need to get coloring to work for this.
-        // TODO - We *could* just have a single string for the body, in which case this is *not* a docstring...
-        if (STRING_LITERAL == builder.getTokenType()) {
-            markAndAdvance(builder, DOCSTRING);
-        }
-
-        parseExpression(builder, marker, MACRO_DEFINITION);
     }
 
     /**

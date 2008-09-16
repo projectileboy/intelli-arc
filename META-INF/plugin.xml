@@ -31,7 +31,7 @@
                                     implementationClass="com.bitbakery.plugin.arc.ArcDocumentationProvider"/>
         <lang.findUsagesProvider language="Arc" implementationClass="com.bitbakery.plugin.arc.ArcFindUsagesProvider"/>
         <lang.foldingBuilder language="Arc" implementationClass="com.bitbakery.plugin.arc.ArcFoldingBuilder"/>
-        <lang.formatter language="Arc" implementationClass="com.bitbakery.plugin.arc.ArcFormattingModelBuilder"/>
+        <!--<lang.formatter language="Arc" implementationClass="com.bitbakery.plugin.arc.ArcFormattingModelBuilder"/>-->
         <lang.languageProvider language="Arc" implementationClass="com.bitbakery.plugin.arc.ArcLanguage"/>
         <lang.parserDefinition language="Arc" implementationClass="com.bitbakery.plugin.arc.ArcParserDefinition"/>
         <lang.psiStructureViewFactory language="Arc"
@@ -53,7 +53,7 @@
             <implementation-class>com.bitbakery.plugin.arc.repl.ReplToolWindow</implementation-class>
         </component>
     </project-components>
-
+            
 
     <actions>
         <!--
