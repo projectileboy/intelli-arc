@@ -9,7 +9,9 @@ import com.intellij.lang.PsiParser;
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -37,6 +39,9 @@ public class ArcParser2 implements PsiParser {
         tokenMap.put(COMMA_AT, COMMA_AT_EXPRESSION);
     }
 
+    private List<PsiBuilder.Marker> markerStack = new ArrayList<PsiBuilder.Marker>();
+
+
     @NotNull
     public ASTNode parse(IElementType root, PsiBuilder builder) {
         builder.setDebugMode(true);
@@ -46,10 +51,12 @@ public class ArcParser2 implements PsiParser {
                 parseExpression(builder);
             }
         } catch (EofException e) {
-            // TODO - So, we need to drop any markers we haven't closed if we hit the eof. But making EofException is... ugly. Plus, we do NOT want to check for EOF every single little time. Especially at the end of a legit eval. Sooo... what??
-
-            //builder.error("Unexpected end-of-file");
-            // TODO - Anything...? Presumably an error marker...?
+            // TODO - Is this right...??
+            for (PsiBuilder.Marker m : markerStack) {
+                System.out.println(m.toString());
+                m.drop();
+            }
+            markerStack.clear();
         }
         rootMarker.done(root);
         return builder.getTreeBuilt();
@@ -71,13 +78,13 @@ public class ArcParser2 implements PsiParser {
     public void parseDocstring(PsiBuilder lexer) {
         // TODO - We need to get coloring to work for this.
         if (STRING_LITERAL == lexer.getTokenType()) {
-            PsiBuilder.Marker marker = lexer.mark();
+            PsiBuilder.Marker m = mark(lexer);
             advance(lexer);
-            marker.done(DOCSTRING);
+            done(m, DOCSTRING);
 
             // If the string is the *entire* body of a def/mac/fn, then it is *not* a docstring...
             if (RIGHT_PAREN == lexer.getTokenType()) {
-                marker.drop(); // TODO - Anything else??
+                drop(m); // TODO - Anything else??
             }
         }
     }
@@ -87,7 +94,7 @@ public class ArcParser2 implements PsiParser {
             markTokenAndAdvance(lexer, VARIABLE_REFERENCE); // TODO - Third-pass annotator should check that the symbol actually resolves to something
 
         } else if (LEFT_PAREN == lexer.getTokenType()) {
-            PsiBuilder.Marker m = lexer.mark();
+            PsiBuilder.Marker m = mark(lexer);
             advance(lexer);
 
             // TODO - We're not accounting for function/macro calls, or quoted lists, or...
@@ -97,22 +104,23 @@ public class ArcParser2 implements PsiParser {
             } else {
                 advance(lexer);
             }
-            m.done(parser.parse(lexer));
+            done(m, parser.parse(lexer));
 
         } else if (LEFT_SQUARE == lexer.getTokenType()) {
-            PsiBuilder.Marker m = lexer.mark();
+            PsiBuilder.Marker m = mark(lexer);
             advance(lexer);
             while (RIGHT_SQUARE != lexer.getTokenType()) {
                 parseExpression(lexer);
             }
-            m.done(SINGLE_ARG_ANONYMOUS_FUNCTION_DEFINITION);
+            done(m, SINGLE_ARG_ANONYMOUS_FUNCTION_DEFINITION);
+            
         } else {
             IElementType elementType = tokenMap.get(lexer.getTokenType());
             if (elementType != null) {
-                PsiBuilder.Marker marker = lexer.mark();
+                PsiBuilder.Marker marker = mark(lexer);
                 advance(lexer);
                 parseExpression(lexer);
-                marker.done(elementType);
+                done(marker, elementType);
             } else {
                 // For literals, tilde, composer, and unknown tokens, we simply advance the lexer
                 advance(lexer);
@@ -121,28 +129,23 @@ public class ArcParser2 implements PsiParser {
     }
 
 
-    public void parseFormalParameters(PsiBuilder lexer) throws EofException {
-        PsiBuilder.Marker paramList = lexer.mark();
-        try {
-            if (SYMBOL == lexer.getTokenType()) {
-                markTokenAndAdvance(lexer, REST_PARAMETER);
-                paramList.done(PARAMETER_LIST);
+    public void parseFormalParameters(PsiBuilder lexer) {
+        PsiBuilder.Marker m = mark(lexer);
+        if (SYMBOL == lexer.getTokenType()) {
+            markTokenAndAdvance(lexer, REST_PARAMETER);
+            done(m, PARAMETER_LIST);
 
-            } else if (LEFT_PAREN == lexer.getTokenType()) {
-                advance(lexer);
-                while (RIGHT_PAREN != lexer.getTokenType()) {
-                    parseFormalParameter(lexer);
-                }
-                advance(lexer);
-                paramList.done(PARAMETER_LIST);
-
-            } else {
-                advance(lexer);
-                paramList.error(message("parser.error.expectedParameterList"));
+        } else if (LEFT_PAREN == lexer.getTokenType()) {
+            advance(lexer);
+            while (RIGHT_PAREN != lexer.getTokenType()) {
+                parseFormalParameter(lexer);
             }
-        } catch (EofException e) {
-            paramList.error("parser.error.unexpectedEof");
-            throw e;
+            advance(lexer);
+            done(m, PARAMETER_LIST);
+
+        } else {
+            advance(lexer);
+            error(m, message("parser.error.expectedParameterList"));
         }
     }
 
@@ -151,25 +154,48 @@ public class ArcParser2 implements PsiParser {
             markTokenAndAdvance(lexer, PARAMETER);
 
         } else if (DOT == lexer.getTokenType()) {
-            lexer.advanceLexer();
-            if (SYMBOL == lexer.getTokenType()) {
-                markTokenAndAdvance(lexer, REST_PARAMETER);
-            } else {
-                lexer.error(message("parser.error.expectedIdentifier"));
-            }
+            parseTrailingRestParameter(lexer);
 
         } else if (LEFT_PAREN == lexer.getTokenType()) {
-            // TODO - Parse optional parameter
-//            advance(builder);
-//            while (RIGHT_PAREN != builder.getTokenType()) {
-//                parseFormalParameter(builder);
-//                advance(builder);
-//            }
-            advance(lexer);
+            parseOptionalParameter(lexer);
 
         } else {
+            // TODO - We should be flagging an error here of some sort...
             advance(lexer);
         }
+    }
+
+    private void parseTrailingRestParameter(PsiBuilder lexer) {
+        advance(lexer);
+        if (SYMBOL == lexer.getTokenType()) {
+            markTokenAndAdvance(lexer, REST_PARAMETER);
+        } else {
+            lexer.error(message("parser.error.expectedIdentifier"));
+        }
+    }
+
+    private void parseOptionalParameter(PsiBuilder lexer) {
+
+        System.out.println("parseOptionalParameter: " + lexer.getTokenText());
+        PsiBuilder.Marker m = mark(lexer);
+
+        advance(lexer); // Move past the left paren
+        System.out.println("parseOptionalParameter: " + lexer.getTokenText());
+        advance(lexer); // Move past the 'o'
+        System.out.println("parseOptionalParameter: " + lexer.getTokenText());
+
+        markTokenAndAdvance(lexer, PARAMETER);
+        System.out.println("parseOptionalParameter: " + lexer.getTokenText());
+
+        if (RIGHT_PAREN != lexer.getTokenType()) {
+            parseExpression(lexer);
+        } 
+
+        // TODO - Verify that we're at a right paren; flag it as an error if we're not!
+        advance(lexer);
+        System.out.println("parseOptionalParameter: " + lexer.getTokenText());
+
+        done(m, OPTIONAL_PARAMETER);
     }
 
     private void advance(PsiBuilder builder) {
@@ -178,9 +204,30 @@ public class ArcParser2 implements PsiParser {
     }
 
     private void markTokenAndAdvance(PsiBuilder lexer, IElementType type) {
-        PsiBuilder.Marker marker = lexer.mark();
+        PsiBuilder.Marker m = mark(lexer);
         advance(lexer);
-        marker.done(type);
+        done(m, type);
+    }
+
+    public PsiBuilder.Marker mark(PsiBuilder builder) {
+        PsiBuilder.Marker m = builder.mark();
+        markerStack.add(m);
+        return m;
+    }
+
+    public void error(PsiBuilder.Marker m, String s) {
+        m.error(s);
+        markerStack.remove(m);
+    }
+
+    public void done(PsiBuilder.Marker m, IElementType e) {
+        m.done(e);
+        markerStack.remove(m);
+    }
+
+    public void drop(PsiBuilder.Marker m) {
+        m.drop();
+        markerStack.remove(m);
     }
 
     private static class EofException extends RuntimeException {
@@ -188,10 +235,18 @@ public class ArcParser2 implements PsiParser {
 
 
     private static class AssignmentParser extends ArcParser2 {
+        /* TODO - AssignmentParser is broken, because this is legit:
+
+        arc> (= s "foo")
+        "foo"
+        arc> (= (s 0) #\m)
+        #\m
+
+        */
         public IElementType parse(PsiBuilder builder) {
             parseName(builder);
             super.parse(builder); // TODO - This is incorrect here... We should enforce only one expression
-            return VARIABLE_ASSIGNMENT;
+            return VARIABLE_ASSIGNMENT; // TODO - This is only true if the element after = is a symbol!
         }
     }
 

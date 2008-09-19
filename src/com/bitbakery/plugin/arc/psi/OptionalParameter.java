@@ -7,20 +7,22 @@ import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
-public class OptionalParameter extends Parameter implements PsiNamedElement {
+public class OptionalParameter extends Parameter {
     public OptionalParameter(@NotNull final ASTNode node) {
         super(node);
     }
 
+    // TODO - Need to wrap the whole parens as "optional parameter", and getName needs to pull from the child "named" element
+
+    @Override
     public String getName() {
-        return getText();
+        for (PsiElement child : getChildren()) {
+            if (child instanceof Parameter) {
+                return child.getText();                
+            }
+        }
+        return null;
     }
-
-    public PsiElement setName(@NonNls @NotNull String name) throws IncorrectOperationException {
-        // TODO - Make me real to support rename refactorings!
-        return this;
-    }
-
     /*
     public PsiElement setName(@NonNls @NotNull String name) throws IncorrectOperationException {
         final ASTNode nameElement = createNameIdentifier(getProject(), name);

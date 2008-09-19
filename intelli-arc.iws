@@ -18,26 +18,11 @@
     <list name="Default" comment="" />
     <list name="docs" comment="" />
     <list default="true" name="All Uncommited Changes" comment="Migrating to v8">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcStrings_ru.properties" afterPath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcStrings_ru.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcStrings_it.properties" afterPath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcStrings_it.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcStrings_ja.properties" afterPath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcStrings_ja.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/Parameter.java" afterPath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/Parameter.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/ArcParser2.java" afterPath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/ArcParser2.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcStrings_el.properties" afterPath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcStrings_el.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcStrings.properties" afterPath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcStrings.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/intelli-arc.iws" afterPath="$PROJECT_DIR$/intelli-arc.iws" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcStrings_de.properties" afterPath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcStrings_de.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/ArcParser.java" afterPath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/ArcParser.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/META-INF/plugin.xml" afterPath="$PROJECT_DIR$/META-INF/plugin.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcStrings_es.properties" afterPath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcStrings_es.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcStrings_pt.properties" afterPath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcStrings_pt.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcStrings_zh.properties" afterPath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcStrings_zh.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/ArcElementTypes.java" afterPath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/ArcElementTypes.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcStrings_fr.properties" afterPath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcStrings_fr.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcStrings_ar.properties" afterPath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcStrings_ar.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcStrings_nl.properties" afterPath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcStrings_nl.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcStrings_ko.properties" afterPath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcStrings_ko.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/com/bitbakery/plugin/arc/psi/ArcParserTest.java" afterPath="$PROJECT_DIR$/test/com/bitbakery/plugin/arc/psi/ArcParserTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcParserDefinition.java" afterPath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcParserDefinition.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/OptionalParameter.java" afterPath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/OptionalParameter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/RestParameter.java" afterPath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/RestParameter.java" />
     </list>
     <ignored path="intelli-arc.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -70,20 +55,7 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/ArcParser2.java" line="45" class="com.bitbakery.plugin.arc.psi.ArcParser2" package="com.bitbakery.plugin.arc.psi">
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="false" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/ArcParser2.java" line="128" class="com.bitbakery.plugin.arc.psi.ArcParser2" package="com.bitbakery.plugin.arc.psi">
+      <breakpoint url="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/ArcParser2.java" line="50" class="com.bitbakery.plugin.arc.psi.ArcParser2" package="com.bitbakery.plugin.arc.psi">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -157,10 +129,64 @@
       <file leaf-file-name="ArcParser2.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/ArcParser2.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="66" column="182" selection-start="2502" selection-end="2502" vertical-scroll-proportion="-0.88235295">
+            <state line="191" column="9" selection-start="6685" selection-end="6685" vertical-scroll-proportion="0.760181">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="VariableReference.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/VariableReference.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="58" column="60" selection-start="2012" selection-end="2012" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Parameter.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/Parameter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="9" column="37" selection-start="325" selection-end="325" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RestParameter.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/RestParameter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="9" column="13" selection-start="301" selection-end="301" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="VariableDefinition.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/VariableDefinition.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="18" column="13" selection-start="701" selection-end="701" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="OptionalParameter.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/OptionalParameter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="20" column="39" selection-start="732" selection-end="732" vertical-scroll-proportion="0.27149323">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ParameterList.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/ParameterList.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="5" column="13" selection-start="129" selection-end="129" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -232,8 +258,8 @@
     </navigator>
   </component>
   <component name="PropertiesComponent">
-    <property name="GoToClass.includeJavaFiles" value="false" />
     <property name="project.structure.proportion" value="0.15" />
+    <property name="GoToClass.includeJavaFiles" value="false" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder0" value="0" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth2" value="206" />
@@ -339,11 +365,6 @@
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
     </configuration>
-    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
-      <module name="intelli-arc" />
-      <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" />
-    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG" enabled="false" merge="false" runner="emma">
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -372,6 +393,11 @@
       <method>
         <option name="Make" value="true" />
       </method>
+    </configuration>
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
+      <module name="intelli-arc" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" />
     </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit" enabled="false" merge="false" runner="emma">
       <module name="" />
@@ -624,48 +650,6 @@
     </buildFile>
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/psi/impl/ElementBase.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="77" selection-start="540" selection-end="540" vertical-scroll-proportion="0.081494056">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/util/diff/DiffTreeChangeBuilder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/com/intellij/lang/impl/PsiBuilderImpl.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="167" column="76" selection-start="9412" selection-end="9412" vertical-scroll-proportion="0.32597622">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcLanguage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="13" selection-start="220" selection-end="220" vertical-scroll-proportion="0.070726916">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/parser/Parser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="13" selection-start="97" selection-end="97" vertical-scroll-proportion="0.04715128">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcSupportLoader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="13" selection-start="463" selection-end="463" vertical-scroll-proportion="0.058939096">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/12282">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
@@ -715,13 +699,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcParserDefinition.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="13" selection-start="827" selection-end="827" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/ArcParser.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="325" column="0" selection-start="12940" selection-end="12940" vertical-scroll-proportion="0.0">
@@ -729,9 +706,58 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcParserDefinition.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="13" selection-start="827" selection-end="827" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/ParameterList.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="13" selection-start="129" selection-end="129" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/RestParameter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="13" selection-start="301" selection-end="301" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/VariableReference.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="58" column="60" selection-start="2012" selection-end="2012" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/VariableDefinition.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="13" selection-start="701" selection-end="701" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/Parameter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="37" selection-start="325" selection-end="325" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/OptionalParameter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="39" selection-start="732" selection-end="732" vertical-scroll-proportion="0.27149323">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/ArcParser2.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="66" column="182" selection-start="2502" selection-end="2502" vertical-scroll-proportion="-0.88235295">
+        <state line="191" column="9" selection-start="6685" selection-end="6685" vertical-scroll-proportion="0.760181">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

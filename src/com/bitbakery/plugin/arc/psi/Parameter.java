@@ -7,18 +7,9 @@ import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
-public class Parameter extends VariableDefinition implements PsiNamedElement {
+public class Parameter extends VariableDefinition {
     public Parameter(@NotNull final ASTNode node) {
         super(node);
-    }
-
-    public String getName() {
-        return getText();
-    }
-
-    public PsiElement setName(@NonNls @NotNull String name) throws IncorrectOperationException {
-        // TODO - Make me real to support rename refactorings!
-        return this;
     }
 
     /*
