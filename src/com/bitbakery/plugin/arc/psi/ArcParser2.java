@@ -44,14 +44,12 @@ public class ArcParser2 implements PsiParser {
 
     @NotNull
     public ASTNode parse(IElementType root, PsiBuilder builder) {
-        builder.setDebugMode(true);
         final PsiBuilder.Marker rootMarker = builder.mark();
         try {
             while (!builder.eof()) {
                 parseExpression(builder);
             }
         } catch (EofException e) {
-            // TODO - Is this right...??
             for (PsiBuilder.Marker m : markerStack) {
                 System.out.println(m.toString());
                 m.drop();
@@ -97,7 +95,6 @@ public class ArcParser2 implements PsiParser {
             PsiBuilder.Marker m = mark(lexer);
             advance(lexer);
 
-            // TODO - We're not accounting for function/macro calls, or quoted lists, or...
             ArcParser2 parser = parsers.get(lexer.getTokenType());
             if (parser == null) {
                 parser = defaultParser;
@@ -113,8 +110,9 @@ public class ArcParser2 implements PsiParser {
                 parseExpression(lexer);
             }
             done(m, SINGLE_ARG_ANONYMOUS_FUNCTION_DEFINITION);
-            
+
         } else {
+            // TODO - All of this tomfoolery is a first attempt at handling macro template stuff (, ,@ ' `)
             IElementType elementType = tokenMap.get(lexer.getTokenType());
             if (elementType != null) {
                 PsiBuilder.Marker marker = mark(lexer);
@@ -176,26 +174,26 @@ public class ArcParser2 implements PsiParser {
 
     private void parseOptionalParameter(PsiBuilder lexer) {
 
-        System.out.println("parseOptionalParameter: " + lexer.getTokenText());
         PsiBuilder.Marker m = mark(lexer);
 
         advance(lexer); // Move past the left paren
-        System.out.println("parseOptionalParameter: " + lexer.getTokenText());
         advance(lexer); // Move past the 'o'
-        System.out.println("parseOptionalParameter: " + lexer.getTokenText());
 
         markTokenAndAdvance(lexer, PARAMETER);
-        System.out.println("parseOptionalParameter: " + lexer.getTokenText());
 
         if (RIGHT_PAREN != lexer.getTokenType()) {
             parseExpression(lexer);
-        } 
+        }
 
         // TODO - Verify that we're at a right paren; flag it as an error if we're not!
         advance(lexer);
-        System.out.println("parseOptionalParameter: " + lexer.getTokenText());
 
         done(m, OPTIONAL_PARAMETER);
+    }
+
+    public void parseLocalVariable(PsiBuilder builder) {
+        parseName(builder);
+        parseExpression(builder);
     }
 
     private void advance(PsiBuilder builder) {
@@ -243,10 +241,16 @@ public class ArcParser2 implements PsiParser {
         #\m
 
         */
+
         public IElementType parse(PsiBuilder builder) {
             parseName(builder);
             super.parse(builder); // TODO - This is incorrect here... We should enforce only one expression
             return VARIABLE_ASSIGNMENT; // TODO - This is only true if the element after = is a symbol!
+
+//            while (RIGHT_PAREN != builder.getTokenType()) {
+//                super.parseLocalVariable(builder);
+//            }
+//            return VARIABLE_ASSIGNMENT; // TODO - This is only true if the element after = is a symbol!
         }
     }
 
@@ -255,11 +259,6 @@ public class ArcParser2 implements PsiParser {
             parseLocalVariable(builder);
             super.parse(builder);
             return LET_BLOCK;
-        }
-
-        public void parseLocalVariable(PsiBuilder builder) {
-            parseName(builder);
-            parseExpression(builder);
         }
     }
 
@@ -290,6 +289,11 @@ public class ArcParser2 implements PsiParser {
     }
 
     private static class MacParser extends DefParser {
-        // TODO - This guy is a little different, in that we can have macro-y stuff in the body (e.g., backquoted expressions)
+        public IElementType parse(PsiBuilder builder) {
+            super.parse(builder);
+            return MACRO_DEFINITION;
+        }
+
+        // TODO - Override parseExpression to do the right thing within macro bodies, which are... weird... (` ' , ,@) 
     }
 }
