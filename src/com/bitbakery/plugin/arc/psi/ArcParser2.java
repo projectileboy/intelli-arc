@@ -51,7 +51,6 @@ public class ArcParser2 implements PsiParser {
             }
         } catch (EofException e) {
             for (PsiBuilder.Marker m : markerStack) {
-                System.out.println(m.toString());
                 m.drop();
             }
             markerStack.clear();
@@ -75,7 +74,7 @@ public class ArcParser2 implements PsiParser {
 
     public void parseDocstring(PsiBuilder lexer) {
         // TODO - We need to get coloring to work for this.
-        if (STRING_LITERAL == lexer.getTokenType()) {
+        if (STRING_LITERAL == lexer.getTokenType() || LINE_COMMENT == lexer.getTokenType()) {
             PsiBuilder.Marker m = mark(lexer);
             advance(lexer);
             done(m, DOCSTRING);
@@ -196,8 +195,9 @@ public class ArcParser2 implements PsiParser {
         parseExpression(builder);
     }
 
-    private void advance(PsiBuilder builder) {
+    protected void advance(PsiBuilder builder) {
         if (builder.eof()) throw new EofException();
+        System.out.println(builder.getTokenText());
         builder.advanceLexer();
     }
 
@@ -262,11 +262,16 @@ public class ArcParser2 implements PsiParser {
         }
     }
 
-    private static class WithParser extends LetParser {
-        public void parseLocalVariable(PsiBuilder builder) {
+    // TODO - Dammit... WITH parsing is broken...
+    private static class WithParser extends ArcParser2 {
+        public IElementType parse(PsiBuilder builder) {
+            advance(builder);
             while (RIGHT_PAREN != builder.getTokenType()) {
-                super.parseLocalVariable(builder);
+                parseLocalVariable(builder);
             }
+            super.parse(builder);
+            advance(builder);
+            return WITH_BLOCK;
         }
     }
 
