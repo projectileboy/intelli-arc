@@ -9,317 +9,296 @@ import com.intellij.lang.PsiParser;
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * Consumes a stream of Arc tokens and generates a PSI tree for an Arc file
  */
 public class ArcParser implements PsiParser {
 
+    private static ArcParser defaultParser = new ArcParser();
+    private static Map<IElementType, ArcParser> parsers = new HashMap<IElementType, ArcParser>();
+    private static Map<IElementType, IElementType> tokenMap = new HashMap<IElementType, IElementType>();
+
+    static {
+        parsers = new HashMap<IElementType, ArcParser>();
+        parsers.put(LET, new LetParser());
+        parsers.put(WITH, new WithParser());
+        parsers.put(FN, new FnParser());
+        parsers.put(DEF, new DefParser());
+        parsers.put(MAC, new MacParser());
+        parsers.put(EQ, new AssignmentParser());
+
+        tokenMap = new HashMap<IElementType, IElementType>();
+        tokenMap.put(QUOTE, QUOTED_EXPRESSION);
+        tokenMap.put(BACKQUOTE, BACKQUOTED_EXPRESSION);
+        tokenMap.put(COMMA, COMMA_EXPRESSION);
+        tokenMap.put(COMMA_AT, COMMA_AT_EXPRESSION);
+    }
+
+    private List<PsiBuilder.Marker> markerStack = new ArrayList<PsiBuilder.Marker>();
+
+
     @NotNull
     public ASTNode parse(IElementType root, PsiBuilder builder) {
         final PsiBuilder.Marker rootMarker = builder.mark();
-        while (!builder.eof()) {
-            IElementType token = builder.getTokenType();
-            if (RIGHT_PAREN == token) {
-                builder.error(message("parser.error.expectedLeftParen"));
-                builder.advanceLexer();
-            } else if (LEFT_PAREN == token) {
-                parseParens(builder);
-            } else if (LEFT_SQUARE == token) {
-                parseBrackets(builder);
-            } else if (SYMBOL == token) {
-                markAndAdvance(builder, VARIABLE_REFERENCE);
-            } else {
-                builder.advanceLexer();
-
+        try {
+            while (!builder.eof()) {
+                parseExpression(builder);
             }
+        } catch (EofException e) {
+            for (PsiBuilder.Marker m : markerStack) {
+                m.drop();
+            }
+            markerStack.clear();
         }
         rootMarker.done(root);
         return builder.getTreeBuilt();
     }
 
-    /**
-     * Enter: Lexer is pointed at the opening left square bracket
-     * Exit: Lexer is pointed immediately after the closing right square bracket, or at the end-of-file
-     */
-    private void parseBrackets(PsiBuilder builder) {
-        PsiBuilder.Marker marker = markAndAdvance(builder);
 
-        while (!builder.eof()) {
-            IElementType token = builder.getTokenType();
-            if (RIGHT_SQUARE == token) {
-                builder.advanceLexer();
-                marker.done(SINGLE_ARG_ANONYMOUS_FUNCTION_DEFINITION);
-                return;
-            } else if (LEFT_PAREN == token) {
-                parseParens(builder);
-            } else if (LEFT_SQUARE == token) {
-                parseBrackets(builder);
-            } else if (SYMBOL == token) {
-                markAndAdvance(builder, VARIABLE_REFERENCE);
-            } else {
-                // TODO - Need some special handling around the underscore
-                builder.advanceLexer();
-            }
+    public IElementType parse(PsiBuilder lexer) {
+        while (RIGHT_PAREN != lexer.getTokenType()) {
+            parseExpression(lexer);
         }
-
-        marker.error(message("parser.error.expectedRightBracket"));
+        advance(lexer);
+        return EXPRESSION;
     }
 
-    /**
-     * Enter: Lexer is pointed at the opening left paren
-     * Exit: Lexer is pointed immediately after the closing right paren, or at the end-of-file
-     */
-    private void parseParens(PsiBuilder builder) {
-        PsiBuilder.Marker marker = markAndAdvance(builder);
-
-        IElementType token = builder.getTokenType();
-        if (DEF == token) {
-            parseDef(builder, marker);
-        } else if (FN == token) {
-            parseFn(builder, marker);
-        } else if (MAC == token) {
-            parseMac(builder, marker);
-        } else if (EQ == token) {
-            parseAssignment(builder, marker);
-        } else if (LET == token) {
-            parseLet(builder, marker);
-        } else if (WITH == token) {
-            parseWith(builder, marker);
-        } else if (LITERALS.contains(token)) {
-            // TODO - But this is OK if we're building a list, so we need to handle that situation...
-            builder.error(message("parser.error.expectedFunctionOrMacro"));
-            parseExpression(builder, marker, EXPRESSION);
-        } else {
-            parseExpression(builder, marker, EXPRESSION);
-        }
+    public void parseName(PsiBuilder lexer) {
+        markTokenAndAdvance(lexer, VARIABLE_DEFINITION);
     }
 
-    /**
-     * Enter: Lexer is pointed at the "let" token
-     * Exit: Lexer is pointed immediately after the closing right paren, or at the end-of-file
-     */
-    private void parseLet(PsiBuilder builder, PsiBuilder.Marker marker) {
-        builder.advanceLexer();
-        IElementType token = builder.getTokenType();
-        PsiBuilder.Marker name = markAndAdvance(builder);
-
-        // TODO - We should have the annotator warn you if a non-arcN.tar file redefines a special char or keyword
-        if (SYMBOL != token && !KEYWORDS.contains(token) && !SPECIAL_CHARACTERS.contains(token)) {
-            name.error(message("parser.error.expectedIdentifier"));
-        } else {
-            name.done(VARIABLE_DEFINITION);
-        }
-
-
-        PsiBuilder.Marker paramList = builder.mark();
-        token = builder.getTokenType();
-        if (RIGHT_PAREN == token) {
-            builder.advanceLexer();
-            paramList.error(message("parser.error.expectedParameterList"));
-        } else if (LEFT_PAREN == token) {
-            builder.advanceLexer();
-            parseParameters(builder, paramList);
-        } else if (LEFT_SQUARE == token) {
-            parseBrackets(builder);
-            paramList.error(message("parser.error.expectedParameterList"));
-        } else {
-            markAndAdvance(builder, REST_PARAMETER);
-            paramList.done(PARAMETER_LIST);
-        }
-
-
-        parseExpression(builder, marker, LET_BLOCK);
-    }
-
-    /**
-     * Enter: Lexer is pointed at the "with" token
-     * Exit: Lexer is pointed immediately after the closing right paren, or at the end-of-file
-     */
-    private void parseWith(PsiBuilder builder, PsiBuilder.Marker marker) {
-        builder.advanceLexer();
-        if (parseParameterList(builder, marker))
-            return; // TODO - This isn't correct - the var initialization expressions shouldn't be tagged as parameters!
-        parseExpression(builder, marker, WITH_BLOCK);
-    }
-
-    /**
-     * Enter: Lexer is pointed at the "def" token
-     * Exit: Lexer is pointed immediately after the closing right paren, or at the end-of-file
-     */
-    private void parseDef(PsiBuilder builder, PsiBuilder.Marker marker) {
-        if (parseIdentifier(builder, marker)) return;
-        if (parseParameterList(builder, marker)) return;
-
+    public void parseDocstring(PsiBuilder lexer) {
         // TODO - We need to get coloring to work for this.
-        // TODO - We *could* just have a single string for the body, in which case this is *not* a docstring...
-        if (STRING_LITERAL == builder.getTokenType()) {
-            markAndAdvance(builder, DOCSTRING);
-        }
-        parseExpression(builder, marker, FUNCTION_DEFINITION);
-    }
+        if (STRING_LITERAL == lexer.getTokenType() || LINE_COMMENT == lexer.getTokenType()) {
+            PsiBuilder.Marker m = mark(lexer);
+            advance(lexer);
+            done(m, DOCSTRING);
 
-    /**
-     * Enter: Lexer is pointed at the "mac" token
-     * Exit: Lexer is pointed immediatelytely after the closing right paren, or at the end-of-file
-     */
-    private void parseMac(PsiBuilder builder, PsiBuilder.Marker marker) {
-        if (parseIdentifier(builder, marker)) return;
-        if (parseParameterList(builder, marker)) return;
-
-        // TODO - We need to get coloring to work for this.
-        // TODO - We *could* just have a single string for the body, in which case this is *not* a docstring...
-        if (STRING_LITERAL == builder.getTokenType()) {
-            markAndAdvance(builder, DOCSTRING);
-        }
-
-        parseExpression(builder, marker, MACRO_DEFINITION);
-    }
-
-    /**
-     * Enter: Lexer is pointed at the "fn" token
-     * Exit: Lexer is pointed immediately after the closing right paren, or at the end-of-file
-     */
-    private void parseFn(PsiBuilder builder, PsiBuilder.Marker marker) {
-        builder.advanceLexer();
-        if (parseParameterList(builder, marker)) return;
-        parseExpression(builder, marker, ANONYMOUS_FUNCTION_DEFINITION);
-    }
-
-    /**
-     * Enter: Lexer is pointing at the token immediately preceding the identifier
-     * Exit: Lexer is pointed immediately after the identifer, or at the end-of-file
-     */
-    private boolean parseIdentifier(PsiBuilder builder, PsiBuilder.Marker marker) {
-        builder.advanceLexer();
-        if (builder.eof()) {
-            marker.error(message("parser.error.expectedIdentifier"));
-            return true;
-        }
-        IElementType token = builder.getTokenType();
-        PsiBuilder.Marker name = markAndAdvance(builder);
-
-        // TODO - We should have the annotator warn you if a non-arcN.tar file redefines a special char or keyword
-        if (SYMBOL != token && !KEYWORDS.contains(token) && !SPECIAL_CHARACTERS.contains(token)) {
-            name.error(message("parser.error.expectedIdentifier"));
-        } else {
-            name.done(VARIABLE_DEFINITION);
-        }
-        return false;
-    }
-
-    /**
-     * Enter : Lexer is pointed at first element of the expression, which will often be a left paren
-     * Exit: Lexer will be pointed immediately after the closing right paren (or constant, or whatever) of the body, or at the end-of-file
-     */
-    private void parseExpression(PsiBuilder builder, PsiBuilder.Marker marker, IElementType type) {
-        while (!builder.eof()) {
-            IElementType token = builder.getTokenType();
-            if (RIGHT_PAREN == token) {
-                builder.advanceLexer();
-                marker.done(type);
-                return;
-            } else if (LEFT_PAREN == token) {
-                parseParens(builder);
-            } else if (LEFT_SQUARE == token) {
-                parseBrackets(builder);
-            } else if (SYMBOL == token) {
-                markAndAdvance(builder, VARIABLE_REFERENCE);
-            } else {
-                builder.advanceLexer();
+            // If the string is the *entire* body of a def/mac/fn, then it is *not* a docstring...
+            if (RIGHT_PAREN == lexer.getTokenType()) {
+                drop(m); // TODO - Anything else??
             }
         }
-
-        marker.error(message("parser.error.expectedRightParen"));
     }
 
-    /**
-     * Enter: Lexer is pointing at either the opening left paren of the parameter list, or else at the single "rest" parameter
-     * Exit: Lexer is pointing immediately after the parameter list, or at the end-of-file
-     */
-    private boolean parseParameterList(PsiBuilder builder, PsiBuilder.Marker marker) {
-        if (builder.eof()) {
-            marker.error(message("parser.error.expectedParameterList"));
-            return true;
-        }
+    public void parseExpression(PsiBuilder lexer) {
+        if (SYMBOL == lexer.getTokenType()) {
+            markTokenAndAdvance(lexer, VARIABLE_REFERENCE); // TODO - Third-pass annotator should check that the symbol actually resolves to something
 
-        PsiBuilder.Marker paramList = builder.mark();
-        IElementType token = builder.getTokenType();
-        if (RIGHT_PAREN == token) {
-            builder.advanceLexer();
-            paramList.error(message("parser.error.expectedParameterList"));
-        } else if (LEFT_PAREN == token) {
-            builder.advanceLexer();
-            parseParameters(builder, paramList);
-        } else if (LEFT_SQUARE == token) {
-            parseBrackets(builder);
-            paramList.error(message("parser.error.expectedParameterList"));
-        } else {
-            markAndAdvance(builder, REST_PARAMETER);
-            paramList.done(PARAMETER_LIST);
-        }
-        return false;
-    }
+        } else if (LEFT_PAREN == lexer.getTokenType()) {
+            PsiBuilder.Marker m = mark(lexer);
+            advance(lexer);
 
-    /**
-     * Enter: Lexer is pointed at the first token of the expression - in general, should be a function or macro call
-     * Exit: Lexer is pointed immediatelytely after the closing right paren, or at the end-of-file
-     */
-    private void parseParameters(PsiBuilder builder, PsiBuilder.Marker marker) {
-        while (!builder.eof()) {
-            IElementType token = builder.getTokenType();
-            if (RIGHT_PAREN == token) {
-                builder.advanceLexer();
-                marker.done(PARAMETER_LIST);
-                return;
-            } else if (LEFT_PAREN == token) { // TODO - This is an optional parameter - parse it correctly!
-                parseParens(builder);
-            } else if (LEFT_SQUARE == token) { // TODO - Isn't this an error?
-                parseBrackets(builder);
-            } else if (DOT == token) {
-                builder.advanceLexer();
-                markAndAdvance(builder, REST_PARAMETER); // TODO - THIS IS NOT WORKING!!!
-            } else if (SYMBOL == token) {
-                markAndAdvance(builder, PARAMETER);
+            ArcParser parser = parsers.get(lexer.getTokenType());
+            if (parser == null) {
+                parser = defaultParser;
             } else {
-                builder.advanceLexer(); // TODO - Isn't this an error??
+                advance(lexer);
+            }
+            done(m, parser.parse(lexer));
+
+        } else if (LEFT_SQUARE == lexer.getTokenType()) {
+            PsiBuilder.Marker m = mark(lexer);
+            advance(lexer);
+            while (RIGHT_SQUARE != lexer.getTokenType()) {
+                parseExpression(lexer);
+            }
+            done(m, SINGLE_ARG_ANONYMOUS_FUNCTION_DEFINITION);
+
+        } else {
+            // TODO - All of this tomfoolery is a first attempt at handling macro template stuff (, ,@ ' `)
+            IElementType elementType = tokenMap.get(lexer.getTokenType());
+            if (elementType != null) {
+                PsiBuilder.Marker marker = mark(lexer);
+                advance(lexer);
+                parseExpression(lexer);
+                done(marker, elementType);
+            } else {
+                // For literals, tilde, composer, and unknown tokens, we simply advance the lexer
+                advance(lexer);
             }
         }
-
-        marker.error(message("parser.error.expectedRightParen"));
     }
 
-    /**
-     * Enter: Lexer is pointed at the "=" token
-     * Exit: Lexer is pointed immediatelytely after the closing right paren, or at the end-of-file
-     */
-    private void parseAssignment(PsiBuilder builder, PsiBuilder.Marker marker) {
-        builder.advanceLexer();
-        if (builder.eof()) {
-            marker.error(message("parser.error.expectedIdentifier"));
-            return;
-        }
-        IElementType token = builder.getTokenType();
-        PsiBuilder.Marker name = markAndAdvance(builder);
-        if (LEFT_PAREN == token) {
-            builder.advanceLexer();
-            parseExpression(builder, name, EXPRESSION);
-        } else if (SYMBOL == token) {
-            name.done(VARIABLE_DEFINITION);
+
+    public void parseFormalParameters(PsiBuilder lexer) {
+        PsiBuilder.Marker m = mark(lexer);
+        if (SYMBOL == lexer.getTokenType()) {
+            markTokenAndAdvance(lexer, REST_PARAMETER);
+            done(m, PARAMETER_LIST);
+
+        } else if (LEFT_PAREN == lexer.getTokenType()) {
+            advance(lexer);
+            while (RIGHT_PAREN != lexer.getTokenType()) {
+                parseFormalParameter(lexer);
+            }
+            advance(lexer);
+            done(m, PARAMETER_LIST);
+
         } else {
-            name.error(message("parser.error.expectedIdentifier"));
+            advance(lexer);
+            error(m, message("parser.error.expectedParameterList"));
+        }
+    }
+
+    public void parseFormalParameter(PsiBuilder lexer) {
+        if (SYMBOL == lexer.getTokenType()) {
+            markTokenAndAdvance(lexer, PARAMETER);
+
+        } else if (DOT == lexer.getTokenType()) {
+            parseTrailingRestParameter(lexer);
+
+        } else if (LEFT_PAREN == lexer.getTokenType()) {
+            parseOptionalParameter(lexer);
+
+        } else {
+            // TODO - We should be flagging an error here of some sort...
+            advance(lexer);
+        }
+    }
+
+    private void parseTrailingRestParameter(PsiBuilder lexer) {
+        advance(lexer);
+        if (SYMBOL == lexer.getTokenType()) {
+            markTokenAndAdvance(lexer, REST_PARAMETER);
+        } else {
+            lexer.error(message("parser.error.expectedIdentifier"));
+        }
+    }
+
+    private void parseOptionalParameter(PsiBuilder lexer) {
+
+        PsiBuilder.Marker m = mark(lexer);
+
+        advance(lexer); // Move past the left paren
+        advance(lexer); // Move past the 'o'
+
+        markTokenAndAdvance(lexer, PARAMETER);
+
+        if (RIGHT_PAREN != lexer.getTokenType()) {
+            parseExpression(lexer);
         }
 
-        parseExpression(builder, marker, VARIABLE_ASSIGNMENT);
+        // TODO - Verify that we're at a right paren; flag it as an error if we're not!
+        advance(lexer);
+
+        done(m, OPTIONAL_PARAMETER);
     }
 
-    private PsiBuilder.Marker markAndAdvance(PsiBuilder builder) {
-        PsiBuilder.Marker marker = builder.mark();
-        builder.getTokenType();
+    public void parseLocalVariable(PsiBuilder builder) {
+        parseName(builder);
+        parseExpression(builder);
+    }
+
+    protected void advance(PsiBuilder builder) {
+        if (builder.eof()) throw new EofException();
+        System.out.println(builder.getTokenText());
         builder.advanceLexer();
-        return marker;
     }
 
-    private void markAndAdvance(PsiBuilder builder, IElementType type) {
-        markAndAdvance(builder).done(type);
+    private void markTokenAndAdvance(PsiBuilder lexer, IElementType type) {
+        PsiBuilder.Marker m = mark(lexer);
+        advance(lexer);
+        done(m, type);
+    }
+
+    public PsiBuilder.Marker mark(PsiBuilder builder) {
+        PsiBuilder.Marker m = builder.mark();
+        markerStack.add(m);
+        return m;
+    }
+
+    public void error(PsiBuilder.Marker m, String s) {
+        m.error(s);
+        markerStack.remove(m);
+    }
+
+    public void done(PsiBuilder.Marker m, IElementType e) {
+        m.done(e);
+        markerStack.remove(m);
+    }
+
+    public void drop(PsiBuilder.Marker m) {
+        m.drop();
+        markerStack.remove(m);
+    }
+
+    private static class EofException extends RuntimeException {
+    }
+
+
+    private static class AssignmentParser extends ArcParser {
+        /* TODO - AssignmentParser is broken, because this is legit:
+
+        arc> (= s "foo")
+        "foo"
+        arc> (= (s 0) #\m)
+        #\m
+
+        */
+
+        public IElementType parse(PsiBuilder builder) {
+            parseName(builder);
+            super.parse(builder); // TODO - This is incorrect here... We should enforce only one expression
+            return VARIABLE_ASSIGNMENT; // TODO - This is only true if the element after = is a symbol!
+
+//            while (RIGHT_PAREN != builder.getTokenType()) {
+//                super.parseLocalVariable(builder);
+//            }
+//            return VARIABLE_ASSIGNMENT; // TODO - This is only true if the element after = is a symbol!
+        }
+    }
+
+    private static class LetParser extends ArcParser {
+        public IElementType parse(PsiBuilder builder) {
+            parseLocalVariable(builder);
+            super.parse(builder);
+            return LET_BLOCK;
+        }
+    }
+
+    // TODO - Dammit... WITH parsing is broken...
+    private static class WithParser extends ArcParser {
+        public IElementType parse(PsiBuilder builder) {
+            advance(builder);
+            while (RIGHT_PAREN != builder.getTokenType()) {
+                parseLocalVariable(builder);
+            }
+            super.parse(builder);
+            advance(builder);
+            return WITH_BLOCK;
+        }
+    }
+
+    private static class FnParser extends ArcParser {
+        public IElementType parse(PsiBuilder builder) {
+            parseFormalParameters(builder);
+            super.parse(builder);
+            return ANONYMOUS_FUNCTION_DEFINITION;
+        }
+    }
+
+    private static class DefParser extends ArcParser {
+        public IElementType parse(PsiBuilder builder) {
+            parseName(builder);
+            parseFormalParameters(builder);
+            parseDocstring(builder);
+            super.parse(builder);
+            return FUNCTION_DEFINITION;
+        }
+    }
+
+    private static class MacParser extends DefParser {
+        public IElementType parse(PsiBuilder builder) {
+            super.parse(builder);
+            return MACRO_DEFINITION;
+        }
+
+        // TODO - Override parseExpression to do the right thing within macro bodies, which are... weird... (` ' , ,@) 
     }
 }
