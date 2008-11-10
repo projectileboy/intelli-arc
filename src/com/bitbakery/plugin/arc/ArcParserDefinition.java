@@ -27,7 +27,7 @@ public class ArcParserDefinition implements ParserDefinition {
     }
 
     public PsiParser createParser(Project project) {
-        return new ArcParser2();
+        return new ArcParser();
     }
 
     public IFileElementType getFileNodeType() {

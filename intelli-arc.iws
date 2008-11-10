@@ -15,15 +15,17 @@
     <option name="historyRevisionsNumber" value="4" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" name="All Uncommited Changes" comment="Minor parser fixes">
+    <list default="true" name="All Uncommited Changes" comment="Eliminated old parser. Full steam ahead!">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/lexer/_ArcLexer.java" afterPath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/lexer/_ArcLexer.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/intelli-arc.ipr" afterPath="$PROJECT_DIR$/intelli-arc.ipr" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/ArcParser2.java" afterPath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/ArcParser2.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/intelli-arc.iws" afterPath="$PROJECT_DIR$/intelli-arc.iws" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/jflex.log" afterPath="$PROJECT_DIR$/jflex.log" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/ArcParser.java" afterPath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/ArcParser.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcSupportLoader.java" afterPath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcSupportLoader.java" />
     </list>
     <list name="docs" comment="" />
+    <list name="Ignored" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/intelli-arc.iws" afterPath="$PROJECT_DIR$/intelli-arc.iws" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/jflex.log" afterPath="$PROJECT_DIR$/jflex.log" />
+    </list>
     <list name="Default" comment="" />
     <ignored path="intelli-arc.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -100,10 +102,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ArcParser2.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/ArcParser2.java">
+      <file leaf-file-name="ArcParser.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/ArcParser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="53" column="4" selection-start="1955" selection-end="1955" vertical-scroll-proportion="0.0">
+            <state line="19" column="14" selection-start="613" selection-end="613" vertical-scroll-proportion="-0.07272727">
               <folding />
             </state>
           </provider>
@@ -127,19 +129,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ArcElement.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="ArcElement.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/ArcElement.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="51" column="103" selection-start="1679" selection-end="1679" vertical-scroll-proportion="0.4556962">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="arc.flex" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/lexer/arc.flex">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="64" column="79" selection-start="1712" selection-end="1712" vertical-scroll-proportion="0.0">
+            <state line="35" column="78" selection-start="1158" selection-end="1158" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -198,18 +191,7 @@
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
   <component name="ProjectPane">
-    <subPane>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="intelli-arc" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="intelli-arc" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-      </PATH>
-    </subPane>
+    <subPane />
   </component>
   <component name="ProjectReloadState">
     <option name="STATE" value="0" />
@@ -237,11 +219,13 @@
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth0" value="231" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth4" value="1046" />
+    <property name="options.lastSelected" value="preferences.keymap" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder4" value="4" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder2" value="2" />
     <property name="FileHistory.git4idea.GitHistoryProvider_flatWidth0" value="237" />
-    <property name="MemberChooser.sorted" value="false" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder3" value="3" />
+    <property name="MemberChooser.sorted" value="false" />
+    <property name="options.searchVisible" value="true" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder3" value="3" />
     <property name="FileHistory.git4idea.GitHistoryProvider_flatOrder0" value="0" />
     <property name="last_opened_file_path" value="/Users/kurtc/dev/arc2" />
@@ -252,8 +236,9 @@
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder0" value="0" />
     <property name="options.splitter.main.proportions" value="0.3" />
-    <property name="GoToFile.includeJavaFiles" value="false" />
+    <property name="RESOURCE_BUNDLE_SPLITTER_PROPORTION" value="0.5" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth2" value="252" />
+    <property name="GoToFile.includeJavaFiles" value="false" />
     <property name="FileHistory.git4idea.GitHistoryProvider_treeOrder2" value="2" />
     <property name="FileHistory.git4idea.GitHistoryProvider_flatOrder1" value="1" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth3" value="35" />
@@ -267,7 +252,7 @@
     <property name="FileHistory.git4idea.GitHistoryProvider_treeWidth0" value="248" />
     <property name="RunManagerConfig.showSettingsBeforeRunnig" value="false" />
     <property name="FileHistory.git4idea.GitHistoryProvider_treeOrder1" value="1" />
-    <property name="project.structure.last.edited" value="JDKs" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth1" value="269" />
     <property name="FileHistory.git4idea.GitHistoryProvider_flatWidth2" value="257" />
     <property name="FileHistory.git4idea.GitHistoryProvider_flatWidth1" value="291" />
@@ -499,7 +484,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="22" width="1916" height="1178" extended-state="0" />
+    <frame x="0" y="28" width="1900" height="1160" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Web Preview" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" />
@@ -507,7 +492,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32985783" sideWeight="0.5" order="7" side_tool="false" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24892934" sideWeight="0.5" order="0" side_tool="false" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24892008" sideWeight="0.66345227" order="0" side_tool="false" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5421801" sideWeight="0.5" order="1" side_tool="false" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24946466" sideWeight="0.5" order="1" side_tool="false" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="6" side_tool="false" />
@@ -516,12 +501,12 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24946466" sideWeight="0.5" order="1" side_tool="false" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32976446" sideWeight="0.5" order="3" side_tool="false" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32985783" sideWeight="0.5" order="8" side_tool="false" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3297975" sideWeight="0.5" order="8" side_tool="false" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.43981043" sideWeight="0.5" order="2" side_tool="false" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3995715" sideWeight="0.5" order="0" side_tool="false" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="4" side_tool="false" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32985783" sideWeight="0.5" order="8" side_tool="false" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3297975" sideWeight="0.5" order="8" side_tool="false" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" />
       <window_info id="Maven projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" />
@@ -545,7 +530,7 @@
     <option name="PERFORM_CHECKOUT_IN_BACKGROUND" value="true" />
     <option name="PERFORM_ADD_REMOVE_IN_BACKGROUND" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Minor parser fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Eliminated old parser. Full steam ahead!" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_FILE_COMMIT" value="false" />
@@ -571,6 +556,7 @@
     <MESSAGE value="Migrating to v8" />
     <MESSAGE value="&#10;More fixes to ArcParser2&#10;&#10;Continuing to work on the next version of ArcParser - made some fixes to optional parameter parsing; also working on parsing assignment expressions, which are trickier than i thought...&#10;" />
     <MESSAGE value="Minor parser fixes" />
+    <MESSAGE value="Eliminated old parser. Full steam ahead!" />
   </component>
   <component name="VssConfiguration">
     <option name="CLIENT_PATH" value="" />
@@ -644,27 +630,6 @@
     </buildFile>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/VariableReference.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="79" column="6" selection-start="2877" selection-end="2877" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/VariableDefinition.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="13" selection-start="701" selection-end="701" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/OptionalParameter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="39" selection-start="732" selection-end="732" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/lib/src/src_openapi.zip!/com/intellij/openapi/util/UserDataHolderEx.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
@@ -707,11 +672,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/ArcParser2.java">
+    <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/lexer/arc.flex">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="53" column="4" selection-start="1955" selection-end="1955" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="64" column="79" selection-start="1712" selection-end="1712" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/META-INF/plugin.xml">
@@ -724,13 +687,6 @@
     <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/repl/ReplToolWindow.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="177" column="0" selection-start="7136" selection-end="7136" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/lexer/arc.flex">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="64" column="79" selection-start="1712" selection-end="1712" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -749,9 +705,62 @@
         </state>
       </provider>
     </entry>
+    <entry file="uml://com.bitbakery.plugin.arc.psi.Mac">
+      <provider selected="true" editor-type-id="UmlClassDiagramEditorProvider">
+        <state>
+          <classes>
+            <class fqn="com.intellij.extapi.psi.ASTWrapperPsiElement" />
+            <class fqn="com.intellij.openapi.util.Iconable" />
+            <class fqn="java.lang.Object" />
+            <class fqn="com.bitbakery.plugin.arc.psi.Mac" />
+            <class fqn="com.intellij.psi.NavigatablePsiElement" />
+            <class fqn="java.lang.Cloneable" />
+            <class fqn="com.intellij.psi.impl.ElementBase" />
+            <class fqn="com.bitbakery.plugin.arc.psi.ArcElement" />
+            <class fqn="com.bitbakery.plugin.arc.psi.VariableAssignment" />
+            <class fqn="com.intellij.openapi.util.UserDataHolderEx" />
+            <class fqn="com.intellij.pom.Navigatable" />
+            <class fqn="com.intellij.psi.PsiNamedElement" />
+            <class fqn="com.intellij.extapi.psi.PsiElementBase" />
+            <class fqn="com.intellij.psi.PsiElement" />
+            <class fqn="com.intellij.extapi.psi.ASTDelegatePsiElement" />
+            <class fqn="com.intellij.openapi.util.UserDataHolder" />
+            <class fqn="com.intellij.openapi.util.UserDataHolderBase" />
+            <class fqn="com.bitbakery.plugin.arc.psi.Expression" />
+            <class fqn="com.intellij.navigation.NavigationItem" />
+          </classes>
+          <packages />
+          <settings isCamel="false" isColorManagerEnabled="false" isFieldsVisible="false" isConstructorsVisible="false" isMethodsVisible="false" isShowDependencies="false" isShowInnerClasses="false" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/ArcElement.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="51" column="103" selection-start="1679" selection-end="1679" vertical-scroll-proportion="0.4556962">
+        <state line="35" column="78" selection-start="1158" selection-end="1158" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jflex.log">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcStrings.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="46" selection-start="469" selection-end="469" vertical-scroll-proportion="0.23606557">
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="ResourceBundle">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/ArcParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="14" selection-start="613" selection-end="613" vertical-scroll-proportion="-0.07272727">
           <folding />
         </state>
       </provider>
@@ -768,6 +777,7 @@
                   <option name="proportions">
                     <list>
                       <option value="0.2" />
+                      <option value="0.61" />
                     </list>
                   </option>
                 </SplitterProportionsDataImpl>
@@ -803,6 +813,7 @@
                   <option name="proportions">
                     <list>
                       <option value="0.2" />
+                      <option value="0.61" />
                     </list>
                   </option>
                 </SplitterProportionsDataImpl>
