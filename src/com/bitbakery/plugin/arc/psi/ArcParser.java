@@ -80,7 +80,8 @@ public class ArcParser implements PsiParser {
             markAndAdvance(VARIABLE_REFERENCE);
 
         } else {
-            advance();
+            // TODO - We're not handling macro templates (backquote, etc.)
+            markAndAdvance(LITERAL);
         }
     }
 
@@ -137,10 +138,11 @@ public class ArcParser implements PsiParser {
     }
 
     private void parseOptionalParameter() {
-        advance(); // Advance past left paren
+        markAndAdvance(); // Advance past left paren
         advance(); // Advance past 'o' token
         parseName();
         parseBody(RIGHT_PAREN);
+        done(OPTIONAL_PARAMETER);
     }
 
     private void parseDocstring() {

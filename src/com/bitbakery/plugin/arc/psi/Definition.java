@@ -14,9 +14,9 @@ package com.bitbakery.plugin.arc.psi;
  *  governing permissions and limitations under the License..
  */
 
+import static com.bitbakery.plugin.arc.psi.ArcElementTypes.*;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.tree.TokenSet;
-import static com.bitbakery.plugin.arc.psi.ArcElementTypes.*;
 
 /**
  * Container for stuff shared by Def and Mac
@@ -35,27 +35,43 @@ public abstract class Definition extends VariableAssignment {
         return null;
     }
 
-    public boolean isValidParameterCount(int actualParamCount) {
-        ASTNode[] params = getNode().getChildren(com.bitbakery.plugin.arc.psi.ArcElementTypes.PARAM_LIST_FILTER);
-
-        int lowerBound = params[0].getChildren(com.bitbakery.plugin.arc.psi.ArcElementTypes.PARAM_FILTER).length;
-        int optionalParamCount = params[0].getChildren(com.bitbakery.plugin.arc.psi.ArcElementTypes.OPTIONAL_PARAM_FILTER).length;
-        int restParamCount = params[0].getChildren(com.bitbakery.plugin.arc.psi.ArcElementTypes.REST_PARAM_FILTER).length;
-
-        int upperBound = restParamCount > 0 ? Integer.MAX_VALUE : lowerBound + optionalParamCount;
-
-        if ("cddr".equals(name)) {
-            System.out.println("buh");
-        }
-        if ("perimeter".equals(name)) {
-            System.out.println("buh");
-        }
-        return actualParamCount >= lowerBound && actualParamCount <= upperBound;
+    public int getParameterCount() {
+        ASTNode[] params = getParams();
+        return params == null ? 0 :
+                params[0].getChildren(TokenSet.create(PARAMETER, OPTIONAL_PARAMETER, REST_PARAMETER)).length;
     }
 
-    public int getParameterCount() {
-        ASTNode[] params = getNode().getChildren(TokenSet.create(PARAMETER_LIST));
-        return params == null ? 0 :
-            params[0].getChildren(TokenSet.create(PARAMETER, OPTIONAL_PARAMETER, REST_PARAMETER)).length;
+    public int getMinParameterCount() {
+        ASTNode[] params = getParams();
+        return params.length > 0 ? params[0].getChildren(PARAM_FILTER).length : 0;
+    }
+
+    public int getMaxParameterCount() {
+        ASTNode[] params = getParams();
+
+        if (params.length > 0) {
+            int optionalParamCount = params[0].getChildren(OPTIONAL_PARAM_FILTER).length;
+            int restParamCount = params[0].getChildren(REST_PARAM_FILTER).length;
+
+            return restParamCount > 0 ? Integer.MAX_VALUE : (getMinParameterCount() + optionalParamCount);
+        }
+        return 0;
+    }
+
+    public boolean isValidParameterCount(int actualParamCount) {
+        return actualParamCount >= getMinParameterCount()
+                && actualParamCount <= getMaxParameterCount();
+    }
+
+    private ASTNode[] getParams() {
+        return getNode().getChildren(PARAM_LIST_FILTER);
+    }
+
+    private String stripQuotes(String s) {
+        s = s.trim();
+        if (s.length() > 2) {
+            return s.substring(1, s.length() - 1);
+        }
+        return s;
     }
 }

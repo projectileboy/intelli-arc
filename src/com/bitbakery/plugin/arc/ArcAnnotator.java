@@ -15,11 +15,19 @@ package com.bitbakery.plugin.arc;
  */
 
 import com.bitbakery.plugin.arc.psi.*;
+import com.bitbakery.plugin.arc.lexer.ArcTokenTypes;
 import com.intellij.lang.annotation.Annotation;
 import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.lang.annotation.Annotator;
+import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiReference;
+import com.intellij.psi.tree.TokenSet;
+import com.intellij.openapi.editor.markup.TextAttributes;
+import com.intellij.openapi.editor.colors.TextAttributesKey;
+import com.intellij.openapi.editor.HighlighterColors;
+
+import java.awt.*;
 
 /**
  * The annotator can identify errors in how a function or macro is being called
@@ -34,10 +42,14 @@ public class ArcAnnotator implements Annotator {
                 if (expr != null) {
                     PsiElement el = r.resolve();
                     if (el instanceof Definition) {
-                        Definition def = (Definition) el;
+                        // Here's a little hack to determine the actual param count - number of expression children, minus the fn/mac name
                         int actualParamCount = expr.getChildren().length - 1;
+
+                        Definition def = (Definition) el;
                         if (!def.isValidParameterCount(actualParamCount)) {
-                            holder.createErrorAnnotation(expr, "Invalid number of parameters");
+                            int min = def.getMinParameterCount();
+                            int max = def.getMaxParameterCount();
+                            holder.createWarningAnnotation(expr, getParamCountErrorMessage(min, max));
                         }
                     }
                 }
@@ -46,5 +58,18 @@ public class ArcAnnotator implements Annotator {
             Annotation a = holder.createInfoAnnotation(psiElement, null);
             a.setTextAttributes(ArcSyntaxHighlighter.getTextAttrs(ArcElementTypes.DOCSTRING));
         }
+    }
+
+    private String getParamCountErrorMessage(int min, int max) {
+        if (max == Integer.MAX_VALUE) {
+            return "Expected " + min + " or more parameters";
+        } else if (min < max) {
+            return "Expected between " + min + " and " + max + " parameter" + pluralize(max); // TODO - i18n me
+        }
+        return "Expected " + min + " parameter" + pluralize(min); // TODO - i18n me!
+    }
+
+    private String pluralize(int num) {
+        return (num != 1 && num != -1) ? "s" : "";
     }
 }

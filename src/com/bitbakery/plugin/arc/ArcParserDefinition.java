@@ -129,6 +129,8 @@ public class ArcParserDefinition implements ParserDefinition {
             return new ParameterList(node);
         } else if (type == DOCSTRING) {
             return new Docstring(node);
+        } else if (type == LITERAL) {
+            return new Literal(node);
         }
 
         return new ASTWrapperPsiElement(node);

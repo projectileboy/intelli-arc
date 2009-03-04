@@ -78,15 +78,4 @@ public class VariableAssignment extends Expression implements PsiNamedElement {
             }
         };
     }
-
-    /**
-     * Strips quote marks from a string - utility method for Def and Mac.
-     */
-    protected String stripQuotes(String s) {
-        s = s.trim();
-        if (s.length() > 2) {
-            return s.substring(1, s.length() - 1);
-        }
-        return s;
-    }
 }
