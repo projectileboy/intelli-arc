@@ -1,6 +1,20 @@
 package com.bitbakery.plugin.arc;
 
-import static com.bitbakery.plugin.arc.lexer.ArcTokenTypes.BLOCK_COMMENT;
+/*
+ * Copyright (c) Kurt Christensen, 2009
+ *
+ *  Licensed under the Artistic License, Version 2.0 (the "License"); you may not use this
+ *  file except in compliance with the License. You may obtain a copy of the License at:
+ *
+ *  http://www.opensource.org/licenses/artistic-license-2.0.php
+ *
+ *  Unless required by applicable law or agreed to in writing, software distributed under
+ *  the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS
+ *  OF ANY KIND, either express or implied. See the License for the specific language
+ *  governing permissions and limitations under the License..
+ */
+
+import static com.bitbakery.plugin.arc.lexer.ArcTokenTypes.*;
 import com.bitbakery.plugin.arc.psi.ArcElementTypes;
 import static com.bitbakery.plugin.arc.psi.ArcElementTypes.*;
 import com.bitbakery.plugin.arc.psi.Def;
@@ -30,15 +44,14 @@ public class ArcFoldingBuilder implements FoldingBuilder {
             return "[...]";
         } else if (node.getElementType() == ANONYMOUS_FUNCTION_DEFINITION) {
             return "(fn ...)";
-        } else if (node.getElementType() == BLOCK_COMMENT) {
-            // TODO - Adjacent line comments should be foldable as a single block comment
+        } else if (node.getElementType() == BLOCK_COMMENT || node.getElementType() == MULTILINE_COMMENT) {
             String text = node.getText();
-            return text.length() > 15 ? text.substring(0, 15) + "..." : text;
+            return text.length() > 20 ? text.substring(0, 20) + "..." : text;
         }
         return null;
     }
 
-    public boolean isCollapsedByDefault(ASTNode node) {
+    public boolean isCollapsedByDefault(ASTNode node) {        
         return false;
     }
 
@@ -75,6 +88,7 @@ public class ArcFoldingBuilder implements FoldingBuilder {
                 || (node.getElementType() == MACRO_DEFINITION)
                 || (node.getElementType() == SINGLE_ARG_ANONYMOUS_FUNCTION_DEFINITION)
                 || (node.getElementType() == ANONYMOUS_FUNCTION_DEFINITION)
+                || (node.getElementType() == MULTILINE_COMMENT)
                 || (node.getElementType() == BLOCK_COMMENT);
     }
 }

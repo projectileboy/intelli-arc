@@ -1,5 +1,19 @@
 package com.bitbakery.plugin.arc.lexer;
 
+/*
+ * Copyright (c) Kurt Christensen, 2009
+ *
+ *  Licensed under the Artistic License, Version 2.0 (the "License"); you may not use this
+ *  file except in compliance with the License. You may obtain a copy of the License at:
+ *
+ *  http://www.opensource.org/licenses/artistic-license-2.0.php
+ *
+ *  Unless required by applicable law or agreed to in writing, software distributed under
+ *  the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS
+ *  OF ANY KIND, either express or implied. See the License for the specific language
+ *  governing permissions and limitations under the License..
+ */
+
 import com.bitbakery.plugin.arc.ArcFileType;
 import com.bitbakery.plugin.arc.ArcLanguage;
 import com.bitbakery.plugin.arc.psi.ArcElementType;
@@ -22,6 +36,9 @@ public interface ArcTokenTypes {
 
     IElementType LEFT_SQUARE = new ArcElementType("[");
     IElementType RIGHT_SQUARE = new ArcElementType("]");
+
+    TokenSet BRACES = TokenSet.create(LEFT_PAREN, LEFT_SQUARE, RIGHT_PAREN, RIGHT_SQUARE);
+
     IElementType TILDE = new ArcElementType("~");
 
     IElementType COMPOSER = new ArcElementType(":");
@@ -33,6 +50,7 @@ public interface ArcTokenTypes {
     IElementType COMMA = new ArcElementType(",");
     IElementType COMMA_AT = new ArcElementType(",@");
     TokenSet SPECIAL_CHARACTERS = TokenSet.create(TILDE, COMPOSER, DOT, EQ, BACKQUOTE, QUOTE, COMMA, COMMA_AT);
+    TokenSet MACRO_MODIFIERS = TokenSet.create(COMMA, COMMA_AT, QUOTE, BACKQUOTE);
 
     // This guy is a little special, at least within single-var anonymous fn definitions
     IElementType UNDERSCORE = new ArcElementType("_");
@@ -58,7 +76,8 @@ public interface ArcTokenTypes {
     // Comments
     IElementType BLOCK_COMMENT = new ArcElementType("block comment");
     IElementType LINE_COMMENT = new ArcElementType("line comment");
-    TokenSet COMMENTS = TokenSet.create(BLOCK_COMMENT, LINE_COMMENT);
+    IElementType MULTILINE_COMMENT = new ArcElementType("multiline comment");
+    TokenSet COMMENTS = TokenSet.create(BLOCK_COMMENT, LINE_COMMENT, MULTILINE_COMMENT);
 
 
     // Literals
@@ -88,4 +107,5 @@ public interface ArcTokenTypes {
     // TODO - Not tokens, but we should know what library functions are available depending on the CL implementation we're using??
     // TODO - We should understand the syntax of common macros, like do, print format synatx, etc.
     // TODO - Should we distinguish between macros and functions that are destructive?
+
 }

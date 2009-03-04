@@ -34,8 +34,8 @@ InputCharacter=[^\r\n]
 WhiteSpace={LineTerminator}|[ \t\f]
 
 LineComment=([ \t\f]*";"{InputCharacter}*{LineTerminator})
-CommentContent = ( [^*] | \*+ [^/*] )*
-BlockComment = "#\|"{CommentContent}"\|#"
+MultilineComment={LineComment}+
+BlockComment = #\|(.|{LineTerminator})*\|#
 
 
 Digit=[0-9]
@@ -52,7 +52,6 @@ NumericLiteral=["+""-"]?({IntegerLiteral})|({FloatLiteral})
 
 /**** TODO - Do we need support for pipe-delimited symbols, like in Common Lisp??? ********************/
 /**** TODO - Is there some nice way to generalize this to other languages with non-Roman chars?? ******/
-/**** TODO - Can we intercept special characters before we intercept symbols? ******/
 Char=[A-Za-z0-9!@#$%<>_/?&\^\+\*\-=\.\?\;\|]
 CharLiteral=#\\(newline|space|tab|return|\"|{Char})
 
@@ -68,6 +67,7 @@ StringLiteral=\"([^\\\"]|{EscapeSequence})*(\"|\\)?
 {WhiteSpace}     { return WHITESPACE; }
 {CharLiteral}    { return CHAR_LITERAL; }
 {LineComment}    { return LINE_COMMENT; }
+{MultilineComment}    { return MULTILINE_COMMENT; }
 {BlockComment}   { return BLOCK_COMMENT; }
 {NumericLiteral} { return NUMERIC_LITERAL; }
 {StringLiteral}  { return STRING_LITERAL; }

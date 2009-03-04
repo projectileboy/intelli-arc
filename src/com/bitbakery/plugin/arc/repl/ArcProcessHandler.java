@@ -1,7 +1,22 @@
 package com.bitbakery.plugin.arc.repl;
 
-import static com.bitbakery.plugin.arc.ArcStrings.message;
-import com.bitbakery.plugin.arc.config.ArcConfiguration;
+/*
+ * Copyright (c) Kurt Christensen, 2009
+ *
+ *  Licensed under the Artistic License, Version 2.0 (the "License"); you may not use this
+ *  file except in compliance with the License. You may obtain a copy of the License at:
+ *
+ *  http://www.opensource.org/licenses/artistic-license-2.0.php
+ *
+ *  Unless required by applicable law or agreed to in writing, software distributed under
+ *  the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS
+ *  OF ANY KIND, either express or implied. See the License for the specific language
+ *  governing permissions and limitations under the License..
+ */
+
+import static com.intellij.openapi.util.SystemInfo.*;
+
+import com.bitbakery.plugin.arc.config.ArcSettings;
 import com.intellij.execution.process.ProcessAdapter;
 import com.intellij.execution.process.ProcessEvent;
 import com.intellij.execution.process.ProcessHandler;
@@ -9,15 +24,13 @@ import com.intellij.execution.process.ProcessOutputTypes;
 import com.intellij.openapi.application.Application;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.options.ShowSettingsUtil;
-import com.intellij.openapi.project.Project;
-import static com.intellij.openapi.util.SystemInfo.isMac;
-import static com.intellij.openapi.util.SystemInfo.isWindows;
+import com.intellij.openapi.options.ConfigurationException;
+import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.encoding.EncodingManager;
 import com.intellij.util.Alarm;
+import com.intellij.util.text.StringTokenizer;
 
-import javax.swing.*;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.util.concurrent.*;
@@ -58,35 +71,58 @@ public class ArcProcessHandler extends ProcessHandler {
         }
     }
 
-    public ArcProcessHandler(Project project) throws IOException {
-        ArcConfiguration arcConfig = ApplicationManager.getApplication().getComponent(ArcConfiguration.class);
-        if (notConfigured(arcConfig)) {
-            if (!ShowSettingsUtil.getInstance().editConfigurable(project, arcConfig)) {
-                // TODO - This isn't doing what you intend...
-                JOptionPane.showMessageDialog(null,
-                        message("config.error.replNotConfiguredMessage"),
-                        message("config.error.replNotConfiguredTitle"),
-                        JOptionPane.WARNING_MESSAGE);
+    public ArcProcessHandler() throws IOException, ConfigurationException {
+/* TODO - This is broken for some stupid reason...
+        if (notConfigured()) {
+            ShowSettingsUtil.getInstance().showSettingsDialog(project, ArcConfigurable.class);
             }
+*/
+
+        if (notConfigured()) {
+            // TODO - Put me in a resource bundle, please!
+            throw new ConfigurationException("Can't create Arc REPL process");
+        } else {
+
+
+            String scheme = ArcSettings.getInstance().mzSchemeHome;
+            if (!StringUtil.isEmptyOrSpaces(scheme)) {
+                scheme += isMac ? "/bin/" : "/";
+            }
+            scheme += isWindows ? "MzScheme.exe" : "mzscheme";
+
+            String[] myCommandLine = new String[]{scheme, "-m", "-f", ArcSettings.getInstance().arcInitializationFile};
+
+
+            // For now, the command-line is hard-coded. We may need more flexibility
+            //  in the future (e.g., different Arc paths with different args)
+            myProcess = Runtime.getRuntime().exec(myCommandLine, null,
+                    new File(ArcSettings.getInstance().arcHome));
+            myWaitFor = new ProcessWaitFor(myProcess);
         }
 
-        // For now, the executables and command-line args are hard-coded. We may need more flexibility
-        //   in the future (e.g., different Schemes with different args)
-        String scheme = arcConfig.mzSchemeHome;
-        if (!StringUtil.isEmptyOrSpaces(scheme)) {
-            scheme += isMac ? "/bin/" : "/";
-        }
-        scheme += isWindows ? "MzScheme.exe" : "mzscheme";
+        addProcessListener(new ProcessAdapter() {
+            public void onTextAvailable(ProcessEvent event, Key outputType) {
+                System.out.println(scrub(event.getText()));
+            }
 
-        String[] myCommandLine = new String[]{scheme, "-m", "-f", arcConfig.arcInitializationFile};
-
-        myProcess = Runtime.getRuntime().exec(myCommandLine, null, new File(arcConfig.arcHome));
-        myWaitFor = new ProcessWaitFor(myProcess);
+            private String scrub(String output) {
+                // TODO - Holy... please clean this!
+                StringTokenizer t = new StringTokenizer(output, "=>");
+                if (t.hasMoreTokens()) {
+                    t.nextToken();
+                    if (t.hasMoreTokens()) {
+                        return t.nextToken().trim();
+                    }
+                }
+                return output;
+            }
+        });
     }
 
-    private boolean notConfigured(ArcConfiguration arcConfig) {
-        return StringUtil.isEmptyOrSpaces(arcConfig.arcHome)
-                || StringUtil.isEmptyOrSpaces(arcConfig.arcInitializationFile);
+    private boolean notConfigured() {
+        return StringUtil.isEmptyOrSpaces(ArcSettings.getInstance().arcHome)
+                || StringUtil.isEmptyOrSpaces(ArcSettings.getInstance().mzSchemeHome)
+                || StringUtil.isEmptyOrSpaces(ArcSettings.getInstance().arcInitializationFile);
     }
 
     private static class ProcessWaitFor {

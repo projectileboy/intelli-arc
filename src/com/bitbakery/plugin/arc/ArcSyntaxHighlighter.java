@@ -1,12 +1,27 @@
 package com.bitbakery.plugin.arc;
 
+/*
+ * Copyright (c) Kurt Christensen, 2009
+ *
+ *  Licensed under the Artistic License, Version 2.0 (the "License"); you may not use this
+ *  file except in compliance with the License. You may obtain a copy of the License at:
+ *
+ *  http://www.opensource.org/licenses/artistic-license-2.0.php
+ *
+ *  Unless required by applicable law or agreed to in writing, software distributed under
+ *  the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS
+ *  OF ANY KIND, either express or implied. See the License for the specific language
+ *  governing permissions and limitations under the License..
+ */
+
 import com.bitbakery.plugin.arc.lexer.ArcLexer;
-import com.bitbakery.plugin.arc.lexer.ArcTokenTypes;
+import static com.bitbakery.plugin.arc.lexer.ArcTokenTypes.*;
 import com.bitbakery.plugin.arc.psi.ArcElementTypes;
 import com.intellij.lexer.Lexer;
 import com.intellij.openapi.editor.HighlighterColors;
 import com.intellij.openapi.editor.SyntaxHighlighterColors;
 import com.intellij.openapi.editor.colors.TextAttributesKey;
+import static com.intellij.openapi.editor.colors.TextAttributesKey.*;
 import com.intellij.openapi.fileTypes.SyntaxHighlighterBase;
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
@@ -20,73 +35,50 @@ import java.util.Map;
 public class ArcSyntaxHighlighter extends SyntaxHighlighterBase {
     private static Map<IElementType, TextAttributesKey> keys;
 
-    public static final TextAttributesKey TILDE = TextAttributesKey.createTextAttributesKey("ARC.TILDE", HighlighterColors.TEXT.getDefaultAttributes());
-    public static final TextAttributesKey EQ = TextAttributesKey.createTextAttributesKey("ARC.EQ", HighlighterColors.TEXT.getDefaultAttributes());
-    public static final TextAttributesKey BACKQUOTE = TextAttributesKey.createTextAttributesKey("ARC.BACKQUOTE", HighlighterColors.TEXT.getDefaultAttributes());
-    public static final TextAttributesKey QUOTE = TextAttributesKey.createTextAttributesKey("ARC.QUOTE", HighlighterColors.TEXT.getDefaultAttributes());
-    public static final TextAttributesKey COMMA = TextAttributesKey.createTextAttributesKey("ARC.COMMA", HighlighterColors.TEXT.getDefaultAttributes());
-    public static final TextAttributesKey COMMA_AT = TextAttributesKey.createTextAttributesKey("ARC.COMMA_AT", HighlighterColors.TEXT.getDefaultAttributes());
-    public static final TextAttributesKey DOT = TextAttributesKey.createTextAttributesKey("ARC.DOT", HighlighterColors.TEXT.getDefaultAttributes());
-    public static final TextAttributesKey COMPOSER = TextAttributesKey.createTextAttributesKey("ARC.COMPOSER", HighlighterColors.TEXT.getDefaultAttributes());
-
-    public static final TextAttributesKey TRUE = TextAttributesKey.createTextAttributesKey("ARC.TRUE", SyntaxHighlighterColors.NUMBER.getDefaultAttributes());
-    public static final TextAttributesKey NIL = TextAttributesKey.createTextAttributesKey("ARC.NIL", SyntaxHighlighterColors.NUMBER.getDefaultAttributes());
-
-    public static final TextAttributesKey NUMERIC_LITERAL = TextAttributesKey.createTextAttributesKey("ARC.NUMERIC_LITERAL", SyntaxHighlighterColors.NUMBER.getDefaultAttributes());
-    public static final TextAttributesKey STRING_LITERAL = TextAttributesKey.createTextAttributesKey("ARC.STRING_LITERAL", SyntaxHighlighterColors.STRING.getDefaultAttributes());
-    public static final TextAttributesKey CHAR_LITERAL = TextAttributesKey.createTextAttributesKey("ARC.CHAR_LITERAL", SyntaxHighlighterColors.STRING.getDefaultAttributes());
-    public static final TextAttributesKey BAD_CHARACTER = TextAttributesKey.createTextAttributesKey("ARC.BAD_CHARACTER", HighlighterColors.BAD_CHARACTER.getDefaultAttributes());
-    public static final TextAttributesKey BLOCK_COMMENT = TextAttributesKey.createTextAttributesKey("ARC.BLOCK_COMMENT", SyntaxHighlighterColors.LINE_COMMENT.getDefaultAttributes());
-    public static final TextAttributesKey LINE_COMMENT = TextAttributesKey.createTextAttributesKey("ARC.LINE_COMMENT", SyntaxHighlighterColors.LINE_COMMENT.getDefaultAttributes());
-    public static final TextAttributesKey DOCSTRING = TextAttributesKey.createTextAttributesKey("ARC.DOCSTRING", SyntaxHighlighterColors.DOC_COMMENT.getDefaultAttributes());
-
-    public static final TextAttributesKey QUOTE_KEYWORD = TextAttributesKey.createTextAttributesKey("ARC.QUOTE_KEYWORD", SyntaxHighlighterColors.KEYWORD.getDefaultAttributes());
-    public static final TextAttributesKey FN = TextAttributesKey.createTextAttributesKey("ARC.FN", SyntaxHighlighterColors.KEYWORD.getDefaultAttributes());
-    public static final TextAttributesKey IF = TextAttributesKey.createTextAttributesKey("ARC.IF", SyntaxHighlighterColors.KEYWORD.getDefaultAttributes());
-    public static final TextAttributesKey DO = TextAttributesKey.createTextAttributesKey("ARC.DO", SyntaxHighlighterColors.KEYWORD.getDefaultAttributes());
-    public static final TextAttributesKey LET = TextAttributesKey.createTextAttributesKey("ARC.LET", SyntaxHighlighterColors.KEYWORD.getDefaultAttributes());
-    public static final TextAttributesKey WITH = TextAttributesKey.createTextAttributesKey("ARC.WITH", SyntaxHighlighterColors.KEYWORD.getDefaultAttributes());
-    public static final TextAttributesKey MAC = TextAttributesKey.createTextAttributesKey("ARC.MAC", SyntaxHighlighterColors.KEYWORD.getDefaultAttributes());
-    public static final TextAttributesKey DEF = TextAttributesKey.createTextAttributesKey("ARC.DEF", SyntaxHighlighterColors.KEYWORD.getDefaultAttributes());
-
-    public static final TextAttributesKey SYMBOL = TextAttributesKey.createTextAttributesKey("ARC.SYMBOL", HighlighterColors.TEXT.getDefaultAttributes());
-
     static {
         keys = new HashMap<IElementType, TextAttributesKey>();
 
-        keys.put(ArcTokenTypes.TILDE, TILDE);
-        keys.put(ArcTokenTypes.EQ, EQ);
-        keys.put(ArcTokenTypes.BACKQUOTE, BACKQUOTE);
-        keys.put(ArcTokenTypes.QUOTE, QUOTE);
-        keys.put(ArcTokenTypes.COMMA, COMMA);
-        keys.put(ArcTokenTypes.COMMA_AT, COMMA_AT);
-        keys.put(ArcTokenTypes.DOT, DOT);
-        keys.put(ArcTokenTypes.COMPOSER, COMPOSER);
+        keys.put(TILDE, createAttrs("ARC.TILDE", HighlighterColors.TEXT));
+        keys.put(EQ, createAttrs("ARC.EQ", HighlighterColors.TEXT));
+        keys.put(BACKQUOTE, createAttrs("ARC.BACKQUOTE", HighlighterColors.TEXT));
+        keys.put(QUOTE, createAttrs("ARC.QUOTE", HighlighterColors.TEXT));
+        keys.put(COMMA, createAttrs("ARC.COMMA", HighlighterColors.TEXT));
+        keys.put(COMMA_AT, createAttrs("ARC.COMMA_AT", HighlighterColors.TEXT));
+        keys.put(DOT, createAttrs("ARC.DOT", HighlighterColors.TEXT));
+        keys.put(COMPOSER, createAttrs("ARC.COMPOSER", HighlighterColors.TEXT));
 
-        keys.put(ArcTokenTypes.TRUE, TRUE);
-        keys.put(ArcTokenTypes.NIL, NIL);
+        keys.put(TRUE, createAttrs("ARC.TRUE", SyntaxHighlighterColors.NUMBER));
+        keys.put(NIL, createAttrs("ARC.NIL", SyntaxHighlighterColors.NUMBER));
 
-        keys.put(ArcTokenTypes.NUMERIC_LITERAL, NUMERIC_LITERAL);
-        keys.put(ArcTokenTypes.STRING_LITERAL, STRING_LITERAL);
-        keys.put(ArcTokenTypes.CHAR_LITERAL, CHAR_LITERAL);
-        keys.put(ArcTokenTypes.BAD_CHARACTER, BAD_CHARACTER);
-        keys.put(ArcTokenTypes.BLOCK_COMMENT, BLOCK_COMMENT);
-        keys.put(ArcTokenTypes.LINE_COMMENT, LINE_COMMENT);
+        keys.put(NUMERIC_LITERAL, createAttrs("ARC.NUMERIC_LITERAL", SyntaxHighlighterColors.NUMBER));
+        keys.put(STRING_LITERAL, createAttrs("ARC.STRING_LITERAL", SyntaxHighlighterColors.STRING));
+        keys.put(CHAR_LITERAL, createAttrs("ARC.CHAR_LITERAL", SyntaxHighlighterColors.STRING));
+        keys.put(BAD_CHARACTER, createAttrs("ARC.BAD_CHARACTER", HighlighterColors.BAD_CHARACTER));
+        keys.put(BLOCK_COMMENT, createAttrs("ARC.BLOCK_COMMENT", SyntaxHighlighterColors.LINE_COMMENT));
+        keys.put(MULTILINE_COMMENT, createAttrs("ARC.MULTILINE_COMMENT", SyntaxHighlighterColors.LINE_COMMENT));
+        keys.put(LINE_COMMENT, createAttrs("ARC.LINE_COMMENT", SyntaxHighlighterColors.LINE_COMMENT));
+        keys.put(ArcElementTypes.DOCSTRING, createAttrs("ARC.DOCSTRING", SyntaxHighlighterColors.LINE_COMMENT));
 
-        // TODO - This doesn't work - the coloring only works with the lexer output - *not* the parser output
-        keys.put(ArcElementTypes.DOCSTRING, DOCSTRING);
-        keys.put(ArcTokenTypes.DO, LINE_COMMENT);
+        keys.put(DO, createAttrs("ARC.LINE_COMMENT", SyntaxHighlighterColors.LINE_COMMENT));
 
-        keys.put(ArcTokenTypes.QUOTE_KEYWORD, QUOTE_KEYWORD);
-        keys.put(ArcTokenTypes.FN, FN);
-        keys.put(ArcTokenTypes.IF, IF);
-        keys.put(ArcTokenTypes.DO, DO);
-        keys.put(ArcTokenTypes.LET, LET);
-        keys.put(ArcTokenTypes.WITH, WITH);
-        keys.put(ArcTokenTypes.MAC, MAC);
-        keys.put(ArcTokenTypes.DEF, DEF);
+        keys.put(QUOTE_KEYWORD, createAttrs("ARC.QUOTE_KEYWORD", SyntaxHighlighterColors.KEYWORD));
+        keys.put(FN, createAttrs("ARC.FN", SyntaxHighlighterColors.KEYWORD));
+        keys.put(IF, createAttrs("ARC.IF", SyntaxHighlighterColors.KEYWORD));
+        keys.put(DO, createAttrs("ARC.DO", SyntaxHighlighterColors.KEYWORD));
+        keys.put(LET, createAttrs("ARC.LET", SyntaxHighlighterColors.KEYWORD));
+        keys.put(WITH, createAttrs("ARC.WITH", SyntaxHighlighterColors.KEYWORD));
+        keys.put(MAC, createAttrs("ARC.MAC", SyntaxHighlighterColors.KEYWORD));
+        keys.put(DEF, createAttrs("ARC.DEF", SyntaxHighlighterColors.KEYWORD));
 
-        keys.put(ArcTokenTypes.SYMBOL, SYMBOL);
+        keys.put(SYMBOL, createAttrs("ARC.SYMBOL", HighlighterColors.TEXT));
+    }
+
+    public static TextAttributesKey getTextAttrs(IElementType key) {
+        return keys.get(key);
+    }
+
+    private static TextAttributesKey createAttrs(String name, TextAttributesKey defaultKey) {
+        return createTextAttributesKey(name, defaultKey.getDefaultAttributes());
     }
 
     @NotNull

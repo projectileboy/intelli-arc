@@ -1,29 +1,69 @@
-<!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
-<idea-plugin url="http://code.google.com/p/intelli-arc/">
-    <name>Arc</name>
-    <version>0.3</version>
-    <category>Custom Languages</category>
-    <vendor>The Bit Bakery</vendor>
-    <idea-version since-build="8000"/>
+<!--
+  ~ Copyright (c) Kurt Christensen, 2009
+  ~
+  ~  Licensed under the Artistic License, Version 2.0 (the "License"); you may not use this
+  ~  file except in compliance with the License. You may obtain a copy of the License at:
+  ~
+  ~  http://www.opensource.org/licenses/artistic-license-2.0.php
+  ~
+  ~  Unless required by applicable law or agreed to in writing, software distributed under
+  ~  the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS
+  ~  OF ANY KIND, either express or implied. See the License for the specific language
+  ~  governing permissions and limitations under the License..
+  -->
 
+<!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
+<idea-plugin url="http://github.com/projectileboy/intelli-arc">
+    <name>Arc</name>
     <description>Creates an environment for creating Arc code, including syntax highlighting, simple structure view, and
         a REPL.
     </description>
 
+    <version>0.4</version>
+    <category>Custom Languages</category>
+    <!--<vendor email="clojet@bitbakery.com" logo="/org/jetbrains/plugins/groovy/images/groovy_16x16.png">The Bit Bakery</vendor>-->
+    <vendor url="http://www.bitbakery.com">The Bit Bakery</vendor>
+    <idea-version since-build="8000"/>
+
+    <!-- TODO -->
+    <!--<helpset></helpset>-->
+
     <change-notes>
+        <![CDATA[
+                0.4 - 2009.02.25<br>
+                * Added tabbed REPL<br>
+                * Added macroexpansion action<br>
+                * Greatly improved parsing<br>
+                * Added support for CL-style docstrings; when available, these show up as documentation
+                * Added quick navigation via cmd-N - this is one of my personal favorites thus far
+                * Added navigation from variable references to variable definitions, which includes defs and macs
+        ]]>
     </change-notes>
 
     <resource-bundle>com.bitbakery.plugin.arc.ArcStrings</resource-bundle>
 
     <extensions defaultExtensionNs="com.intellij">
-        <annotator language="Arc" implementationClass="com.bitbakery.plugin.arc.ArcAnnotator"/>
-        <colorSettingsPage implementation="com.bitbakery.plugin.arc.ArcColorsPage"/>
         <!-- <errorHandler implementation="com.intellij.diagnostic.ITNReporter"/> -->
-        <fileTypeFactory implementation="com.bitbakery.plugin.arc.ArcSupportLoader"/>
+        <fileTypeFactory implementation="com.bitbakery.plugin.arc.ArcFileTypeLoader"/>
+
+        <annotator language="Arc" implementationClass="com.bitbakery.plugin.arc.ArcAnnotator"/>
+        <syntaxHighlighter key="Arc" implementationClass="com.bitbakery.plugin.arc.ArcSyntaxHighlighter"/>
+
+        <colorSettingsPage implementation="com.bitbakery.plugin.arc.config.ArcColorSettingsPage"/>
+
+        <findUsagesHandlerFactory implementation="com.bitbakery.plugin.arc.ArcFindUsagesHandlerFactory"/>
+
+<!--
+        <configurationType implementation="org.jetbrains.plugins.clojure.runner.ClojureScriptRunConfigurationType"/>
+        <configurationProducer
+                implementation="org.jetbrains.plugins.clojure.runner.ClojureScriptRunConfigurationProducer"/>
+-->
+        <!-- TODO <fileTemplateGroup implementation="com.bitbakery.plugin.arc.templates.ArcTemplatesFactory"/>-->
+        <liveTemplateContext implementation="com.bitbakery.plugin.arc.templates.ArcTemplateContextType"/>
+
         <gotoClassContributor implementation="com.bitbakery.plugin.arc.nav.ArcChooser"/>
         <!-- <gotoFileContributor implementation="com.bitbakery.plugin.arc.nav.ArcChooser"/> -->
         <!-- <gotoSymbolContributor implementation="com.bitbakery.plugin.arc.nav.ArcChooser"/> -->
-        <syntaxHighlighter key="Arc" factoryClass="com.bitbakery.plugin.arc.ArcSyntaxHighlighterProvider"/>
 
         <lang.braceMatcher language="Arc" implementationClass="com.bitbakery.plugin.arc.ArcBraceMatcher"/>
         <lang.commenter language="Arc" implementationClass="com.bitbakery.plugin.arc.ArcCommenter"/>
@@ -31,63 +71,90 @@
                                     implementationClass="com.bitbakery.plugin.arc.ArcDocumentationProvider"/>
         <lang.findUsagesProvider language="Arc" implementationClass="com.bitbakery.plugin.arc.ArcFindUsagesProvider"/>
         <lang.foldingBuilder language="Arc" implementationClass="com.bitbakery.plugin.arc.ArcFoldingBuilder"/>
-        <!--<lang.formatter language="Arc" implementationClass="com.bitbakery.plugin.arc.ArcFormattingModelBuilder"/>-->
-        <lang.languageProvider language="Arc" implementationClass="com.bitbakery.plugin.arc.ArcLanguage"/>
+
+        <!--<lang.formatter language="Arc" implementationClass="com.bitbakery.plugin.arc.formatting.ArcFormattingModelBuilder"/>-->
+        <!--<fileTypeIndentOptionsProvider implementation="com.bitbakery.plugin.arc.config.ArcIndentOptionsProvider"/>-->
+
         <lang.parserDefinition language="Arc" implementationClass="com.bitbakery.plugin.arc.ArcParserDefinition"/>
         <lang.psiStructureViewFactory language="Arc"
                                       implementationClass="com.bitbakery.plugin.arc.ArcStructureViewBuilderFactory"/>
 
+
+        <applicationConfigurable implementation="com.bitbakery.plugin.arc.config.ArcConfigurable"/>
+        <applicationService serviceInterface="com.bitbakery.plugin.arc.config.ArcSettings"
+                            serviceImplementation="com.bitbakery.plugin.arc.config.ArcSettings"/>
+
+
+        <!--
+                <quoteHandler fileType="Clojure" className="org.jetbrains.plugins.clojure.editor.ClojureQuoteHandler"/>
+                <gotoSymbolContributor implementation="org.jetbrains.plugins.clojure.gotoclass.ClGoToSymbolContributor"/>
+
+                <stubElementTypeHolder class="org.jetbrains.plugins.clojure.parser.ClojureElementTypes"/>
+                <stubIndex implementation="org.jetbrains.plugins.clojure.psi.stubs.index.ClDefNameIndex"/>
+
+                <extendWordSelectionHandler implementation="org.jetbrains.plugins.clojure.editor.selection.ClojureListSelectioner"/>
+                <extendWordSelectionHandler implementation="org.jetbrains.plugins.clojure.editor.selection.ClojureLiteralSelectioner"/>
+        -->
+
     </extensions>
+
+
 
     <application-components>
         <component>
             <implementation-class>com.bitbakery.plugin.arc.ArcSupportLoader</implementation-class>
         </component>
-        <component>
-            <implementation-class>com.bitbakery.plugin.arc.config.ArcConfiguration</implementation-class>
-        </component>
     </application-components>
+
 
     <project-components>
         <component>
             <implementation-class>com.bitbakery.plugin.arc.repl.ReplToolWindow</implementation-class>
         </component>
     </project-components>
-            
+
 
     <actions>
-        <!--
-                <action id="ArcMacex" class="com.bitbakery.plugin.arc.actions.MacexAction" text="Macroexpand"
-                        description="Full macroexpansion" icon="/resources/icons/arc16.png">
-                    <keyboard-shortcut keymap="$default" first-keystroke="alt M"/>
-                    <add-to-group group-id="EditorPopupMenu" anchor="last"/>
-                </action>
-        -->
+        <action id="ArcCreateNewFile" class="com.bitbakery.plugin.arc.actions.NewArcFileAction"
+                icon="/icons/arc-shiny-16.png">
+            <add-to-group group-id="NewGroup" anchor="last"/>
+        </action>
 
-        <!--
-                <action id="ArcMacex1" class="com.bitbakery.plugin.arc.actions.Macex1Action" text="Macroexpand-1"
-                        description="Single macroexpansion">
-                    <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl alt Z"/>
-                    <add-to-group group-id="EditorPopupMenu" anchor="last"/>
-                </action>
-        -->
-        <!-- TODO - The text needs to be keys into the resource bundle! -->
+        <group class="com.bitbakery.plugin.arc.actions.EditorActionGroup" id="ArcEditorActionGroup">
 
-        <action id="ArcLoadFile" class="com.bitbakery.plugin.arc.actions.LoadFileAction" text="Load File"
-                description="Load file in the REPL" icon="/icons/arc16.png">
-            <keyboard-shortcut keymap="$default" first-keystroke="alt L"/>
+            <separator/>
+            <action id="ArcGoToRepl" class="com.bitbakery.plugin.arc.actions.GoToReplAction"
+                    icon="/icons/arc-shiny-16.png">
+                <keyboard-shortcut keymap="$default" first-keystroke="alt R"/>
+            </action>
+            <action id="ArcRunSelection" class="com.bitbakery.plugin.arc.actions.RunSelectedTextAction"
+                    icon="/icons/arc-shiny-16.png">
+                <keyboard-shortcut keymap="$default" first-keystroke="alt S"/>
+            </action>
+            <action id="ArcLoadFile" class="com.bitbakery.plugin.arc.actions.LoadFileAction"
+                    icon="/icons/arc-shiny-16.png">
+                <keyboard-shortcut keymap="$default" first-keystroke="alt L"/>
+            </action>
+            <action id="ArcMacroexpandOne" class="com.bitbakery.plugin.arc.actions.MacroexpandOneAction"
+                    icon="/icons/arc-shiny-16.png">
+                <keyboard-shortcut keymap="$default" first-keystroke="alt M"/>
+            </action>
+            <separator/>
             <add-to-group group-id="EditorPopupMenu" anchor="last"/>
-        </action>
-        <action id="ArcRunSelection" class="com.bitbakery.plugin.arc.actions.RunSelectionAction" text="Run Selection"
-                description="Run selected text in the REPL" icon="/icons/arc16.png">
-            <keyboard-shortcut keymap="$default" first-keystroke="alt S"/>
-            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
-        </action>
-        <action id="ArcGoToRepl" class="com.bitbakery.plugin.arc.actions.GoToReplAction" text="Go to REPL"
-                description="Go to the REPL tool window" icon="/icons/arc16.png">
-            <keyboard-shortcut keymap="$default" first-keystroke="alt R"/>
-            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
-        </action>
+        </group>
+
+        <group class="com.bitbakery.plugin.arc.actions.ReplActionGroup" id="ArcReplActionGroup" popup="true">
+            <action id="ArcAddRepl" class="com.bitbakery.plugin.arc.actions.AddReplAction">
+                <keyboard-shortcut keymap="$default" first-keystroke="alt A"/>
+            </action>
+            <action id="ArcRemoveRepl" class="com.bitbakery.plugin.arc.actions.RemoveReplAction">
+                <keyboard-shortcut keymap="$default" first-keystroke="alt B"/>
+            </action>
+            <separator/>
+            <action id="ArcRenameRepl" class="com.bitbakery.plugin.arc.actions.RenameReplAction">
+                <keyboard-shortcut keymap="$default" first-keystroke="alt C"/>
+            </action>
+        </group>
     </actions>
 
 

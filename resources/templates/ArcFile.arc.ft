@@ -1,0 +1,9 @@
+###parse("File Header.arc")
+
+(def ${NAME} (param1 param2 (o optional-param "default value"))
+    "Function description"
+    (do something))
+
+(mac ${NAME} (param1 param2 (o optional-param "default value"))
+    "Macro description"
+    (do something))

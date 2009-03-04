@@ -9,8 +9,8 @@ Requirements
   - Available at http://plt-scheme/mzscheme
 - Arc
   - See http://www.arclanguage.org/install for details
-- IntelliJ 7.0 or higher
-  - Tested on Windows, Mac OS X 10.4, and Ubuntu 7.10
+- IntelliJ 8.0 or higher
+  - Tested on Windows, Mac OS X 10.5, and Ubuntu 8
 
 
 
@@ -26,7 +26,7 @@ Changes
 
 0.4 (2008/05/13):
 - Added support for CL-style docstrings; when available, these show up as documentation
-- Added quick navigation via cmd-N - this is one of personal favorites thus far
+- Added quick navigation via cmd-N - this is one of my personal favorites thus far
 - Added navigation from variable references to variable definitions, which includes defs and macs
 
 

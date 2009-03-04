@@ -1,17 +1,30 @@
 package com.bitbakery.plugin.arc;
 
+/*
+ * Copyright (c) Kurt Christensen, 2009
+ *
+ *  Licensed under the Artistic License, Version 2.0 (the "License"); you may not use this
+ *  file except in compliance with the License. You may obtain a copy of the License at:
+ *
+ *  http://www.opensource.org/licenses/artistic-license-2.0.php
+ *
+ *  Unless required by applicable law or agreed to in writing, software distributed under
+ *  the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS
+ *  OF ANY KIND, either express or implied. See the License for the specific language
+ *  governing permissions and limitations under the License..
+ */
 
 import com.intellij.openapi.components.ApplicationComponent;
 import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.openapi.fileTypes.FileTypeConsumer;
 import com.intellij.openapi.fileTypes.FileTypeFactory;
 import com.intellij.openapi.fileTypes.LanguageFileType;
+import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
 
-public class ArcSupportLoader extends FileTypeFactory implements ApplicationComponent { //, InspectionToolProvider, FileTypeIndentOptionsProvider, IconProvider {
+import javax.swing.*;
 
-    public static final LanguageFileType ARC = new ArcFileType();
-
+public class ArcSupportLoader implements ApplicationComponent {
 
     public void initComponent() {
     }
@@ -21,36 +34,6 @@ public class ArcSupportLoader extends FileTypeFactory implements ApplicationComp
 
     @NotNull
     public String getComponentName() {
-        return "Arc support loader";
-    }
-
-/*
-TODO - See Javascript plugin for good examples of inspection goodies
-    public Class[] getInspectionClasses() {
-        return new Class[]{
-        };
-    }
-*/
-
-    //public CodeStyleSettings.IndentOptions createIndentOptions() {
-    //    return new CodeStyleSettings.IndentOptions();
-    //}
-
-    public FileType getFileType() {
-
-        return ARC;
-    }
-
-//    public void createFileTypes(final @NotNull PairConsumer<FileType, String> consumer) {
-//        consumer.consume(ARC, "arc");
-//    }
-
-    //public Icon getIcon(@NotNull final PsiElement element, final int flags) {
-    //    return null;
-    //}
-
-    public void createFileTypes(@NotNull FileTypeConsumer consumer) {
-        // TODO - Is this correct?? The Javadoc is non-existent!!
-        consumer.consume(ARC, "arc");
+        return "arc.support.loader";
     }
 }
