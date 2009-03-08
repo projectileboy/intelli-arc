@@ -23,7 +23,7 @@
     <category>Custom Languages</category>
     <!--<vendor email="clojet@bitbakery.com" logo="/org/jetbrains/plugins/groovy/images/groovy_16x16.png">The Bit Bakery</vendor>-->
     <vendor url="http://www.bitbakery.com">The Bit Bakery</vendor>
-    <idea-version since-build="8000"/>
+    <idea-version since-build="9000"/>
 
     <!-- TODO -->
     <!--<helpset></helpset>-->
@@ -61,9 +61,7 @@
         <!-- TODO <fileTemplateGroup implementation="com.bitbakery.plugin.arc.templates.ArcTemplatesFactory"/>-->
         <liveTemplateContext implementation="com.bitbakery.plugin.arc.templates.ArcTemplateContextType"/>
 
-        <gotoClassContributor implementation="com.bitbakery.plugin.arc.nav.ArcChooser"/>
-        <!-- <gotoFileContributor implementation="com.bitbakery.plugin.arc.nav.ArcChooser"/> -->
-        <!-- <gotoSymbolContributor implementation="com.bitbakery.plugin.arc.nav.ArcChooser"/> -->
+        <gotoSymbolContributor implementation="com.bitbakery.plugin.arc.nav.ArcChooser"/>
 
         <lang.braceMatcher language="Arc" implementationClass="com.bitbakery.plugin.arc.ArcBraceMatcher"/>
         <lang.commenter language="Arc" implementationClass="com.bitbakery.plugin.arc.ArcCommenter"/>

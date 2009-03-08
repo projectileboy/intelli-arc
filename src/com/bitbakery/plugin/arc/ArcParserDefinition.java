@@ -129,6 +129,14 @@ public class ArcParserDefinition implements ParserDefinition {
             return new ParameterList(node);
         } else if (type == DOCSTRING) {
             return new Docstring(node);
+        } else if (type == BACKQUOTED_EXPRESSION) {
+            return new BackquotedExpression(node);
+        } else if (type == QUOTED_EXPRESSION) {
+            return new QuotedExpression(node);
+        } else if (type == COMMA_AT_EXPRESSION) {
+            return new CommaAtExpression(node);
+        } else if (type == COMMA_EXPRESSION) {
+            return new CommaExpression(node);
         } else if (type == LITERAL) {
             return new Literal(node);
         }

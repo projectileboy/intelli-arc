@@ -15,9 +15,7 @@ package com.bitbakery.plugin.arc.structure;
  */
 
 import com.bitbakery.plugin.arc.psi.Def;
-import com.bitbakery.plugin.arc.psi.Fn;
 import com.bitbakery.plugin.arc.psi.Mac;
-import com.bitbakery.plugin.arc.psi.SingleArgFn;
 import com.intellij.ide.structureView.StructureViewTreeElement;
 import com.intellij.ide.structureView.TextEditorBasedStructureViewModel;
 import com.intellij.ide.util.treeView.smartTree.Filter;
@@ -31,6 +29,8 @@ import org.jetbrains.annotations.NotNull;
  */
 public class ArcStructureViewModel extends TextEditorBasedStructureViewModel {
     private PsiFile myFile;
+    private Filter[] filters = new Filter[]{new DefFilter(), new MacFilter()};
+    private Grouper[] groupers = new Grouper[]{new DefMacGrouper()};
 
     public ArcStructureViewModel(final PsiFile file) {
         super(file);
@@ -44,8 +44,7 @@ public class ArcStructureViewModel extends TextEditorBasedStructureViewModel {
 
     @NotNull
     public Grouper[] getGroupers() {
-        // TODO - Enable grouping based on defs, macs, fns, []s, etc...
-        return Grouper.EMPTY_ARRAY;
+        return groupers;
     }
 
     @NotNull
@@ -56,8 +55,7 @@ public class ArcStructureViewModel extends TextEditorBasedStructureViewModel {
 
     @NotNull
     public Filter[] getFilters() {
-        // TODO - Enable filtering based on defs, macs, fns, []s, etc...
-        return Filter.EMPTY_ARRAY;
+        return filters;
     }
 
     protected PsiFile getPsiFile() {
@@ -66,6 +64,6 @@ public class ArcStructureViewModel extends TextEditorBasedStructureViewModel {
 
     @NotNull
     protected Class[] getSuitableClasses() {
-        return new Class[]{Def.class, Mac.class, SingleArgFn.class, Fn.class};
+        return new Class[]{Def.class, Mac.class};
     }
 }

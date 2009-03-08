@@ -79,8 +79,30 @@ public class ArcParser implements PsiParser {
         } else if (isAt(SYMBOL)) {
             markAndAdvance(VARIABLE_REFERENCE);
 
+
+
+
+        // TODO - The handling of macro templates is broken... what do we *want* to have happen??    
+        } else if (isAt(BACKQUOTE)){
+            markAndAdvance();
+            parseNext();
+            done(BACKQUOTED_EXPRESSION);
+        } else if (isAt(QUOTE)){
+            markAndAdvance();
+            parseNext();
+            done(QUOTED_EXPRESSION);
+        } else if (isAt(COMMA_AT)){
+            markAndAdvance();
+            parseNext();
+            done(COMMA_EXPRESSION);
+        } else if (isAt(COMMA)){
+            markAndAdvance();
+            parseNext();
+            done(COMMA_AT_EXPRESSION);
+
+
+
         } else {
-            // TODO - We're not handling macro templates (backquote, etc.)
             markAndAdvance(LITERAL);
         }
     }

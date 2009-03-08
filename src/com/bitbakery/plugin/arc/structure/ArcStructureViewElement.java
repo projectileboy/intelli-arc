@@ -75,9 +75,7 @@ public class ArcStructureViewElement implements StructureViewTreeElement {
 
     private boolean isBrowsableElement(PsiElement element) {
         return element instanceof Def
-                || element instanceof Mac
-                || element instanceof SingleArgFn
-                || element instanceof Fn;
+                || element instanceof Mac;
     }
 
     public ItemPresentation getPresentation() {

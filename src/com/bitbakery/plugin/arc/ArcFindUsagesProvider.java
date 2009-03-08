@@ -17,7 +17,7 @@ package com.bitbakery.plugin.arc;
 import com.bitbakery.plugin.arc.lexer.ArcLexer;
 import static com.bitbakery.plugin.arc.lexer.ArcTokenTypes.COMMENTS;
 import static com.bitbakery.plugin.arc.lexer.ArcTokenTypes.LITERALS;
-import static com.bitbakery.plugin.arc.psi.ArcElementTypes.VARIABLE_ASSIGNMENT_FILTER;
+import static com.bitbakery.plugin.arc.psi.ArcElementTypes.VARIABLE_REFERENCE_FILTER;
 import com.bitbakery.plugin.arc.psi.Def;
 import com.bitbakery.plugin.arc.psi.Mac;
 import com.bitbakery.plugin.arc.psi.VariableDefinition;
@@ -41,7 +41,7 @@ public class ArcFindUsagesProvider implements FindUsagesProvider {
     @Nullable
     public WordsScanner getWordsScanner() {
         if (wordsScanner == null) {
-            wordsScanner = new DefaultWordsScanner(new ArcLexer(), VARIABLE_ASSIGNMENT_FILTER, COMMENTS, LITERALS);
+            wordsScanner = new DefaultWordsScanner(new ArcLexer(), VARIABLE_REFERENCE_FILTER, COMMENTS, LITERALS);
         }
         return wordsScanner;
     }

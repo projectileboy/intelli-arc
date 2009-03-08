@@ -33,8 +33,9 @@ LineTerminator=\r|\n|\r\n
 InputCharacter=[^\r\n]
 WhiteSpace={LineTerminator}|[ \t\f]
 
-LineComment=([ \t\f]*";"{InputCharacter}*{LineTerminator})
-MultilineComment={LineComment}+
+LineComment=([ \t\f]*";"{InputCharacter}*)
+TerminatedLineComment=({LineComment}{LineTerminator})
+MultilineComment=({TerminatedLineComment}+{LineComment})
 BlockComment = #\|(.|{LineTerminator})*\|#
 
 
@@ -50,7 +51,6 @@ FloatLiteral=({FloatingPointLiteral1})|({FloatingPointLiteral2})|({FloatingPoint
 
 NumericLiteral=["+""-"]?({IntegerLiteral})|({FloatLiteral})
 
-/**** TODO - Do we need support for pipe-delimited symbols, like in Common Lisp??? ********************/
 /**** TODO - Is there some nice way to generalize this to other languages with non-Roman chars?? ******/
 Char=[A-Za-z0-9!@#$%<>_/?&\^\+\*\-=\.\?\;\|]
 CharLiteral=#\\(newline|space|tab|return|\"|{Char})
@@ -59,8 +59,6 @@ Symbol={Char}*
 
 EscapeSequence=\\[^\r\n]
 StringLiteral=\"([^\\\"]|{EscapeSequence})*(\"|\\)?
-
-/**** TODO - Include character literals ******************************/
 
 %%
 

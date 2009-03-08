@@ -59,6 +59,7 @@ public interface ArcElementTypes {
     IElementType LITERAL = new ArcElementType("literal");
 
     TokenSet VARIABLE_DEFINITION_FILTER = TokenSet.create(VARIABLE_DEFINITION);
+    TokenSet VARIABLE_REFERENCE_FILTER = TokenSet.create(VARIABLE_REFERENCE);
     TokenSet VARIABLE_ASSIGNMENT_FILTER = TokenSet.create(VARIABLE_ASSIGNMENT);
 
 
