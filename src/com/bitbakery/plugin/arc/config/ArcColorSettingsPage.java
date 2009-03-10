@@ -60,7 +60,7 @@ public class ArcColorSettingsPage implements ColorSettingsPage {
             createDescriptor("color.settings.bad_character", BAD_CHARACTER),
             createDescriptor("color.settings.def", DEF),
             createDescriptor("color.settings.mac", MAC),
-            createDescriptor("color.settings.ttings.backquote", BACKQUOTE),
+            createDescriptor("color.settings.backquote", BACKQUOTE),
             createDescriptor("color.settings.comma", COMMA),
             createDescriptor("color.settings.comma_at", COMMA_AT),
     };

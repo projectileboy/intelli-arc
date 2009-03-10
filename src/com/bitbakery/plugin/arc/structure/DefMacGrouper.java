@@ -23,7 +23,6 @@ import com.intellij.ide.util.treeView.smartTree.ActionPresentation;
 import com.intellij.ide.util.treeView.smartTree.Group;
 import com.intellij.ide.util.treeView.smartTree.Grouper;
 import com.intellij.ide.util.treeView.smartTree.TreeElement;
-import com.intellij.psi.PsiFile;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
@@ -31,11 +30,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * Created by IntelliJ IDEA.
- * User: kurtc
- * Date: Mar 8, 2009
- * Time: 1:12:22 PM
- * To change this template use File | Settings | File Templates.
+ *
  */
 public class DefMacGrouper implements Grouper {
 

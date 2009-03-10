@@ -30,6 +30,7 @@ public interface ArcElementTypes {
     IElementType FUNCTION_DEFINITION = new ArcElementType("def");
     IElementType MACRO_DEFINITION = new ArcElementType("mac");
 
+    IElementType IF_BLOCK = new ArcElementType("if");
     IElementType LET_BLOCK = new ArcElementType("let");
     IElementType WITH_BLOCK = new ArcElementType("with");
 

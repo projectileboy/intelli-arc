@@ -27,18 +27,15 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * TODO: Describe the role(s) and responsibilit(ies)
+ * Builds the formatting model for automatically applying proper spacing and indentation to Arc source code.
  */
 public class ArcFormattingModelBuilder implements FormattingModelBuilder {
     @NotNull
     public FormattingModel createModel(final PsiElement element, final CodeStyleSettings settings) {
-        ASTNode node = element.getNode();
-        assert node != null;
-        PsiFile containingFile = element.getContainingFile();
-        ASTNode astNode = containingFile.getNode();
-        assert astNode != null;
-        return FormattingModelProvider.createFormattingModelForPsiFile(containingFile,
-                new ArcBlock(astNode, null, Indent.getAbsoluteNoneIndent(), null, settings), settings);
+        PsiFile file = element.getContainingFile();
+        ASTNode node = file.getNode();
+        return FormattingModelProvider.createFormattingModelForPsiFile(file,
+                new ArcBlock(node, null, Indent.getAbsoluteNoneIndent(), null, settings), settings);
     }
 
     @Nullable

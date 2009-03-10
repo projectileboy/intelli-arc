@@ -23,8 +23,11 @@ import com.intellij.psi.tree.TokenSet;
  */
 public abstract class Definition extends VariableAssignment {
 
-    public Definition(ASTNode node) {
+    private final String quickDocType;
+
+    public Definition(ASTNode node, String quickDocType) {
         super(node);
+        this.quickDocType = quickDocType;
     }
 
     public String getDocstring() {
@@ -33,6 +36,16 @@ public abstract class Definition extends VariableAssignment {
             return stripQuotes(children[0].getText());
         }
         return null;
+    }
+
+    public String getQuickDoc() {
+        StringBuffer buf = new StringBuffer();
+        buf.append(quickDocType).append(" ").append(getName());
+
+        String docstring = getDocstring();
+        buf.append(docstring == null ? "" : "\r\n" + docstring);
+        
+        return buf.toString();
     }
 
     public int getParameterCount() {

@@ -70,7 +70,7 @@
         <lang.findUsagesProvider language="Arc" implementationClass="com.bitbakery.plugin.arc.ArcFindUsagesProvider"/>
         <lang.foldingBuilder language="Arc" implementationClass="com.bitbakery.plugin.arc.ArcFoldingBuilder"/>
 
-        <!--<lang.formatter language="Arc" implementationClass="com.bitbakery.plugin.arc.formatting.ArcFormattingModelBuilder"/>-->
+        <lang.formatter language="Arc" implementationClass="com.bitbakery.plugin.arc.formatting.ArcFormattingModelBuilder"/>
         <!--<fileTypeIndentOptionsProvider implementation="com.bitbakery.plugin.arc.config.ArcIndentOptionsProvider"/>-->
 
         <lang.parserDefinition language="Arc" implementationClass="com.bitbakery.plugin.arc.ArcParserDefinition"/>

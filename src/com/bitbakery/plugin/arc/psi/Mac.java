@@ -31,7 +31,7 @@ import java.util.Map;
 public class Mac extends Definition {
 
     public Mac(ASTNode node) {
-        super(node);
+        super(node, "mac");
         ASTNode[] children = node.getChildren(TokenSet.create(VARIABLE_DEFINITION));
         name = isEmpty(children) ? "mac" : children[0].getText();
     }

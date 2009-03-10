@@ -17,6 +17,7 @@ package com.bitbakery.plugin.arc;
 import com.bitbakery.plugin.arc.psi.Def;
 import com.bitbakery.plugin.arc.psi.Mac;
 import com.bitbakery.plugin.arc.psi.VariableDefinition;
+import com.bitbakery.plugin.arc.psi.Definition;
 import com.intellij.lang.documentation.DocumentationProvider;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiManager;
@@ -33,10 +34,9 @@ public class ArcDocumentationProvider implements DocumentationProvider {
 
     @Nullable
     public String getQuickNavigateInfo(PsiElement element) {
-        if (element instanceof Def) {
-            return ((Def) element).getDocstring();
-        } else if (element instanceof Mac) {
-            return ((Mac) element).getDocstring();
+        if (element instanceof Definition) {
+            Definition d = (Definition) element;
+            return d.getQuickDoc();
         }
         return null;
     }

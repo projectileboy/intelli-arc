@@ -121,6 +121,8 @@ public class ArcParserDefinition implements ParserDefinition {
             return new VariableDefinition(node);
         } else if (type == VARIABLE_REFERENCE) {
             return new VariableReference(node);
+        } else if (type == IF_BLOCK) {
+            return new If(node);
         } else if (type == LET_BLOCK) {
             return new Let(node);
         } else if (type == WITH_BLOCK) {

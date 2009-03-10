@@ -67,6 +67,20 @@ public class ArcParser implements PsiParser {
             } else if (isAt(EQ)) {
                 advance(); // Advance past = token
                 parseVarName();
+            } else if (isAt(IF)) {
+                advance(); // Advance past if token
+            } else if (isAt(LET)) {
+                advance(); // Advance past let token
+                parseBinding();
+            } else if (isAt(WITH)) {
+                advance(); // Advance past with token
+                if (isAt(LEFT_PAREN)) {
+                    advance();
+                    while (!isAt(RIGHT_PAREN)) {
+                        parseBinding();
+                    }
+                    advance();
+                }
             }
             parseBody(RIGHT_PAREN);
             done(type);
@@ -103,8 +117,14 @@ public class ArcParser implements PsiParser {
 
 
         } else {
+            // TODO - We can actually have error conditions at this point - for example, when parseNext gets called, we're not expecting a right paren, but we could get one!
             markAndAdvance(LITERAL);
         }
+    }
+   
+    private void parseBinding() {
+        parseName();
+        parseNext();
     }
 
     private void parseBody(IElementType teminator) {
@@ -230,6 +250,12 @@ public class ArcParser implements PsiParser {
             return ANONYMOUS_FUNCTION_DEFINITION;
         } else if (isAt(EQ)) {
             return VARIABLE_ASSIGNMENT;
+        } else if (isAt(IF)) {
+            return IF_BLOCK;
+        } else if (isAt(LET)) {
+            return LET_BLOCK;
+        } else if (isAt(WITH)) {
+            return WITH_BLOCK;
         }
         return EXPRESSION;
     }

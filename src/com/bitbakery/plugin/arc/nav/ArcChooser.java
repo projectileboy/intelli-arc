@@ -51,13 +51,10 @@ public class ArcChooser implements ChooseByNameContributor {
             findNames(project, contentRoot, names);
         }
 
-        // TODO - Include the notion of project libraries
-
         // ...if specified, we also want to include defs and macs in the standard Arc library files
         if (includeNonProjectItems) {
             findNames(project, fs.findFileByPath(ArcSettings.getInstance().arcHome), names);
         }
-
 
         return names.toArray(new String[names.size()]);
     }
@@ -67,10 +64,6 @@ public class ArcChooser implements ChooseByNameContributor {
     }
 
     public NavigationItem[] getItemsByName(String name, Project project, boolean includeNonProjectItems) {
-
-        // TODO - Not sure what I do here to handle defs/macs from the standard Arc library files...???
-        //    TODO - ...right now Arc library defs/macs are bing included in te symbol chooser, even when includeNonProjectItems is false. WTF???
-        
         List navItems = map.get(name);
         return (NavigationItem[]) navItems.toArray(new NavigationItem[navItems.size()]);
     }

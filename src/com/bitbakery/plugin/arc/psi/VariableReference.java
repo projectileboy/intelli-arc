@@ -19,7 +19,6 @@ import com.bitbakery.plugin.arc.config.ArcSettings;
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ProjectRootManager;
-import com.intellij.openapi.roots.ProjectFileIndex;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileManager;
@@ -82,7 +81,7 @@ public class VariableReference extends ArcElement {
                 // ...if not there, then search through the standard Arc library files
                 VirtualFile home = fs.findFileByPath(ArcSettings.getInstance().arcHome);
                 return home == null ? null : search(home.getChildren(), myElement.getProject());
-                
+
             } else if (e instanceof PsiFile) {
                 // TODO - Move this logic to the element class
                 for (PsiElement def : e.getChildren()) {
@@ -113,14 +112,11 @@ public class VariableReference extends ArcElement {
                     }
                 }
             } else if (e instanceof With) {
-
                 // TODO - Move this logic to the element class
-                // TODO - Check the variables defined by the Let/With
-                ParameterList params = PsiTreeUtil.getChildOfType(e, ParameterList.class);
-                if (params != null) {
-                    for (PsiElement param : params.getChildren()) {
-                        if (nameMatches(param)) {
-                            return param;
+                for (PsiElement el : e.getChildren()) {
+                    if (el instanceof VariableDefinition) {
+                        if (nameMatches(el)) {
+                            return el;
                         }
                     }
                 }

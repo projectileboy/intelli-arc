@@ -27,7 +27,7 @@ import javax.swing.*;
 public class Def extends Definition {
 
     public Def(ASTNode node) {
-        super(node);
+        super(node, "def");
         ASTNode[] children = node.getChildren(TokenSet.create(ArcElementTypes.VARIABLE_DEFINITION));
         name = isEmpty(children) ? "def" : children[0].getText();
     }
