@@ -30,6 +30,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/If.java" afterPath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/If.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/Mac.java" afterPath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/Mac.java" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/intelli-arc.jar" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/ArcElementTypes.java" afterPath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/psi/ArcElementTypes.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/structure/DefMacGrouper.java" afterPath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/structure/DefMacGrouper.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/config/ArcColorSettingsPage.java" afterPath="$PROJECT_DIR$/src/com/bitbakery/plugin/arc/config/ArcColorSettingsPage.java" />
@@ -156,8 +157,10 @@
       <file leaf-file-name="ArcDocumentationProvider.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcDocumentationProvider.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="37" column="35" selection-start="1490" selection-end="1490" vertical-scroll-proportion="0.2840909">
-              <folding />
+            <state line="62" column="74" selection-start="2345" selection-end="2345" vertical-scroll-proportion="0.48863637">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -841,8 +844,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/bitbakery/plugin/arc/ArcDocumentationProvider.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="35" selection-start="1490" selection-end="1490" vertical-scroll-proportion="0.2840909">
-          <folding />
+        <state line="62" column="74" selection-start="2345" selection-end="2345" vertical-scroll-proportion="0.48863637">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

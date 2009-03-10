@@ -14,9 +14,6 @@ package com.bitbakery.plugin.arc;
  *  governing permissions and limitations under the License..
  */
 
-import com.bitbakery.plugin.arc.psi.Def;
-import com.bitbakery.plugin.arc.psi.Mac;
-import com.bitbakery.plugin.arc.psi.VariableDefinition;
 import com.bitbakery.plugin.arc.psi.Definition;
 import com.intellij.lang.documentation.DocumentationProvider;
 import com.intellij.psi.PsiElement;
@@ -24,13 +21,16 @@ import com.intellij.psi.PsiManager;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.net.URLEncoder;
 
 public class ArcDocumentationProvider implements DocumentationProvider {
+
     // TODO - I needs to be configurablzzz
-    private static final String DOC_ROOT_URL = "http://www.bitbakery.com/arc-";
+    private static final String DOC_ROOT_URL = "http://practical-scheme.net/wiliki/arcxref?";
 
     @Nullable
     public String getQuickNavigateInfo(PsiElement element) {
@@ -44,25 +44,38 @@ public class ArcDocumentationProvider implements DocumentationProvider {
     @Nullable
     public String getUrlFor(PsiElement element, PsiElement originalElement) {
         // TODO - We need to be able to specify which URL we should go to, based on the file we're in
-        if (element instanceof VariableDefinition) {
-            return DOC_ROOT_URL + ((VariableDefinition) element).getName();
+        if (element instanceof Definition) {
+            try {
+                return DOC_ROOT_URL + URLEncoder.encode(((Definition) element).getName(), "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace(); // Pretty sure UTF-8 is supported... stupid Java...
+            }
         }
         return null;
     }
 
     @Nullable
     public String generateDoc(PsiElement element, PsiElement originalElement) {
-        // TODO - Make me real, somehow...? Pull from arcfn, maybe...? Plus parameter info...?
+
         StringBuffer buf = new StringBuffer();
         BufferedReader in = null;
         try {
-            URL url = new URL(DOC_ROOT_URL + ((VariableDefinition) element).getName());
+            // Screen-scrape the Arc xref wiki...  this is all (obviously) super brittle
+            URL url = new URL(getUrlFor(element, originalElement));
             in = new BufferedReader(new InputStreamReader(url.openStream()));
             String str;
+            boolean isInCode = false;
             while ((str = in.readLine()) != null) {
+                if (str.contains("<pre")) {
+                    isInCode = true;
+                } else if (str.contains("</pre")) {
+                    isInCode = false;
+                }
                 buf.append(str);
+                if (isInCode) buf.append("<br>");
             }
-            return buf.toString();
+            String s = buf.toString();
+            return s.substring(s.indexOf("<h1>"), s.indexOf("</td><td class=\"menu-strip\""));
         } catch (Exception e) {
             return null;
         } finally {
