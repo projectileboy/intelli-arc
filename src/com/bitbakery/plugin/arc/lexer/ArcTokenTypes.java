@@ -44,9 +44,9 @@ public interface ArcTokenTypes {
     IElementType COMPOSER = new ArcElementType(":");
     IElementType DOT = new ArcElementType(".");
     IElementType EQ = new ArcElementType("=");
-    IElementType BACKQUOTE = new ArcElementType("`");
 
     IElementType QUOTE = new ArcElementType("'");
+    IElementType BACKQUOTE = new ArcElementType("`");
     IElementType COMMA = new ArcElementType(",");
     IElementType COMMA_AT = new ArcElementType(",@");
     TokenSet SPECIAL_CHARACTERS = TokenSet.create(TILDE, COMPOSER, DOT, EQ, BACKQUOTE, QUOTE, COMMA, COMMA_AT);

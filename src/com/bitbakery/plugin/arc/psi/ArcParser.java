@@ -20,6 +20,7 @@ import com.intellij.lang.ASTNode;
 import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.PsiParser;
 import com.intellij.psi.tree.IElementType;
+import com.intellij.psi.tree.TokenSet;
 import com.intellij.util.containers.Stack;
 import org.jetbrains.annotations.NotNull;
 
@@ -57,73 +58,74 @@ public class ArcParser implements PsiParser {
 
     private void parseNext() {
         if (isAt(LEFT_PAREN)) {
-            markAndAdvance();
-            IElementType type = getExpressionType();
-            if (isAt(DEF) || isAt(MAC)) {
-                advance(); // Advance past def/mac token
-                parseName();
-                parseParameters();
-                parseDocstring();
-            } else if (isAt(EQ)) {
-                advance(); // Advance past = token
-                parseVarName();
-            } else if (isAt(IF)) {
-                advance(); // Advance past if token
-            } else if (isAt(LET)) {
-                advance(); // Advance past let token
-                parseBinding();
-            } else if (isAt(WITH)) {
-                advance(); // Advance past with token
-                if (isAt(LEFT_PAREN)) {
-                    advance();
-                    while (!isAt(RIGHT_PAREN)) {
-                        parseBinding();
-                    }
-                    advance();
-                }
-            }
-            parseBody(RIGHT_PAREN);
-            done(type);
-
+            parseExpression();
         } else if (isAt(LEFT_SQUARE)) {
-            markAndAdvance();
-            parseBody(RIGHT_SQUARE);
-            done(SINGLE_ARG_ANONYMOUS_FUNCTION_DEFINITION);
-
+            parseSingleArgFn();
         } else if (isAt(SYMBOL)) {
             markAndAdvance(VARIABLE_REFERENCE);
-
-
-
-
-        // TODO - The handling of macro templates is broken... what do we *want* to have happen??    
-        } else if (isAt(BACKQUOTE)){
-            markAndAdvance();
-            parseNext();
-            done(BACKQUOTED_EXPRESSION);
-        } else if (isAt(QUOTE)){
-            markAndAdvance();
-            parseNext();
-            done(QUOTED_EXPRESSION);
-        } else if (isAt(COMMA_AT)){
-            markAndAdvance();
-            parseNext();
-            done(COMMA_EXPRESSION);
-        } else if (isAt(COMMA)){
-            markAndAdvance();
-            parseNext();
-            done(COMMA_AT_EXPRESSION);
-
-
-
+        } else if (isAtMacroTemplateToken()) {
+            advance();
         } else {
             // TODO - We can actually have error conditions at this point - for example, when parseNext gets called, we're not expecting a right paren, but we could get one!
             markAndAdvance(LITERAL);
         }
     }
-   
+
+    private void parseSingleArgFn() {
+        markAndAdvance();
+        parseBody(RIGHT_SQUARE);
+        done(SINGLE_ARG_ANONYMOUS_FUNCTION_DEFINITION);
+    }
+
+    private void parseExpression() {
+        markAndAdvance();
+        IElementType type = getExpressionType();
+        if (isAt(DEF) || isAt(MAC)) {
+            advance(); // Advance past def/mac token
+            parseName();
+            parseParameters();
+            parseDocstring();
+        } else if (isAt(EQ)) {
+            advance(); // Advance past = token
+            if (isAt (SYMBOL)) {
+                markAndAdvance(VARIABLE_DEFINITION);
+            } else {
+                type = EXPRESSION;
+            }
+        } else if (isAt(IF)) {
+            advance(); // Advance past if token
+        } else if (isAt(LET)) {
+            advance(); // Advance past let token
+            parseBinding();
+        } else if (isAt(WITH)) {
+            advance(); // Advance past with token
+            if (isAt(LEFT_PAREN)) {
+                advance();
+                while (!isAt(RIGHT_PAREN)) {
+                    parseBinding();
+                }
+                advance();
+            }
+        }
+        parseBody(RIGHT_PAREN);
+        done(type);
+    }
+
+    private boolean isAtMacroTemplateToken() {
+        return isAt(BACKQUOTE) || isAt(QUOTE) || isAt(COMMA) || isAt(COMMA_AT);
+    }
+
     private void parseBinding() {
-        parseName();
+        if (isAtMacroTemplateToken()) {
+            advance();
+        }
+        
+        if (isAt(LEFT_PAREN)) {
+            parseExpression();
+        } else {
+            parseName();
+        }
+        
         parseNext();
     }
 
@@ -134,14 +136,11 @@ public class ArcParser implements PsiParser {
         advance();
     }
 
-    private void parseVarName() {
-        if (isAt (SYMBOL)) {
-            markAndAdvance(VARIABLE_DEFINITION);
-        }
-    }
-
     private void parseName() {
-        if (isAt (SYMBOL)) {
+        if (isAtMacroTemplateToken()) {
+            advance();
+        }
+        if (isAt (SYMBOL) || isIn(KEYWORDS) || isIn(SPECIAL_CHARACTERS)) { // Arc will blissfully let us redefine... anything!
             markAndAdvance(VARIABLE_DEFINITION);
         } else {
             builder.error("Expected identifier"); // TODO - Prop-ify me!!
@@ -166,6 +165,10 @@ public class ArcParser implements PsiParser {
     }
 
     private void parseParameter() {
+        if (isAtMacroTemplateToken()) {
+            advance();
+        }
+        
         if (isAt(SYMBOL)) {
             markAndAdvance(PARAMETER);
         } else if (isAt(LEFT_PAREN)) {
@@ -239,6 +242,10 @@ public class ArcParser implements PsiParser {
 
     private boolean isAt(IElementType token) {
         return builder.getTokenType() == token;
+    }
+
+    private boolean isIn(TokenSet set) {
+        return set.contains(builder.getTokenType());
     }
 
     private IElementType getExpressionType() {

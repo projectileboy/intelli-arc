@@ -34,6 +34,8 @@ public interface ArcIcons {
 
     final Icon ARC_REPL_ICON = IconLoader.findIcon(DATA_PATH + "arc-shiny-16.png");
     final Icon ARC_FILE_ICON = IconLoader.findIcon(DATA_PATH + "arc-shiny-16.png");
-    final Icon ARC_DEF_ICON = IconLoader.findIcon(DATA_PATH + "arc-def.png");
-    final Icon ARC_MAC_ICON = IconLoader.findIcon(DATA_PATH + "arc-mac.png");
+    
+    final Icon ARC_DEF_ICON = IconLoader.findIcon(DATA_PATH + "ArcDef.png");
+    final Icon ARC_MAC_ICON = IconLoader.findIcon(DATA_PATH + "ArcMac.png");
+    final Icon ARC_EQ_ICON = IconLoader.findIcon(DATA_PATH + "ArcEq.png");
 }

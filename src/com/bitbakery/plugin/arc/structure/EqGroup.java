@@ -33,13 +33,13 @@ import java.util.Collection;
  * Time: 1:11:38 PM
  * To change this template use File | Settings | File Templates.
  */
-public class MacGroup implements Group {
-    private Collection<TreeElement> macs = new ArrayList<TreeElement>();
+public class EqGroup implements Group {
+    private Collection<TreeElement> eqs = new ArrayList<TreeElement>();
 
     public ItemPresentation getPresentation() {
         return new ItemPresentation() {
             public String getPresentableText() {
-                return "Macro definitions";
+                return "Variable definitions";
             }
 
             public String getLocationString() {
@@ -47,20 +47,20 @@ public class MacGroup implements Group {
             }
 
             public Icon getIcon(boolean open) {
-                return ArcIcons.ARC_MAC_ICON;
+                return ArcIcons.ARC_EQ_ICON;
             }
 
             public TextAttributesKey getTextAttributesKey() {
-                return ArcSyntaxHighlighter.getTextAttrs(ArcTokenTypes.MAC);
+                return ArcSyntaxHighlighter.getTextAttrs(ArcTokenTypes.DEF);
             }
         };
     }
 
     public Collection<TreeElement> getChildren() {
-        return macs;
+        return eqs;
     }
 
     protected void add(TreeElement el) {
-        macs.add(el);
+        eqs.add(el);
     }
 }

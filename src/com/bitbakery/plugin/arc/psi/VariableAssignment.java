@@ -52,7 +52,7 @@ public class VariableAssignment extends Expression implements PsiNamedElement {
     }
 
     public Icon getIcon(int flags) {
-        return ArcIcons.ARC_DEF_ICON; // TODO - Create an icon for variable assignment
+        return ArcIcons.ARC_EQ_ICON;
     }
 
     // TODO - Figure out where this should really live... ArcElement, maybe??

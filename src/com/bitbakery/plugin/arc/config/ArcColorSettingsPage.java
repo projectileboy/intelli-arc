@@ -35,6 +35,8 @@ import java.util.HashMap;
 
 public class ArcColorSettingsPage implements ColorSettingsPage {
 
+    private static final ColorDescriptor[] COLORS = new ColorDescriptor[0];
+
     private static final String DEMO_TEXT =
             ";  Sample comment\n\n" +
 
@@ -52,6 +54,10 @@ public class ArcColorSettingsPage implements ColorSettingsPage {
                     "(mac macro-name (param . rest)\n" +
                     "   `(,param ,@rest))\n";
 
+    private static AttributesDescriptor createDescriptor(String msgKey, IElementType token) {
+        return new AttributesDescriptor(message(msgKey), getTextAttrs(token));
+    }
+
     private static final AttributesDescriptor[] ATTRS = new AttributesDescriptor[]{
             createDescriptor("color.settings.comment", LINE_COMMENT),
             createDescriptor("color.settings.docstring", ArcElementTypes.DOCSTRING),
@@ -65,17 +71,16 @@ public class ArcColorSettingsPage implements ColorSettingsPage {
             createDescriptor("color.settings.comma_at", COMMA_AT),
     };
 
-    private static AttributesDescriptor createDescriptor(String msgKey, IElementType token) {
-        return new AttributesDescriptor(message(msgKey), getTextAttrs(token));
+    private HashMap<String,TextAttributesKey> annotatedElementMap;
+    private ArcSyntaxHighlighter highlighter = new ArcSyntaxHighlighter();
+
+    public ArcColorSettingsPage() {
+        annotatedElementMap = new HashMap<String, TextAttributesKey>();
+        annotatedElementMap.put("doc", getTextAttrs(ArcElementTypes.DOCSTRING));
     }
-
-
-    private static final ColorDescriptor[] COLORS = new ColorDescriptor[0];
-
+    
     @Nullable
     public Map<String, TextAttributesKey> getAdditionalHighlightingTagToDescriptorMap() {
-        HashMap<String, TextAttributesKey> annotatedElementMap = new HashMap<String, TextAttributesKey>();
-        annotatedElementMap.put("doc", getTextAttrs(ArcElementTypes.DOCSTRING));
         return annotatedElementMap;
     }
 
@@ -101,7 +106,7 @@ public class ArcColorSettingsPage implements ColorSettingsPage {
 
     @NotNull
     public SyntaxHighlighter getHighlighter() {
-        return new ArcSyntaxHighlighter();
+        return highlighter;
     }
 
     @NotNull

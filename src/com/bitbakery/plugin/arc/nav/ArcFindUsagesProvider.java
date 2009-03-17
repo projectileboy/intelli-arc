@@ -1,4 +1,4 @@
-package com.bitbakery.plugin.arc;
+package com.bitbakery.plugin.arc.nav;
 
 /*
  * Copyright (c) Kurt Christensen, 2009
@@ -18,9 +18,7 @@ import com.bitbakery.plugin.arc.lexer.ArcLexer;
 import static com.bitbakery.plugin.arc.lexer.ArcTokenTypes.COMMENTS;
 import static com.bitbakery.plugin.arc.lexer.ArcTokenTypes.LITERALS;
 import static com.bitbakery.plugin.arc.psi.ArcElementTypes.VARIABLE_REFERENCE_FILTER;
-import com.bitbakery.plugin.arc.psi.Def;
-import com.bitbakery.plugin.arc.psi.Mac;
-import com.bitbakery.plugin.arc.psi.VariableDefinition;
+import com.bitbakery.plugin.arc.psi.*;
 import com.intellij.lang.cacheBuilder.DefaultWordsScanner;
 import com.intellij.lang.cacheBuilder.WordsScanner;
 import com.intellij.lang.findUsages.FindUsagesProvider;
@@ -31,6 +29,16 @@ import org.jetbrains.annotations.Nullable;
 
 /**
  * Enables the "Find Usages" feature for Arc functions and macros.
+ *
+ *
+ * TODO - <sigh>... OK... here's everything we need to fix around navigation and find usages:
+ * TODO     - I need to consistently differentiate between VariableAssignment (global var def - i.e., an = expression) and VariableDefinition
+ * TODO     - I need to be able to find usages for a VariableAssignment, a Def, and a Mac
+ * TODO     - I need to be able to find usages for a def/mac/fn/[_] parameter
+ * TODO     - I need to be able to navigate to a parameter definition from a parameter reference
+ * TODO     - If a variable is defined more than once within scope, then I need to present these as multiple target options when I'm navigating
+ * TODO     - Parameters are showing up as variable assignments, and hence being found globally - we need to do find usages - and do reference navigations - appropriately for the scope
+ * TODO     - Related to all this is the need to properly handle (or properly ignore?) macro template stuff
  */
 public class ArcFindUsagesProvider implements FindUsagesProvider {
     private WordsScanner wordsScanner;
@@ -46,10 +54,11 @@ public class ArcFindUsagesProvider implements FindUsagesProvider {
         return wordsScanner;
     }
 
-    public boolean canFindUsagesFor(@NotNull PsiElement psiElement) {
-        return psiElement instanceof Def
-                || psiElement instanceof Mac
-                || psiElement instanceof VariableDefinition;
+    public boolean canFindUsagesFor(@NotNull PsiElement el) {
+        return el instanceof Def || el.getParent() instanceof Def
+                || el instanceof Mac || el.getParent() instanceof Mac
+                || el instanceof VariableAssignment || el.getParent() instanceof VariableAssignment
+                || el instanceof Parameter;
     }
 
     @Nullable
@@ -59,12 +68,14 @@ public class ArcFindUsagesProvider implements FindUsagesProvider {
 
     @NotNull
     public String getType(@NotNull PsiElement element) {
-        if (element instanceof Def) {
-            return "def";
-        } else if (element instanceof Mac) {
-            return "mac";
-        } else if (element instanceof VariableDefinition) {
-            return "var";
+        if (element instanceof Def || element.getParent() instanceof Def) {
+            return "Function";
+        } else if (element instanceof Mac || element.getParent() instanceof Mac) {
+            return "Macro";
+        } else if (element instanceof VariableAssignment || element.getParent() instanceof VariableAssignment) {
+            return "Global variable";
+        } else if (element instanceof Parameter) {
+            return "Parameter";
         }
         return null;
     }

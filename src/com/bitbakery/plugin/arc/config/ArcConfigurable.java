@@ -58,6 +58,6 @@ public class ArcConfigurable implements Configurable {
     }
 
     public void disposeUIResources() {
-        // ??? panel = null
+        // Do nothing
     }
 }

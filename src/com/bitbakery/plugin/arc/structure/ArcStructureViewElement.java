@@ -75,7 +75,8 @@ public class ArcStructureViewElement implements StructureViewTreeElement {
 
     private boolean isBrowsableElement(PsiElement element) {
         return element instanceof Def
-                || element instanceof Mac;
+                || element instanceof Mac
+                || element instanceof VariableAssignment;
     }
 
     public ItemPresentation getPresentation() {
@@ -90,6 +91,7 @@ public class ArcStructureViewElement implements StructureViewTreeElement {
 
             public String getLocationString() {
                 return null;
+                // return myElement.getContainingFile().getName();
             }
 
             public Icon getIcon(boolean open) {

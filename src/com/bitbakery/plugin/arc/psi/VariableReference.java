@@ -103,6 +103,10 @@ public class VariableReference extends ArcElement {
                         }
                     }
                 }
+            } else if (e instanceof VariableAssignment) {
+                if (nameMatches(e)) {
+                    return e;
+                }
             } else if (e instanceof Let) {
                 VariableDefinition var = PsiTreeUtil.getChildOfType(e, VariableDefinition.class);
                 // TODO - Move this logic to the element class

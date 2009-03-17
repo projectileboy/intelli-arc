@@ -84,33 +84,16 @@ public class NewArcFileAction extends CreateElementActionBase {
         presentation.setVisible(true);
     }
 
-    public static boolean isUnderSourceRoots(final AnActionEvent e) {
-        final DataContext context = e.getDataContext();
-        final IdeView view = (IdeView) context.getData(DataKeys.IDE_VIEW.getName());
-        final Project project = (Project) context.getData(DataKeys.PROJECT.getName());
-        if (view != null && project != null) {
-            ProjectFileIndex projectFileIndex = ProjectRootManager.getInstance(project).getFileIndex();
-            PsiDirectory[] dirs = view.getDirectories();
-            for (PsiDirectory dir : dirs) {
-                PsiPackage aPackage = JavaDirectoryService.getInstance().getPackage(dir);
-                if (projectFileIndex.isInSourceContent(dir.getVirtualFile()) && aPackage != null) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
 
     @NotNull
     protected PsiElement[] create(String newName, PsiDirectory directory) throws Exception {
         return doCreate(newName, directory);
     }
 
-    protected static PsiFile createFileFromTemplate(final PsiDirectory directory, String className, @NonNls String templateName,
+    protected static PsiFile createFileFromTemplate(final PsiDirectory directory, String name, @NonNls String templateName,
                                                     @NonNls String... parameters) throws IncorrectOperationException {
         return ArcTemplatesFactory.createFromTemplate(
-                directory, className, className + ArcFileType.EXTENSION, templateName, parameters);
+                directory, name, name + "." + ArcFileType.EXTENSION, templateName, parameters);
     }
 
 
@@ -124,6 +107,6 @@ public class NewArcFileAction extends CreateElementActionBase {
 
     @NotNull
     protected PsiElement[] doCreate(String newName, PsiDirectory directory) throws Exception {
-        return new PsiElement[]{createFileFromTemplate(directory, newName, "/templates/ArcFile.arc")};
+        return new PsiElement[]{createFileFromTemplate(directory, newName, "ArcFile.arc")};
     }
 }

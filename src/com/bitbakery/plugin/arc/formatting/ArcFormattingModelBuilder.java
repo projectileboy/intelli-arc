@@ -33,9 +33,8 @@ public class ArcFormattingModelBuilder implements FormattingModelBuilder {
     @NotNull
     public FormattingModel createModel(final PsiElement element, final CodeStyleSettings settings) {
         PsiFile file = element.getContainingFile();
-        ASTNode node = file.getNode();
         return FormattingModelProvider.createFormattingModelForPsiFile(file,
-                new ArcBlock(node, null, Indent.getAbsoluteNoneIndent(), null, settings), settings);
+                new ArcBlock(file.getNode(), null, Indent.getAbsoluteNoneIndent(), null, settings), settings);
     }
 
     @Nullable

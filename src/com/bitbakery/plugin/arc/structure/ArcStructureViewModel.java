@@ -16,6 +16,7 @@ package com.bitbakery.plugin.arc.structure;
 
 import com.bitbakery.plugin.arc.psi.Def;
 import com.bitbakery.plugin.arc.psi.Mac;
+import com.bitbakery.plugin.arc.psi.VariableAssignment;
 import com.intellij.ide.structureView.StructureViewTreeElement;
 import com.intellij.ide.structureView.TextEditorBasedStructureViewModel;
 import com.intellij.ide.util.treeView.smartTree.Filter;
@@ -29,7 +30,7 @@ import org.jetbrains.annotations.NotNull;
  */
 public class ArcStructureViewModel extends TextEditorBasedStructureViewModel {
     private PsiFile myFile;
-    private Filter[] filters = new Filter[]{new DefFilter(), new MacFilter()};
+    private Filter[] filters = new Filter[]{new DefFilter(), new MacFilter(), new EqFilter()};
     private Grouper[] groupers = new Grouper[]{new DefMacGrouper()};
 
     public ArcStructureViewModel(final PsiFile file) {
@@ -64,6 +65,6 @@ public class ArcStructureViewModel extends TextEditorBasedStructureViewModel {
 
     @NotNull
     protected Class[] getSuitableClasses() {
-        return new Class[]{Def.class, Mac.class};
+        return new Class[]{Def.class, Mac.class, VariableAssignment.class};
     }
 }

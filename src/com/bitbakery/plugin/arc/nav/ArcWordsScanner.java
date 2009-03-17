@@ -1,4 +1,4 @@
-package com.bitbakery.plugin.arc;
+package com.bitbakery.plugin.arc.nav;
 
 /*
  * Copyright (c) Kurt Christensen, 2009

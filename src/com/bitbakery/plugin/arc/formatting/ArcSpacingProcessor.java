@@ -35,24 +35,24 @@ public class ArcSpacingProcessor {
     private static final Spacing NO_SPACING_WITH_NEWLINE = Spacing.createSpacing(0, 0, 0, true, 1);
     private static final Spacing COMMON_SPACING = Spacing.createSpacing(1, 1, 0, true, 100);
 
-    public static Spacing getSpacing(Block child1, Block child2) {
-        if (!(child1 instanceof ArcBlock) || !(child2 instanceof ArcBlock)) return null;
+    public static Spacing getSpacing(Block left, Block right) {
+        if (!(left instanceof ArcBlock) || !(right instanceof ArcBlock)) return null;
 
-        IElementType type1 = ((ArcBlock) child1).getNode().getElementType();
-        IElementType type2 = ((ArcBlock) child2).getNode().getElementType();
+        IElementType leftType = ((ArcBlock) left).getNode().getElementType();
+        IElementType rightType = ((ArcBlock) right).getNode().getElementType();
 
-        if (MACRO_MODIFIERS.contains(type1)) {
+        if (MACRO_MODIFIERS.contains(leftType)) {
             return NO_SPACING;
         }
 
-        String text1 = ((ArcBlock) child1).getNode().getText();
-        String text2 = ((ArcBlock) child2).getNode().getText();
+        String leftText = ((ArcBlock) left).getNode().getText();
+        String rightText = ((ArcBlock) right).getNode().getText();
 
-        if (text1.trim().startsWith(",") || text2.trim().startsWith(",")) {
+        if (leftText.trim().startsWith(",") || rightText.trim().startsWith(",")) {
             return null;
         }
 
-        if (BRACES.contains(type1) || BRACES.contains(type2)) {
+        if (BRACES.contains(leftType) || BRACES.contains(rightType)) {
             return NO_SPACING_WITH_NEWLINE;
         }
 

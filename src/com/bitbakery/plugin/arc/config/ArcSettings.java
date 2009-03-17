@@ -28,11 +28,13 @@ import com.intellij.util.xmlb.XmlSerializerUtil;
         name = "ArcSettings",
         storages = {
                 @Storage(
-                        id = "main",
+                        id = "arc",
                         file = "$APP_CONFIG$/arc-settings.xml"
                 )}
 )
 public class ArcSettings implements PersistentStateComponent<ArcSettings>, RoamingTypeDisabled {
+
+    private static ArcSettings instance = new ArcSettings();
 
     public String arcHome = "";
     public String mzSchemeHome = "";

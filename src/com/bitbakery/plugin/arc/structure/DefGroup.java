@@ -39,7 +39,7 @@ public class DefGroup implements Group {
     public ItemPresentation getPresentation() {
         return new ItemPresentation() {
             public String getPresentableText() {
-                return "def group";
+                return "Function definitions";
             }
 
             public String getLocationString() {

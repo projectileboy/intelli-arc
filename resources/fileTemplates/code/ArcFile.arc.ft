@@ -1,0 +1,12 @@
+;;;; ${NAME}
+;;;; ${DATE}
+
+(= single-arg-fn [+ _ 1])
+
+(def some-function (param1 param2 (o optional-param "default value"))
+    "Function description"
+    (do something))
+
+(mac some-macro (param1 param2 (o optional-param "default value"))
+    "Macro description"
+    (do something))

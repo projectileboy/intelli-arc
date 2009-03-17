@@ -276,15 +276,6 @@ public class ReplToolWindow implements ProjectComponent {
                 }
             });
 
-/* TODO - I may want this, but right now it pukes when you "Run Selected Text" from the editor and the result is an error...
-            ed.getContentComponent().addFocusListener(new FocusAdapter() {
-                public void focusGained(FocusEvent event) {
-                    // TODO - This is probably wrong, actually, but it's a start...
-                    ed.getCaretModel().moveToOffset(view.getContentSize());
-                    ed.getScrollingModel().scrollToCaret(ScrollType.MAKE_VISIBLE);
-                }
-            });
-*/
 
             // TODO - Experimental... Play around with what widgetry we'd like to see in the REPL
             ed.getSettings().setSmartHome(true);
@@ -342,6 +333,7 @@ public class ReplToolWindow implements ProjectComponent {
         }
 
         public void close() {
+            view.print("(quit)\r\n", ConsoleViewContentType.USER_INPUT);
             if (processHandler != null) {
                 processHandler.destroyProcess();
             }

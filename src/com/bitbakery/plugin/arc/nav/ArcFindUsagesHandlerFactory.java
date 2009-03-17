@@ -1,4 +1,4 @@
-package com.bitbakery.plugin.arc;
+package com.bitbakery.plugin.arc.nav;
 
 import com.intellij.find.findUsages.FindUsagesHandlerFactory;
 import com.intellij.find.findUsages.FindUsagesHandler;

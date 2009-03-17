@@ -17,6 +17,7 @@ package com.bitbakery.plugin.arc.structure;
 import com.bitbakery.plugin.arc.ArcIcons;
 import com.bitbakery.plugin.arc.psi.Def;
 import com.bitbakery.plugin.arc.psi.Mac;
+import com.bitbakery.plugin.arc.psi.VariableAssignment;
 import com.intellij.ide.structureView.StructureViewTreeElement;
 import com.intellij.ide.util.treeView.AbstractTreeNode;
 import com.intellij.ide.util.treeView.smartTree.ActionPresentation;
@@ -42,6 +43,7 @@ public class DefMacGrouper implements Grouper {
 
             DefGroup defs = new DefGroup();
             MacGroup macs = new MacGroup();
+            EqGroup eqs = new EqGroup();
 
             for (TreeElement el : children) {
                 if (el instanceof StructureViewTreeElement) {
@@ -50,12 +52,15 @@ public class DefMacGrouper implements Grouper {
                         defs.add(el);
                     } else if (svel.getValue() instanceof Mac) {
                         macs.add(el);
+                    } else if (svel.getValue() instanceof VariableAssignment) {
+                        eqs.add(el);
                     }
                 }
             }
 
             groups.add(defs);
             groups.add(macs);
+            groups.add(eqs);
 
             return groups;
         }
@@ -66,11 +71,11 @@ public class DefMacGrouper implements Grouper {
     public ActionPresentation getPresentation() {
         return new ActionPresentation() {
             public String getText() {
-                return "def/mac grouper";
+                return "def/mac/= grouper";
             }
 
             public String getDescription() {
-                return "def/mac grouper";
+                return "def/mac/= grouper";
             }
 
             public Icon getIcon() {
@@ -81,6 +86,6 @@ public class DefMacGrouper implements Grouper {
 
     @NotNull
     public String getName() {
-        return "def/mac grouper";
+        return "def/mac/= grouper";
     }
 }

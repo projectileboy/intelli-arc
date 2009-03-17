@@ -30,13 +30,38 @@
 
     <change-notes>
         <![CDATA[
-                0.4 - 2009.02.25<br>
-                * Added tabbed REPL<br>
-                * Added macroexpansion action<br>
-                * Greatly improved parsing<br>
-                * Added support for CL-style docstrings; when available, these show up as documentation
-                * Added quick navigation via cmd-N - this is one of my personal favorites thus far
-                * Added navigation from variable references to variable definitions, which includes defs and macs
+                <b>Version 0.4 - 2009.03.11</b>
+                <ul>
+                <li>Added tabbed REPL</li>
+                <li>Added macroexpansion action</li>
+                <li>Greatly improved parsing</li>
+                <li>Added support for CL-style docstrings; when available, these show up as documentation</li>
+                <li>Added support for external documentation, scraped from the Practical Scheme Arc xref wiki</li>
+                <li>Added quick navigation via cmd-N - this is one of my personal favorites thus far</li>
+                <li>Added navigation from variable references to variable definitions, which includes defs and macs</li>
+                </ul>
+                <br/>
+
+                <b>Version 0.3 - 2008.03.26</b>
+                <ul>
+                <li>xxx</li>
+                </ul>
+                <br/>
+
+                <b>Version 0.2 - 2008.03.14</b>
+                <ul>
+                <li>xxx</li>
+                </ul>
+                <br/>
+
+                <b>Version 0.1 - 2008.03.11</b>
+                <ul>
+ 	            <li>Simple syntax highlighting, with customizable fonts and colors</li>
+ 	            <li>Arc REPL</li>
+ 	            <li>Run selected code (option-R on the Mac, although this is customizable)</li>
+ 	            <li>Load current file  (option-L on the Mac, although this is customizable)</li>
+ 	            <li>Simple structure view, showing function and macro definitions in the current file</li>
+                </ul>
         ]]>
     </change-notes>
 
@@ -49,16 +74,12 @@
         <annotator language="Arc" implementationClass="com.bitbakery.plugin.arc.ArcAnnotator"/>
         <syntaxHighlighter key="Arc" implementationClass="com.bitbakery.plugin.arc.ArcSyntaxHighlighter"/>
 
+        <!--<codeStyleSettingsProvider language="Arc" implementation="com.bitbakery.plugin.arc.config.ArcCodeStyleSettingsProvider"/>-->
         <colorSettingsPage implementation="com.bitbakery.plugin.arc.config.ArcColorSettingsPage"/>
 
-        <findUsagesHandlerFactory implementation="com.bitbakery.plugin.arc.ArcFindUsagesHandlerFactory"/>
+        <findUsagesHandlerFactory implementation="com.bitbakery.plugin.arc.nav.ArcFindUsagesHandlerFactory"/>
 
-<!--
-        <configurationType implementation="org.jetbrains.plugins.clojure.runner.ClojureScriptRunConfigurationType"/>
-        <configurationProducer
-                implementation="org.jetbrains.plugins.clojure.runner.ClojureScriptRunConfigurationProducer"/>
--->
-        <!-- TODO <fileTemplateGroup implementation="com.bitbakery.plugin.arc.templates.ArcTemplatesFactory"/>-->
+        <fileTemplateGroup implementation="com.bitbakery.plugin.arc.templates.ArcTemplatesFactory"/>
         <liveTemplateContext implementation="com.bitbakery.plugin.arc.templates.ArcTemplateContextType"/>
 
         <gotoSymbolContributor implementation="com.bitbakery.plugin.arc.nav.ArcChooser"/>
@@ -67,32 +88,20 @@
         <lang.commenter language="Arc" implementationClass="com.bitbakery.plugin.arc.ArcCommenter"/>
         <lang.documentationProvider language="Arc"
                                     implementationClass="com.bitbakery.plugin.arc.ArcDocumentationProvider"/>
-        <lang.findUsagesProvider language="Arc" implementationClass="com.bitbakery.plugin.arc.ArcFindUsagesProvider"/>
+        <lang.findUsagesProvider language="Arc" implementationClass="com.bitbakery.plugin.arc.nav.ArcFindUsagesProvider"/>
         <lang.foldingBuilder language="Arc" implementationClass="com.bitbakery.plugin.arc.ArcFoldingBuilder"/>
 
         <lang.formatter language="Arc" implementationClass="com.bitbakery.plugin.arc.formatting.ArcFormattingModelBuilder"/>
-        <!--<fileTypeIndentOptionsProvider implementation="com.bitbakery.plugin.arc.config.ArcIndentOptionsProvider"/>-->
+        <fileTypeIndentOptionsProvider implementation="com.bitbakery.plugin.arc.config.ArcIndentOptionsProvider"/>
 
         <lang.parserDefinition language="Arc" implementationClass="com.bitbakery.plugin.arc.ArcParserDefinition"/>
         <lang.psiStructureViewFactory language="Arc"
-                                      implementationClass="com.bitbakery.plugin.arc.ArcStructureViewBuilderFactory"/>
+                                      implementationClass="com.bitbakery.plugin.arc.structure.ArcStructureViewBuilderFactory"/>
 
 
         <applicationConfigurable implementation="com.bitbakery.plugin.arc.config.ArcConfigurable"/>
         <applicationService serviceInterface="com.bitbakery.plugin.arc.config.ArcSettings"
                             serviceImplementation="com.bitbakery.plugin.arc.config.ArcSettings"/>
-
-
-        <!--
-                <quoteHandler fileType="Clojure" className="org.jetbrains.plugins.clojure.editor.ClojureQuoteHandler"/>
-                <gotoSymbolContributor implementation="org.jetbrains.plugins.clojure.gotoclass.ClGoToSymbolContributor"/>
-
-                <stubElementTypeHolder class="org.jetbrains.plugins.clojure.parser.ClojureElementTypes"/>
-                <stubIndex implementation="org.jetbrains.plugins.clojure.psi.stubs.index.ClDefNameIndex"/>
-
-                <extendWordSelectionHandler implementation="org.jetbrains.plugins.clojure.editor.selection.ClojureListSelectioner"/>
-                <extendWordSelectionHandler implementation="org.jetbrains.plugins.clojure.editor.selection.ClojureLiteralSelectioner"/>
-        -->
 
     </extensions>
 

@@ -107,7 +107,7 @@ public class ArcBlock implements Block {
         if (psiParent instanceof ArcFile) {
             return new ChildAttributes(Indent.getNoneIndent(), null);
         }
-        if (ArcElementTypes.LIST_LIKE_FORMS.contains(astNode.getElementType())) {
+        if (ArcElementTypes.EXPRESSIONS.contains(astNode.getElementType())) {
             return new ChildAttributes(Indent.getNormalIndent(), null);
         }
         return new ChildAttributes(Indent.getNoneIndent(), null);

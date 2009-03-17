@@ -17,9 +17,9 @@ package com.bitbakery.plugin.arc.formatting;
 import com.intellij.formatting.Indent;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
-import com.bitbakery.plugin.arc.psi.ArcElementTypes;
 import com.bitbakery.plugin.arc.psi.ArcFile;
-import com.bitbakery.plugin.arc.lexer.ArcTokenTypes;
+import static com.bitbakery.plugin.arc.psi.ArcElementTypes.*;
+import static com.bitbakery.plugin.arc.lexer.ArcTokenTypes.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -38,10 +38,8 @@ public class ArcIndentProcessor {
         }
 
         ASTNode node = parent.getNode();
-        if (ArcElementTypes.LIST_LIKE_FORMS.contains(node.getElementType())) {
-            if (ArcTokenTypes.BRACES.contains(child.getElementType())) {
-                return Indent.getNoneIndent();
-            } else {
+        if (EXPRESSIONS.contains(node.getElementType())) {
+            if (!BRACES.contains(child.getElementType())) {
                 return Indent.getNormalIndent();
             }
         }
