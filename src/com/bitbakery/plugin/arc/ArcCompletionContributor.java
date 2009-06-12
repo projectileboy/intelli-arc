@@ -1,5 +1,9 @@
 package com.bitbakery.plugin.arc;
 
+import com.intellij.codeInsight.completion.CompletionContributor;
+import com.intellij.codeInsight.completion.CompletionParameters;
+import com.intellij.codeInsight.completion.CompletionResultSet;
+
 /*
  * Copyright (c) Kurt Christensen, 2009
  *
@@ -14,12 +18,13 @@ package com.bitbakery.plugin.arc;
  *  governing permissions and limitations under the License..
  */
 
-import com.intellij.lang.Language;
+/**
+ * This would be our hook into any special handling for code completion.
+ */
+public class ArcCompletionContributor extends CompletionContributor {
 
-
-public class ArcLanguage extends Language {
-    public ArcLanguage() {
-        super("Arc");
+    @Override
+    public boolean fillCompletionVariants(CompletionParameters parameters, CompletionResultSet result) {
+        return super.fillCompletionVariants(parameters, result);
     }
 }
-

@@ -57,7 +57,7 @@ public class ArcTemplatesFactory implements FileTemplateGroupDescriptorFactory {
                                              @NonNls String... parameters) throws IncorrectOperationException {
         FileTemplateManager tMgr = FileTemplateManager.getInstance();
         try {
-            FileTemplate template = tMgr.getCodeTemplate(templateName);
+            FileTemplate template = tMgr.getTemplate(templateName);
             String text = template.getText(defineTemplateProperties(name, parameters));
             PsiFile file = PsiFileFactory.getInstance(directory.getProject()).createFileFromText(fileName, text);
             return (PsiFile) directory.add(file);

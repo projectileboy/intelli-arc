@@ -44,7 +44,7 @@ public abstract class Definition extends VariableAssignment {
 
         String docstring = getDocstring();
         buf.append(docstring == null ? "" : "\r\n" + docstring);
-        
+
         return buf.toString();
     }
 
@@ -69,6 +69,14 @@ public abstract class Definition extends VariableAssignment {
             return restParamCount > 0 ? Integer.MAX_VALUE : (getMinParameterCount() + optionalParamCount);
         }
         return 0;
+    }
+
+    public String getParameterString() {
+        ASTNode[] params = getParams();
+        if (params.length > 0) {
+            return params[0].getText();
+        }
+        return "";
     }
 
     public boolean isValidParameterCount(int actualParamCount) {

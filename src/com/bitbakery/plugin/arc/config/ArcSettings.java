@@ -19,7 +19,6 @@ import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
 import com.intellij.openapi.util.RoamingTypeDisabled;
-import com.intellij.util.xmlb.XmlSerializerUtil;
 
 /**
  * Intelli-Arc configuration settings
@@ -45,7 +44,9 @@ public class ArcSettings implements PersistentStateComponent<ArcSettings>, Roami
     }
 
     public void loadState(ArcSettings that) {
-        XmlSerializerUtil.copyBean(that, this);
+        this.arcHome = that.arcHome;
+        this.mzSchemeHome = that.mzSchemeHome;
+        this.arcInitializationFile = that.arcInitializationFile;
     }
 
     public static ArcSettings getInstance() {

@@ -260,7 +260,11 @@
   <component name="ProjectDetails">
     <option name="projectName" value="intelli-arc" />
   </component>
-  <component name="ProjectFileVersion" converted="true" />
+  <component name="ProjectFileVersion" converted="true">
+    <converter id="javaee-modules" />
+    <converter id="ror-modules" />
+    <converter id="SelenaRunConfToDiana" />
+  </component>
   <component name="ProjectKey">
     <option name="state" value="project:///Users/kurtc/dev/intelli-arc/intelli-arc.ipr" />
   </component>
@@ -269,7 +273,7 @@
       <module fileurl="file://$PROJECT_DIR$/intelli-arc.iml" filepath="$PROJECT_DIR$/intelli-arc.iml" />
     </modules>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_5" assert-keyword="true" jdk-15="true" project-jdk-name="IDEA 9757" project-jdk-type="IDEA JDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_5" assert-keyword="true" jdk-15="true" project-jdk-name="IDEA 9852" project-jdk-type="IDEA JDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
   <component name="RUBY_DOC_SETTINGS">

@@ -14,11 +14,10 @@ package com.bitbakery.plugin.arc.config;
  *  governing permissions and limitations under the License..
  */
 
+import static com.bitbakery.plugin.arc.ArcStrings.message;
 import com.intellij.ide.BrowserUtil;
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.ui.TextFieldWithBrowseButton;
-import com.bitbakery.plugin.arc.ArcStrings;
-import static com.bitbakery.plugin.arc.ArcStrings.message;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
@@ -34,26 +33,33 @@ public class ArcConfigPanel {
     private TextFieldWithBrowseButton arcInitializationFileField;
     private JLabel arcUrl;
     private JLabel mzSchemeUrl;
+    private JLabel arcTutorialUrl;
+
 
     public ArcConfigPanel() {
-        arcHomeField.addBrowseFolderListener(message("plugin.name"), message("plugin.name"), null,
-                new FileChooserDescriptor(false, true, false, false, false, false));
-        mzSchemeHomeField.addBrowseFolderListener(message("plugin.name"), message("plugin.name"), null,
-                new FileChooserDescriptor(false, true, false, false, false, false));
-        arcInitializationFileField.addBrowseFolderListener(message("plugin.name"), message("plugin.name"), null,
-                new FileChooserDescriptor(true, false, false, false, false, false));
+        String msg = message("plugin.name");
+
+        arcHomeField.addBrowseFolderListener(msg, msg, null, new Chooser(false, true));
+        mzSchemeHomeField.addBrowseFolderListener(msg, msg, null, new Chooser(false, true));
+        arcInitializationFileField.addBrowseFolderListener(msg, msg, null, new Chooser(false, true));
 
         enableHyperlink(arcUrl);
         enableHyperlink(mzSchemeUrl);
+        enableHyperlink(arcTutorialUrl);
     }
 
     private void enableHyperlink(final JLabel label) {
         label.addMouseListener(new MouseAdapter() {
-            private Color textColor = label.getForeground();
+            private Color textColor;
+
+            {
+                label.setForeground(Color.BLUE);
+                textColor = label.getForeground();
+            }
 
             public void mouseEntered(MouseEvent mouseEvent) {
                 label.setCursor(getPredefinedCursor(HAND_CURSOR));
-                label.setForeground(Color.BLUE);
+                label.setForeground(Color.DARK_GRAY);
             }
 
             public void mouseExited(MouseEvent mouseEvent) {
@@ -87,5 +93,11 @@ public class ArcConfigPanel {
         settings.arcHome = arcHomeField.getText();
         settings.mzSchemeHome = mzSchemeHomeField.getText();
         settings.arcInitializationFile = arcInitializationFileField.getText();
+    }
+
+    private static class Chooser extends FileChooserDescriptor {
+        public Chooser(boolean chooseFiles, boolean chooseFolders) {
+            super(chooseFiles, chooseFolders, false, false, false, false);
+        }
     }
 }

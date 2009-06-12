@@ -101,8 +101,6 @@ public class ReplToolWindow implements ProjectComponent {
                     @Override
                     public void onTextAvailable(ProcessEvent event, Key outputType) {
                         try {
-                            // TODO - I'm getting broken pipe exceptions... perhaps multiple threads are clobbering each others' pipes?
-                            // TODO  - And if we do that, do we need to sync the write and/or read calls? Maybe?
                             pipeOut.write(event.getText());
                             pipeOut.flush();
                             pipeOut.close();
@@ -121,7 +119,7 @@ public class ReplToolWindow implements ProjectComponent {
                     buf.append(str);
                 }
                 buf.delete(0, 5); // Remove the 'arc> ' prefix
-                
+
                 repl.processHandler.removeProcessListener(processListener);
 
                 return buf.toString().trim();

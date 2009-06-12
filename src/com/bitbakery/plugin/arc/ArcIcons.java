@@ -26,16 +26,16 @@ public interface ArcIcons {
     @NonNls
     final String DATA_PATH = "/icons/";
 
-    final Icon ARC_LARGE_ICON = IconLoader.findIcon(DATA_PATH + "arc-shiny-128.png");
+    final Icon ARC_LARGE_ICON = IconLoader.findIcon(DATA_PATH + "arc128.png");
 
-    final Icon ARC_MODULE_TYPE_ICON = IconLoader.findIcon(DATA_PATH + "arc-shiny-24.png");
+    final Icon ARC_MODULE_TYPE_ICON = IconLoader.findIcon(DATA_PATH + "arc24.png");
 
-    final Icon ARC_CONFIG_ICON = IconLoader.findIcon(DATA_PATH + "arc-shiny-32.png");
+    final Icon ARC_CONFIG_ICON = IconLoader.findIcon(DATA_PATH + "arc32.png");
 
-    final Icon ARC_REPL_ICON = IconLoader.findIcon(DATA_PATH + "arc-shiny-16.png");
-    final Icon ARC_FILE_ICON = IconLoader.findIcon(DATA_PATH + "arc-shiny-16.png");
-    
-    final Icon ARC_DEF_ICON = IconLoader.findIcon(DATA_PATH + "ArcDef.png");
-    final Icon ARC_MAC_ICON = IconLoader.findIcon(DATA_PATH + "ArcMac.png");
-    final Icon ARC_EQ_ICON = IconLoader.findIcon(DATA_PATH + "ArcEq.png");
+    final Icon ARC_REPL_ICON = IconLoader.findIcon(DATA_PATH + "arc16.png");
+    final Icon ARC_FILE_ICON = IconLoader.findIcon(DATA_PATH + "arc16.png");
+
+    final Icon ARC_DEF_ICON = IconLoader.findIcon(DATA_PATH + "arc16.png");
+    final Icon ARC_MAC_ICON = IconLoader.findIcon(DATA_PATH + "mac16.png");
+    final Icon ARC_EQ_ICON = IconLoader.findIcon(DATA_PATH + "mac16.png");
 }

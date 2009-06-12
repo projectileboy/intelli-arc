@@ -16,7 +16,6 @@ package com.bitbakery.plugin.arc.structure;
 
 import com.bitbakery.plugin.arc.ArcIcons;
 import com.bitbakery.plugin.arc.ArcSyntaxHighlighter;
-import com.bitbakery.plugin.arc.lexer.ArcTokenTypes;
 import com.intellij.ide.util.treeView.smartTree.Group;
 import com.intellij.ide.util.treeView.smartTree.TreeElement;
 import com.intellij.navigation.ItemPresentation;
@@ -27,11 +26,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * Created by IntelliJ IDEA.
- * User: kurtc
- * Date: Mar 8, 2009
- * Time: 1:11:38 PM
- * To change this template use File | Settings | File Templates.
+ * Groups macro definitions for the structure view
  */
 public class MacGroup implements Group {
     private Collection<TreeElement> macs = new ArrayList<TreeElement>();
@@ -51,7 +46,7 @@ public class MacGroup implements Group {
             }
 
             public TextAttributesKey getTextAttributesKey() {
-                return ArcSyntaxHighlighter.getTextAttrs(ArcTokenTypes.MAC);
+                return ArcSyntaxHighlighter.MAC;
             }
         };
     }

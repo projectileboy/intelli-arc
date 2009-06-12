@@ -16,7 +16,6 @@ package com.bitbakery.plugin.arc.structure;
 
 import com.bitbakery.plugin.arc.ArcIcons;
 import com.bitbakery.plugin.arc.ArcSyntaxHighlighter;
-import com.bitbakery.plugin.arc.lexer.ArcTokenTypes;
 import com.intellij.ide.util.treeView.smartTree.Group;
 import com.intellij.ide.util.treeView.smartTree.TreeElement;
 import com.intellij.navigation.ItemPresentation;
@@ -51,7 +50,7 @@ public class EqGroup implements Group {
             }
 
             public TextAttributesKey getTextAttributesKey() {
-                return ArcSyntaxHighlighter.getTextAttrs(ArcTokenTypes.DEF);
+                return ArcSyntaxHighlighter.DEF;
             }
         };
     }

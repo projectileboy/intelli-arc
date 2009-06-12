@@ -2,7 +2,6 @@ package com.bitbakery.plugin.arc.structure;
 
 import com.bitbakery.plugin.arc.ArcIcons;
 import com.bitbakery.plugin.arc.ArcSyntaxHighlighter;
-import com.bitbakery.plugin.arc.lexer.ArcTokenTypes;
 import com.intellij.ide.util.treeView.smartTree.Group;
 import com.intellij.ide.util.treeView.smartTree.TreeElement;
 import com.intellij.navigation.ItemPresentation;
@@ -27,11 +26,7 @@ import java.util.Collection;
  */
 
 /**
- * Created by IntelliJ IDEA.
- * User: kurtc
- * Date: Mar 8, 2009
- * Time: 1:11:38 PM
- * To change this template use File | Settings | File Templates.
+ * Groups function definitions for the structure view
  */
 public class DefGroup implements Group {
     private Collection<TreeElement> defs = new ArrayList<TreeElement>();
@@ -51,7 +46,7 @@ public class DefGroup implements Group {
             }
 
             public TextAttributesKey getTextAttributesKey() {
-                return ArcSyntaxHighlighter.getTextAttrs(ArcTokenTypes.DEF);
+                return ArcSyntaxHighlighter.DEF;
             }
         };
     }

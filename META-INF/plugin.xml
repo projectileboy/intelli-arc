@@ -30,15 +30,25 @@
 
     <change-notes>
         <![CDATA[
-                <b>Version 0.4 - 2009.03.11</b>
+                <b>KNOWN ISSUES</b>
+                <ul>
+ 	            <li>The plugin is blowing the heap if you open the settings dialog and do... much of anything for very long.
+ 	                Admittedly, this is pretty horrible. But open it once, set your Arc and MzScheme home settings,
+ 	                and hopefully you shouldn't have to go back in. This is the number one priority bug right now.</li>
+ 	            <li>Find usages for def/mac only works if the cursor is at the leading left paren</li>
+ 	            <li>Auto code formatting doesn't work great, and is not yet customizable</li>
+                </ul>
+
+                <b>Version 0.4 - 2009.06.11</b>
                 <ul>
                 <li>Added tabbed REPL</li>
                 <li>Added macroexpansion action</li>
                 <li>Greatly improved parsing</li>
-                <li>Added support for CL-style docstrings; when available, these show up as documentation</li>
+                <li>Added support for CL-style docstrings; when available, these show up in the tooltops when you shift-mouse over a variable reference</li>
                 <li>Added support for external documentation, scraped from the Practical Scheme Arc xref wiki</li>
-                <li>Added quick navigation via cmd-N - this is one of my personal favorites thus far</li>
-                <li>Added navigation from variable references to variable definitions, which includes defs and macs</li>
+                <li>Added quick navigation via cmd-N</li>
+                <li>Added navigation from variable references to variable definitions (def/mac/=)</li>
+                <li>Added simple code completion (and note that code preview (cmd-shift-I) works from within the code completion popup!)</li>
                 </ul>
                 <br/>
 
@@ -68,43 +78,45 @@
     <resource-bundle>com.bitbakery.plugin.arc.ArcStrings</resource-bundle>
 
     <extensions defaultExtensionNs="com.intellij">
+        <colorSettingsPage implementation="com.bitbakery.plugin.arc.config.ArcColorSettingsPage"/>
+
+        <applicationConfigurable implementation="com.bitbakery.plugin.arc.config.ArcConfigurable"/>
+        <applicationService serviceInterface="com.bitbakery.plugin.arc.config.ArcSettings"
+                            serviceImplementation="com.bitbakery.plugin.arc.config.ArcSettings"/>
+
         <!-- <errorHandler implementation="com.intellij.diagnostic.ITNReporter"/> -->
         <fileTypeFactory implementation="com.bitbakery.plugin.arc.ArcFileTypeLoader"/>
 
         <annotator language="Arc" implementationClass="com.bitbakery.plugin.arc.ArcAnnotator"/>
         <syntaxHighlighter key="Arc" implementationClass="com.bitbakery.plugin.arc.ArcSyntaxHighlighter"/>
 
-        <!--<codeStyleSettingsProvider language="Arc" implementation="com.bitbakery.plugin.arc.config.ArcCodeStyleSettingsProvider"/>-->
-        <colorSettingsPage implementation="com.bitbakery.plugin.arc.config.ArcColorSettingsPage"/>
+        <!--<codeStyleSettingsProvider  implementation="com.bitbakery.plugin.arc.config.ArcCodeStyleSettingsProvider"/>-->
 
-        <findUsagesHandlerFactory implementation="com.bitbakery.plugin.arc.nav.ArcFindUsagesHandlerFactory"/>
+        <completion.contributor implementation="com.bitbakery.plugin.arc.ArcCompletionContributor"/>
+        <indexPatternBuilder implementation="com.bitbakery.plugin.arc.ArcIndexPatternBuilder"/>
 
         <fileTemplateGroup implementation="com.bitbakery.plugin.arc.templates.ArcTemplatesFactory"/>
         <liveTemplateContext implementation="com.bitbakery.plugin.arc.templates.ArcTemplateContextType"/>
 
+        <gotoClassContributor implementation="com.bitbakery.plugin.arc.nav.ArcChooser"/>
         <gotoSymbolContributor implementation="com.bitbakery.plugin.arc.nav.ArcChooser"/>
 
         <lang.braceMatcher language="Arc" implementationClass="com.bitbakery.plugin.arc.ArcBraceMatcher"/>
         <lang.commenter language="Arc" implementationClass="com.bitbakery.plugin.arc.ArcCommenter"/>
         <lang.documentationProvider language="Arc"
                                     implementationClass="com.bitbakery.plugin.arc.ArcDocumentationProvider"/>
-        <lang.findUsagesProvider language="Arc" implementationClass="com.bitbakery.plugin.arc.nav.ArcFindUsagesProvider"/>
+        <lang.findUsagesProvider language="Arc"
+                                 implementationClass="com.bitbakery.plugin.arc.nav.ArcFindUsagesProvider"/>
         <lang.foldingBuilder language="Arc" implementationClass="com.bitbakery.plugin.arc.ArcFoldingBuilder"/>
 
-        <lang.formatter language="Arc" implementationClass="com.bitbakery.plugin.arc.formatting.ArcFormattingModelBuilder"/>
+        <lang.formatter language="Arc"
+                        implementationClass="com.bitbakery.plugin.arc.formatting.ArcFormattingModelBuilder"/>
         <fileTypeIndentOptionsProvider implementation="com.bitbakery.plugin.arc.config.ArcIndentOptionsProvider"/>
 
         <lang.parserDefinition language="Arc" implementationClass="com.bitbakery.plugin.arc.ArcParserDefinition"/>
         <lang.psiStructureViewFactory language="Arc"
                                       implementationClass="com.bitbakery.plugin.arc.structure.ArcStructureViewBuilderFactory"/>
-
-
-        <applicationConfigurable implementation="com.bitbakery.plugin.arc.config.ArcConfigurable"/>
-        <applicationService serviceInterface="com.bitbakery.plugin.arc.config.ArcSettings"
-                            serviceImplementation="com.bitbakery.plugin.arc.config.ArcSettings"/>
-
     </extensions>
-
 
 
     <application-components>
@@ -123,7 +135,7 @@
 
     <actions>
         <action id="ArcCreateNewFile" class="com.bitbakery.plugin.arc.actions.NewArcFileAction"
-                icon="/icons/arc-shiny-16.png">
+                icon="/icons/arc16.png">
             <add-to-group group-id="NewGroup" anchor="last"/>
         </action>
 
@@ -131,19 +143,19 @@
 
             <separator/>
             <action id="ArcGoToRepl" class="com.bitbakery.plugin.arc.actions.GoToReplAction"
-                    icon="/icons/arc-shiny-16.png">
+                    icon="/icons/arc16.png">
                 <keyboard-shortcut keymap="$default" first-keystroke="alt R"/>
             </action>
             <action id="ArcRunSelection" class="com.bitbakery.plugin.arc.actions.RunSelectedTextAction"
-                    icon="/icons/arc-shiny-16.png">
+                    icon="/icons/arc16.png">
                 <keyboard-shortcut keymap="$default" first-keystroke="alt S"/>
             </action>
             <action id="ArcLoadFile" class="com.bitbakery.plugin.arc.actions.LoadFileAction"
-                    icon="/icons/arc-shiny-16.png">
-                <keyboard-shortcut keymap="$default" first-keystroke="alt L"/>
+                    icon="/icons/arc16.png">
+                <keyboard-shortcut keymap="$default" first-keystroke="alt Z"/>
             </action>
             <action id="ArcMacroexpandOne" class="com.bitbakery.plugin.arc.actions.MacroexpandOneAction"
-                    icon="/icons/arc-shiny-16.png">
+                    icon="/icons/arc16.png">
                 <keyboard-shortcut keymap="$default" first-keystroke="alt M"/>
             </action>
             <separator/>

@@ -18,7 +18,10 @@ import com.bitbakery.plugin.arc.lexer.ArcLexer;
 import static com.bitbakery.plugin.arc.lexer.ArcTokenTypes.COMMENTS;
 import static com.bitbakery.plugin.arc.lexer.ArcTokenTypes.LITERALS;
 import static com.bitbakery.plugin.arc.psi.ArcElementTypes.VARIABLE_REFERENCE_FILTER;
-import com.bitbakery.plugin.arc.psi.*;
+import com.bitbakery.plugin.arc.psi.Def;
+import com.bitbakery.plugin.arc.psi.Mac;
+import com.bitbakery.plugin.arc.psi.Parameter;
+import com.bitbakery.plugin.arc.psi.VariableAssignment;
 import com.intellij.lang.cacheBuilder.DefaultWordsScanner;
 import com.intellij.lang.cacheBuilder.WordsScanner;
 import com.intellij.lang.findUsages.FindUsagesProvider;
@@ -29,8 +32,8 @@ import org.jetbrains.annotations.Nullable;
 
 /**
  * Enables the "Find Usages" feature for Arc functions and macros.
- *
- *
+ * <p/>
+ * <p/>
  * TODO - <sigh>... OK... here's everything we need to fix around navigation and find usages:
  * TODO     - I need to consistently differentiate between VariableAssignment (global var def - i.e., an = expression) and VariableDefinition
  * TODO     - I need to be able to find usages for a VariableAssignment, a Def, and a Mac
@@ -77,20 +80,22 @@ public class ArcFindUsagesProvider implements FindUsagesProvider {
         } else if (element instanceof Parameter) {
             return "Parameter";
         }
-        return null;
+        return "";
     }
 
+    @NotNull
     public String getDescriptiveName(@NotNull PsiElement element) {
         if (element instanceof PsiNamedElement) {
             return ((PsiNamedElement) element).getName();
         }
-        return null;
+        return "";
     }
 
+    @NotNull
     public String getNodeText(@NotNull PsiElement element, boolean useFullName) {
         if (element instanceof PsiNamedElement) {
             return element.getText();
         }
-        return null;
+        return "";
     }
 }

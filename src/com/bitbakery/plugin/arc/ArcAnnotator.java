@@ -14,20 +14,14 @@ package com.bitbakery.plugin.arc;
  *  governing permissions and limitations under the License..
  */
 
-import com.bitbakery.plugin.arc.psi.*;
-import com.bitbakery.plugin.arc.lexer.ArcTokenTypes;
+import com.bitbakery.plugin.arc.psi.Definition;
+import com.bitbakery.plugin.arc.psi.Docstring;
+import com.bitbakery.plugin.arc.psi.VariableReference;
 import com.intellij.lang.annotation.Annotation;
 import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.lang.annotation.Annotator;
-import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiReference;
-import com.intellij.psi.tree.TokenSet;
-import com.intellij.openapi.editor.markup.TextAttributes;
-import com.intellij.openapi.editor.colors.TextAttributesKey;
-import com.intellij.openapi.editor.HighlighterColors;
-
-import java.awt.*;
 
 /**
  * The annotator can identify errors in how a function or macro is being called
@@ -56,7 +50,7 @@ public class ArcAnnotator implements Annotator {
             }
         } else if (psiElement instanceof Docstring) {
             Annotation a = holder.createInfoAnnotation(psiElement, null);
-            a.setTextAttributes(ArcSyntaxHighlighter.getTextAttrs(ArcElementTypes.DOCSTRING));
+            a.setTextAttributes(ArcSyntaxHighlighter.DOCSTRING);
         }
     }
 

@@ -87,7 +87,7 @@ public interface ArcTokenTypes {
 
     IElementType TRUE = new ArcElementType("t");
     IElementType NIL = new ArcElementType("nil");
-    TokenSet BOOLEAN_LITERAL = TokenSet.create(TRUE, NIL);
+    TokenSet BOOLEAN_LITERALS = TokenSet.create(TRUE, NIL);
 
     TokenSet LITERALS = TokenSet.create(STRING_LITERAL, NUMERIC_LITERAL, CHAR_LITERAL, TRUE, NIL);
     TokenSet READABLE_TEXT = TokenSet.create(STRING_LITERAL, BLOCK_COMMENT, LINE_COMMENT);

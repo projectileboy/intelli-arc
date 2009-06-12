@@ -15,7 +15,6 @@ package com.bitbakery.plugin.arc.psi;
  */
 
 import com.bitbakery.plugin.arc.ArcIcons;
-import static com.bitbakery.plugin.arc.psi.ArcElementTypes.*;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.tree.TokenSet;
 
@@ -35,5 +34,4 @@ public class Def extends Definition {
     public Icon getIcon(int flags) {
         return ArcIcons.ARC_DEF_ICON;
     }
-
 }

@@ -1,10 +1,9 @@
-package com.bitbakery.plugin.arc.nav;
+package com.bitbakery.plugin.arc.config;
 
-import com.intellij.find.findUsages.FindUsagesHandlerFactory;
-import com.intellij.find.findUsages.FindUsagesHandler;
-import com.intellij.psi.PsiElement;
-import com.bitbakery.plugin.arc.psi.ArcElementTypes;
-import com.bitbakery.plugin.arc.psi.VariableDefinition;
+import com.intellij.openapi.options.Configurable;
+import com.intellij.psi.codeStyle.CodeStyleSettings;
+import com.intellij.psi.codeStyle.CodeStyleSettingsProvider;
+import org.jetbrains.annotations.NotNull;
 
 /*
  * Copyright (c) Kurt Christensen, 2009
@@ -23,17 +22,13 @@ import com.bitbakery.plugin.arc.psi.VariableDefinition;
 /**
  * Created by IntelliJ IDEA.
  * User: kurtc
- * Date: Mar 2, 2009
- * Time: 10:33:26 AM
+ * Date: Jun 12, 2009
+ * Time: 9:45:17 AM
  * To change this template use File | Settings | File Templates.
  */
-public class ArcFindUsagesHandlerFactory extends FindUsagesHandlerFactory{
-    public boolean canFindUsages(PsiElement psiElement) {
-        return psiElement instanceof VariableDefinition;
-    }
-
-    public FindUsagesHandler createFindUsagesHandler(PsiElement psiElement, boolean b) {
-        return new FindUsagesHandler(psiElement) {
-        };
+public class ArcCodeStyleSettingsProvider extends CodeStyleSettingsProvider {
+    @NotNull
+    public Configurable createSettingsPage(CodeStyleSettings settings, CodeStyleSettings originalSettings) {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 }

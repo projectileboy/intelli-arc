@@ -14,10 +14,10 @@ package com.bitbakery.plugin.arc.config;
  *  governing permissions and limitations under the License..
  */
 
-import com.intellij.openapi.options.Configurable;
-import com.intellij.openapi.options.ConfigurationException;
 import com.bitbakery.plugin.arc.ArcIcons;
 import com.bitbakery.plugin.arc.ArcStrings;
+import com.intellij.openapi.options.Configurable;
+import com.intellij.openapi.options.ConfigurationException;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
@@ -58,6 +58,6 @@ public class ArcConfigurable implements Configurable {
     }
 
     public void disposeUIResources() {
-        // Do nothing
+        // Anything???
     }
 }
