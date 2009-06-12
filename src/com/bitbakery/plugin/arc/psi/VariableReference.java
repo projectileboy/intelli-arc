@@ -181,13 +181,12 @@ public class VariableReference extends ArcElement {
                             Definition d = (Definition) e;
                             item.setTailType(TailType.SPACE);
                             item.setAttribute(LookupItem.TAIL_TEXT_ATTR, " " + d.getParameterString());
-                            item.setAttribute(LookupItem.TYPE_TEXT_ATTR, file.getName());
+                            item.setAttribute(LookupItem.TYPE_TEXT_ATTR, "[" + file.getName() + "]");
                             names.add(item);
                         } else if (e instanceof VariableAssignment) {
                             LookupItem item = new LookupItem(e, ((PsiNamedElement) e).getName());
                             item.setTailType(TailType.SPACE);
-                            //item.setAttribute(LookupItem.TAIL_TEXT_ATTR, " " + def.getParameterString());
-                            item.setAttribute(LookupItem.TYPE_TEXT_ATTR, file.getName());
+                            item.setAttribute(LookupItem.TYPE_TEXT_ATTR, "[" + file.getName() + "]");
                             names.add(item);
                         }
                     }

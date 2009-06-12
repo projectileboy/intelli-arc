@@ -14,13 +14,11 @@ package com.bitbakery.plugin.arc.config;
  *  governing permissions and limitations under the License..
  */
 
-import com.bitbakery.plugin.arc.ArcFileType;
 import com.bitbakery.plugin.arc.ArcIcons;
 import com.bitbakery.plugin.arc.ArcSyntaxHighlighter;
 import static com.bitbakery.plugin.arc.ArcSyntaxHighlighter.*;
 import com.intellij.openapi.editor.colors.TextAttributesKey;
 import com.intellij.openapi.fileTypes.SyntaxHighlighter;
-import com.intellij.openapi.fileTypes.SyntaxHighlighterFactory;
 import com.intellij.openapi.options.colors.AttributesDescriptor;
 import com.intellij.openapi.options.colors.ColorDescriptor;
 import com.intellij.openapi.options.colors.ColorSettingsPage;
@@ -72,7 +70,8 @@ public class ArcColorSettingsPage implements ColorSettingsPage {
 
     @NotNull
     public SyntaxHighlighter getHighlighter() {
-        return SyntaxHighlighterFactory.getSyntaxHighlighter(ArcFileType.ARC, null, null);
+        return new ArcSyntaxHighlighter();
+        // return SyntaxHighlighterFactory.getSyntaxHighlighter(ArcFileType.ARC, null, null);
     }
 
     @Nullable

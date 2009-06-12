@@ -106,9 +106,6 @@ StringLiteral=\"([^\\\"]|{EscapeSequence})*(\"|\\)?
 [Dd][Ee][Ff]    { return DEF; }
 [Mm][Aa][Cc]    { return MAC; }
 
-/** TODO - In general, I think we'll want tokens for anything for which we'd like parsing - if statements, etc.)  ***/
-
-/** TODO - In here is where we'd insert core stuff from ac.scm, as.scm, and arc.arc *************************/
 
 /** TODO - In here is where we *might* choose to insert library stuff, although I don't know if that's *quite* to the "token" level... dunno, maybe iterators, at least **********/
 
